@@ -15,10 +15,10 @@ Welcome to the official repository Staking Locks , a decentralized application (
 
 ## Getting Started
 
-To start using the YourTokenName Staking DApp, follow these simple steps:
+To start using the TokenDapp Staking DApp, follow these simple steps:
 
 1. Connect your wallet.
-2. Choose the amount of YourTokenName tokens you wish to stake.
+2. Choose the amount of TokenDapp tokens you wish to stake.
 3. Select your preferred staking period (30, 90, or 180 days).
 4. Confirm your staking transaction.
 5. Monitor your staked tokens and earnings directly from the dashboard.
@@ -27,8 +27,8 @@ To start using the YourTokenName Staking DApp, follow these simple steps:
 
 The built-in swapper feature allows for easy exchange between the DApp's token and the native currency:
 
-- **Buy Tokens**: Convert your native currency into YourTokenName tokens seamlessly.
-- **Sell Tokens**: Exchange YourTokenName tokens back into the native currency whenever you choose.
+- **Buy Tokens**: Convert your native currency into TokenDapp tokens seamlessly.
+- **Sell Tokens**: Exchange TokenDapp tokens back into the native currency whenever you choose.
 
 ## NFT Minting
 
@@ -36,7 +36,7 @@ For projects with an NFT collection, our DApp offers a straightforward minting p
 
 ## Token Information
 
-Find all relevant information about YourTokenName, including its purpose, benefits, and how it integrates with our DApp, in the token information section.
+Find all relevant information about TokenDapp, including its purpose, benefits, and how it integrates with our DApp, in the token information section.
 
 ## Socials and Links
 
@@ -49,8 +49,8 @@ Stay connected and up-to-date with the latest news and updates:
 
 ## Live Price Data
 
-Access live price data for YourTokenName and the native currency directly from our DApp, ensuring you have the most current information at your fingertips.
+Access live price data for TokenDapp and the native currency directly from our DApp, ensuring you have the most current information at your fingertips.
 
 ---
 
-For more information, visit our [official website](#) or connect with our community on [Telegram](#), [Twitter](#), and [Discord](#).
+

@@ -1,0 +1,75 @@
+
+//NFT1 section
+// ######################################################################################################################################################################
+
+  const account = useAccount();
+  const [contractName, setContractName] = useState('');
+  const [totalSupply, setTotalSupply] = useState(0);
+  const [loading, setLoading] = useState(true);
+
+  const contractConfig = {
+    addressOrName: CONTRACT_ADDRESS,
+    contractInterface: abiFile,
+  };
+
+  const [imgURL, setImgURL] = useState('');
+  const { writeAsync: mint, error: mintError } = useContractWrite({
+    ...contractConfig,
+    functionName: 'mint',
+  });
+  const [mintLoading, setMintLoading] = useState(false);
+  const { address } = useAccount();
+  const isConnected = !!address;
+  const [mintedTokenId, setMintedTokenId] = useState(null);
+  const [mintAmount, setMintQuantity] = useState(1);
+
+  const [newCost, setNewCost] = useState('');
+
+  const { writeAsync: pauseContract, error: pauseError } = useContractWrite({
+    ...contractConfig,
+    functionName: 'pause',
+  });
+
+
+    const calculateTotalPrice = () => {
+      const pricePerToken = parseFloat(cost);
+      return ethers.utils.parseEther((mintAmount * pricePerToken).toString());
+    };
+
+
+    const maxSupply = 777;
+    const remainingSupply = maxSupply - totalSupply;
+
+
+  const { writeAsync: setNewCostFn, error: setNewCostError } = useContractWrite({
+  ...contractConfig,
+  functionName: 'setCost',
+});
+
+  const handleIncrement = () => {
+    setMintQuantity((prevQuantity) => Math.min(prevQuantity + 1, 100));
+  };
+
+  const handleDecrement = () => {
+    setMintQuantity((prevQuantity) => Math.max(prevQuantity - 1, 1));
+  };
+
+  const onMintClick = async () => {
+    try {
+      setMintLoading(true);
+      const totalPrice = calculateTotalPrice();
+
+      const tx = await mint({
+        args: [mintAmount, { value: totalPrice }],
+      });
+
+      await tx.wait();
+      toast.success('Mint successful! You can view your NFT soon.');
+    } catch (error) {
+      console.error(error);
+      toast.error('Mint unsuccessful! Please try again.');
+    } finally {
+      setMintLoading(false);
+    }
+  };
+  // ######################################################################################################################################################################

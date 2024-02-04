@@ -1,0 +1,319 @@
+
+
+// ######################################################################################################################################################################
+// ##################################
+// unstake tokens 1month
+// ##################################
+
+    const { writeAsync: Unstake3Month } = useContractWrite({
+      ...tokenContractConfig,
+      functionName: 'Unstake3Month',
+    });
+    const onUnstake3MonthClick = async () => {
+      try {
+        const tx = await Unstake3Month();
+        await tx.wait();
+        toast.success('Unstaking successful!');
+      } catch (error) {
+        console.error(error);
+        toast.error('Unstaking failed. Please Check your Unlock Date in dapp.');
+      }
+    };
+
+
+    // ##################################
+        // State for staking amount
+        // ##################################
+         const [stakeAmount3Month, setStakeAmount3Month] = useState('');
+
+         // Contract write hook for staking in the token contract
+         const { writeAsync: stakeFor3Month } = useContractWrite({
+           ...tokenContractConfig,
+           functionName: 'StakeFor3Month',
+         });
+
+         // Function to handle staking
+         const onStakeClick3Month = async () => {
+           try {
+             if (!stakeAmount3Month) {
+               toast.error('Please enter an amount to stake.');
+               return;
+             }
+
+             // Convert the stake amount to Wei
+             const stakeAmount3MonthInWei = ethers.utils.parseUnits(stakeAmount3Month, 'wei');
+
+             // Call the StakeFor3Month function in the contract
+             const tx = await stakeFor3Month({
+               args: [stakeAmount3MonthInWei],
+             });
+
+             await tx.wait();
+             toast.success('Staking successful!');
+           } catch (error) {
+             console.error(error);
+             toast.error('Staking failed. Please try again.');
+           }
+         };
+
+// ##################################
+  // is the user staked
+  // ##################################
+
+
+    const [userStaked3Month, setUserStaked3Month] = useState('Loading...');
+
+    useEffect(() => {
+     const fetchUserStaked3MonthStatus = async () => {
+       if (address) {
+         try {
+           const provider = new ethers.providers.Web3Provider(window.ethereum);
+           const tokenContract = new ethers.Contract(TOKEN_ADDRESS, tokenAbi, provider);
+
+           const isStaked = await tokenContract._isStaked3Month(address);
+           setUserStaked3Month(isStaked.toString());
+         } catch (error) {
+           console.error('Error fetching staking status:', error);
+           setUserStaked3Month('Error');
+         }
+       }
+     };
+
+     fetchUserStaked3MonthStatus();
+   }, [address]); // Fetch staking status when the address changes
+
+
+
+
+
+
+     // amount staked 3 month pool
+       const [tokensStaked3Month, setTokensStaked3Month] = useState('Loading...');
+
+       useEffect(() => {
+          const fetchTokensStaked3Month = async () => {
+            if (address) {
+              try {
+                const provider = new ethers.providers.Web3Provider(window.ethereum);
+                const tokenContract = new ethers.Contract(TOKEN_ADDRESS, tokenAbi, provider);
+
+                const tokens = await tokenContract.tokensStaked3Month(address);
+                setTokensStaked3Month(ethers.utils.formatUnits(tokens, 'ether')); // Adjust based on your token's decimals
+              } catch (error) {
+                console.error('Error fetching tokens staked for 1 month:', error);
+                setTokensStaked3Month('Error');
+              }
+            }
+          };
+
+          fetchTokensStaked3Month();
+        }, [address]); // Fetch when the address changes
+
+
+     // available balance after staking locks
+     const [availableBalance3Month, setAvailableBalance3Month] = useState('Loading...');
+
+     useEffect(() => {
+       const fetchBalances3Month = async () => {
+         if (address) {
+           try {
+             const provider = new ethers.providers.Web3Provider(window.ethereum);
+             const tokenContract = new ethers.Contract(TOKEN_ADDRESS, tokenAbi, provider);
+
+             const [balance, tokensStaked3Month] = await Promise.all([
+               tokenContract.balanceOf(address),
+               tokenContract.tokensStaked3Month(address),
+             ]);
+
+             const available = balance.sub(tokensStaked3Month);
+             // Format balance and set it to 2 decimal places
+             const formattedAvailable = ethers.utils.formatUnits(available, 'ether');
+             setAvailableBalance3Month(parseFloat(formattedAvailable).toFixed(2)); // Now the balance is a string with 2 decimal places
+           } catch (error) {
+             console.error('Error fetching balances:', error);
+             setAvailableBalance3Month('Error');
+           }
+         }
+       };
+
+       fetchBalances3Month();
+     }, [address]); // Fetch when the address changes
+
+
+
+       const [unlockTime3Month, setUnlockTime3Month] = useState('Loading...');
+
+       useEffect(() => {
+         const fetchUnlockTime3Month = async () => {
+           if (address) {
+             try {
+               const provider = new ethers.providers.Web3Provider(window.ethereum);
+               const tokenContract = new ethers.Contract(TOKEN_ADDRESS, tokenAbi, provider);
+
+               const stakedTimestamp3Month = await tokenContract._staked1MonthTimestamp(address);
+               const currentBlock = await provider.getBlock('latest');
+               const currentTime = currentBlock.timestamp;
+
+               const timeDiff = stakedTimestamp3Month - currentTime;
+               if (timeDiff <= 0) {
+                 setUnlockTime3Month('Unlocked');
+                 return;
+               }
+
+               const days = Math.floor(timeDiff / (24 * 3600));
+               const hours = Math.floor((timeDiff % (24 * 3600)) / 3600);
+               const minutes = Math.floor((timeDiff % 3600) / 60);
+               const seconds = Math.floor(timeDiff % 60);
+
+               setUnlockTime3Month(`${days} days, ${hours} hours, ${minutes} minutes, ${seconds} seconds`);
+             } catch (error) {
+               console.error('Error fetching unlock time:', error);
+               setUnlockTime3Month('Error');
+             }
+           }
+         };
+
+         fetchUnlockTime3Month();
+       }, [address]);
+
+
+
+       const [stakedTimestamp3Month, setStakedTimestamp3Month] = useState('Loading...');
+
+       useEffect(() => {
+         const fetchStakedTimestamp3Month = async () => {
+           if (address) {
+             try {
+               const provider = new ethers.providers.Web3Provider(window.ethereum);
+               const tokenContract = new ethers.Contract(TOKEN_ADDRESS, tokenAbi, provider);
+
+               const timestamp = await tokenContract._staked1MonthTimestamp(address);
+               const date = new Date(timestamp.toNumber() * 1000).toLocaleString(); // Convert timestamp to readable date
+               setStakedTimestamp3Month(date);
+             } catch (error) {
+               console.error('Error fetching staked timestamp:', error);
+               setStakedTimestamp3Month('Error');
+             }
+           }
+         };
+
+         fetchStakedTimestamp3Month();
+       }, [address]);
+
+
+       const [stakedBlockNumber3Month, setStakedBlockNumber3Month] = useState('Loading...');
+
+       useEffect(() => {
+        const fetchStakedBlockNumber3Month = async () => {
+          if (address) {
+            try {
+              const provider = new ethers.providers.Web3Provider(window.ethereum);
+              const tokenContract = new ethers.Contract(TOKEN_ADDRESS, tokenAbi, provider);
+
+              const stakedTimestamp3MonthBN = await tokenContract._staked1MonthTimestamp(address);
+              const stakedTimestamp3Month = stakedTimestamp3MonthBN.toNumber();
+
+              const currentBlock = await provider.getBlock('latest');
+              const currentTimestamp = currentBlock.timestamp;
+              const currentBlockNumber = currentBlock.number;
+
+              // Estimate the block number of the staked timestamp
+              const blockDifference = (stakedTimestamp3Month - currentTimestamp) / BLOCK_RATE_SECONDS;
+              const estimatedStakedBlockNumber3Month = currentBlockNumber + Math.round(blockDifference);
+
+              setStakedBlockNumber3Month(estimatedStakedBlockNumber3Month.toString());
+            } catch (error) {
+              console.error('Error fetching staked block number:', error);
+              setStakedBlockNumber3Month('Error');
+            }
+          }
+        };
+
+        fetchStakedBlockNumber3Month();
+      }, [address]);
+
+        const [unlockDate3Month, setUnlockDate3Month] = useState('Loading...');
+
+        useEffect(() => {
+         const fetchUnlockDate3Month = async () => {
+           if (address) {
+             try {
+               const provider = new ethers.providers.Web3Provider(window.ethereum);
+               const tokenContract = new ethers.Contract(TOKEN_ADDRESS, tokenAbi, provider);
+
+               const stakedTimestamp3MonthBN = await tokenContract._staked1MonthTimestamp(address);
+               const stakedTimestamp3Month = stakedTimestamp3MonthBN.toNumber();
+
+               // Add 30 days to the staked timestamp
+               const unlockTime3Monthstamp = new Date(stakedTimestamp3Month * 1000);
+               unlockTime3Monthstamp.setDate(unlockTime3Monthstamp.getDate() + 30);
+
+               setUnlockDate3Month(unlockTime3Monthstamp.toLocaleDateString());
+             } catch (error) {
+               console.error('Error fetching unlock date:', error);
+               setUnlockDate3Month('Error');
+             }
+           }
+         };
+
+         fetchUnlockDate3Month();
+       }, [address]);
+
+
+// ######################################################################################################################################################################
+
+
+
+  <TabPanel>
+    <Box minH="350px">
+    <Box
+      display='flex'
+      flexDirection='column'
+      alignItems='center'
+      justifyContent='center'
+      marginTop='4'
+      style={{ backgroundColor: '' }} // Light dark grey color
+      >
+
+      <div style={{ fontSize: '24px', fontWeight: 'bold', textAlign: 'center', marginBottom: '20px' }}>
+        90 Day Staking Pool
+      </div>
+
+{/* Staking Section */}
+<Box display='flex' flexDirection='column' alignItems='center' justifyContent='center' marginTop='4'>
+<Input
+placeholder='Enter amount to stake 30 Days'
+value={stakeAmount3Month}
+onChange={(e) => setStakeAmount3Month(e.target.value)}
+size='md'
+width='250px'
+/>
+<Button
+onClick={onStakeClick3Month}
+marginTop='2'
+textColor='white'
+bg='Blue'
+_hover={{ bg: 'Blue' }}
+>
+Stake for 90 Days
+</Button>
+</Box>
+{/* Unstake Section */}
+<Box display='flex' flexDirection='column' alignItems='center' justifyContent='center' marginTop='4'>
+<Button
+onClick={onUnstake3MonthClick}
+textColor='white'
+bg='Blue'
+_hover={{ bg: 'Blue' }}
+>
+Unstake from 30 Day Staking
+</Button>
+</Box>
+<div>39 Day active Stake: {userStaked3Month}</div>
+<div>Your Tokens Staked for 1 Month: {tokensStaked3Month}</div>
+<div>Staked on: {stakedTimestamp3Month}</div>
+<div>Unlock Date: {unlockDate3Month}</div>
+
+</Box>
+    </Box>
+  </TabPanel>

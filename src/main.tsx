@@ -49,7 +49,7 @@ const { chains, provider } = configureChains(
     jsonRpcProvider({
       rpc: () => {
         return {
-          http: "https://bsc-dataseed.binance.org/",
+          http: "https://mainrpc4.maxxchain.org/",
         };
       },
     }),
@@ -58,7 +58,7 @@ const { chains, provider } = configureChains(
 );
 
 const { connectors } = getDefaultWallets({
-  appName: "Alpha7 Token on BSC 2024",
+  appName: "Staking Locks Dapp 2024",
   chains,
 });
 

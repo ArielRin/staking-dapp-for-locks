@@ -39,11 +39,11 @@ const BLOCK_RATE_SECONDS = 3; // BSC block rate
 
 
 
-const TOKEN_IMAGE = 'https://raw.githubusercontent.com/ArielRin/PangeaPage-Update/master/Web/pangeapage/src/pangeatoken.png';
-const TOKEN_SYMBOL = 'PRT';
+const TOKEN_IMAGE = 'https://raw.githubusercontent.com/ArielRin/staking-dapp-for-locks/master/src/favicon.png';
+const TOKEN_SYMBOL = 'PST';
 const TOKEN_DECIMALS = 18;
 
-const INITIAL_SUPPLY = 1000000; //  set at 1,000,000
+const INITIAL_SUPPLY = 100000000; //  set at 1,000,000
 
 
 const App = () => {
@@ -61,7 +61,7 @@ const App = () => {
             address: TOKEN_ADDRESS,
             symbol: TOKEN_SYMBOL,
             decimals: TOKEN_DECIMALS,
-            image: 'https://raw.githubusercontent.com/ArielRin/PangeaPage-Update/master/Web/pangeapage/src/pangeatoken.png',
+            image: 'https://raw.githubusercontent.com/ArielRin/staking-dapp-for-locks/master/src/favicon.png',
           },
         },
       })
@@ -91,7 +91,7 @@ const App = () => {
                 address: TOKEN_ADDRESS,
                 symbol: TOKEN_SYMBOL,
                 decimals: TOKEN_DECIMALS,
-                image: 'https://raw.githubusercontent.com/ArielRin/PangeaPage-Update/master/Web/pangeapage/src/pangeatoken.png',
+                image: 'https://raw.githubusercontent.com/ArielRin/staking-dapp-for-locks/master/src/favicon.png',
               },
             },
           });
@@ -111,40 +111,123 @@ const App = () => {
 
    // ##############################################################
 
+   // copy token address to memory
+   // ##############################################################
+   // ##############################################################
+   const [copySuccess, setCopySuccess] = useState('');
+
+   const copyToClipboard = () => {
+     navigator.clipboard.writeText(TOKEN_ADDRESS)
+       .then(() => {
+         setCopySuccess('Address Copied!');
+         setTimeout(() => setCopySuccess(''), 2000); // Clear message after 2 seconds
+       })
+       .catch(err => {
+         console.error('Failed to copy: ', err);
+         setCopySuccess('Failed to copy');
+       });
+   };
+
+   // ##############################################################
+   // ##############################################################
 
    //fetch  supply data of PRT
    // ##############################################################
    // ##############################################################
    // const [totalSupply, setTotalSupply] = useState('Loading...');
-     const [tokensRemoved, setTokensRemoved] = useState('Calculating...');
+   // const [tokensRemoved, setTokensRemoved] = useState<string>('Calculating...');
+   //
+   // useEffect(() => {
+   //   const fetchSupplyData = async () => {
+   //     const url = `https://api.geckoterminal.com/api/v2/networks/maxxchain/tokens/${TOKEN_ADDRESS}`;
+   //
+   //     try {
+   //       const response = await fetch(url);
+   //       const data = await response.json();
+   //       if (data && data.data && data.data.attributes && data.data.attributes.total_supply) {
+   //         const totalSupplyWei = data.data.attributes.total_supply;
+   //         // Assuming INITIAL_SUPPLY is defined and is a number
+   //         const totalSupplyEth = totalSupplyWei / 1e18;
+   //         setTotalSupply(totalSupplyEth.toLocaleString(undefined, { maximumFractionDigits: 2 }));
+   //
+   //         const removedTokens = INITIAL_SUPPLY - totalSupplyEth;
+   //         setTokensRemoved(removedTokens.toLocaleString(undefined, { maximumFractionDigits: 2 }));
+   //       } else {
+   //         setTotalSupply('Data not available');
+   //         setTokensRemoved('Data not available');
+   //       }
+   //     } catch (error) {
+   //       console.error('Error fetching supply data:', error);
+   //       setTotalSupply('Error fetching data');
+   //       setTokensRemoved('Error fetching data');
+   //     }
+   //   };
+   //
+   //   fetchSupplyData();
+   // }, []);
 
-     useEffect(() => {
-       const url = `https://api.geckoterminal.com/api/v2/networks/maxxchain/tokens/${TOKEN_ADDRESS}`;
 
-       fetch(url)
-         .then(response => response.json())
-         .then(data => {
-           if (data && data.data && data.data.attributes && data.data.attributes.total_supply) {
-             const totalSupplyWei = data.data.attributes.total_supply;
-             const totalSupplyEth = totalSupplyWei / 1e18; // Convert wei to ether
-             setTotalSupply(totalSupplyEth.toLocaleString(undefined, { maximumFractionDigits: 2 }));
+   // ##############################################################
+   // ##############################################################
 
-             // Calculate tokens removed from supply
-             const removedTokens = INITIAL_SUPPLY - totalSupplyEth;
-             setTokensRemoved(removedTokens.toLocaleString(undefined, { maximumFractionDigits: 2 }));
+
+   // fetch marketcap from api
+   // ##############################################################
+   // ##############################################################
+   const [marketCap, setMarketCap] = useState('Loading...');
+   const [totalReserveInUSD, setTotalReserveInUSD] = useState('Loading...');
+
+   // ... (existing useEffect hooks)
+
+   // Fetch Market Cap and Total Reserve data
+   useEffect(() => {
+     const url = `https://api.geckoterminal.com/api/v2/networks/maxxchain/tokens/${TOKEN_ADDRESS}`;
+
+     fetch(url)
+       .then(response => response.json())
+       .then(data => {
+         if (data && data.data && data.data.attributes) {
+           if (data.data.attributes.fdv_usd) {
+             const fdvUsd = data.data.attributes.fdv_usd;
+             setMarketCap(`${parseFloat(fdvUsd).toLocaleString('en-US', { style: 'currency', currency: 'USD' })}`); // Format as currency
            } else {
-             setTotalSupply('Data not available');
-             setTokensRemoved('Data not available');
+             setMarketCap('Market Cap not available');
            }
-         })
-         .catch(error => {
-           console.error('Error fetching total supply:', error);
-           setTotalSupply('Error fetching data');
-           setTokensRemoved('Error fetching data');
-         });
-     }, []);
-   // ##############################################################
-   // ##############################################################
+
+           if (data.data.attributes.total_reserve_in_usd) {
+             const reserveUsd = data.data.attributes.total_reserve_in_usd;
+             setTotalReserveInUSD(`${parseFloat(reserveUsd).toLocaleString('en-US', { style: 'currency', currency: 'USD' })}`); // Format as currency
+           } else {
+             setTotalReserveInUSD('Total Reserve not available');
+           }
+         } else {
+           setMarketCap('Data not available');
+           setTotalReserveInUSD('Data not available');
+         }
+       })
+       .catch(error => {
+         console.error('Error fetching data:', error);
+         setMarketCap('Error fetching data');
+         setTotalReserveInUSD('Error fetching data');
+       });
+   }, []);
+     // ##############################################################
+     // ##############################################################
+
+
+       // ##############################################################
+       // ##############################################################
+
+   const [totalLiquidityUSD, setTotalLiquidityUSD] = useState('Loading...');
+
+   useEffect(() => {
+     if (totalReserveInUSD !== 'Loading...' && totalReserveInUSD !== 'Total Reserve not available' && totalReserveInUSD !== 'Error fetching data') {
+       // Extract the number from the formatted currency string
+       const reserveValue = Number(totalReserveInUSD.replace(/[^0-9.-]+/g, ""));
+       const liquidityValue = reserveValue * 2;
+       setTotalLiquidityUSD(`${liquidityValue.toLocaleString('en-US', { style: 'currency', currency: 'USD' })}`); // Format as currency
+     }
+   }, [totalReserveInUSD]); // Dependency on totalReserveInUSD
 
 
 
@@ -1200,37 +1283,52 @@ const App = () => {
 
         <Container maxW="container.xl" p={4}>
           <Flex direction="column" gap={4}>
-          <Box h="400px" bg="gray.200" p={4}>
+          <Box minH="400px" bg="gray.200" p={4}>
             {/* Use the paddingTop for the first div after the heading */}
-            <div>Token General Info</div>
-            <div style={{ paddingTop: '20px' }}>
+
+                          <div style={{ fontSize: '24px', fontWeight: 'bold', textAlign: 'center', marginBottom: '60px' }}>
+              Token General Info
+            </div>
+
+                        <div style={{ fontSize: '16px', fontWeight: 'normal', textAlign: 'center', marginBottom: '20px' }}>
               Description of Dapp here Talk about the features of this page at least 100-200 words
               Token Information Find all relevant information about TokenDapp, including its purpose, benefits, and
               how it integrates with our DApp, in the token information section.
             </div>
-            <div style={{ paddingTop: '20px' }}>Liquidity of Token: $123,456.00 USD</div>
-            <div>Total Supply: 5 Billion</div>
-            <div>Burnt to date: 1,000,000,000</div>
-            <div>Remaining Supply: 4,000,000,000</div>
+
+            <div style={{ fontSize: '20px', fontWeight: 'bold', textAlign: 'center', marginBottom: '20px' }}>
+                 Current Market Cap: {marketCap}
+                 </div>
+            <div style={{ fontSize: '20px', fontWeight: 'bold', textAlign: 'center', marginBottom: '20px' }}>
+                 Total Liquidity: {totalLiquidityUSD} USD Value</div>
+
+
+            <div style={{ fontSize: '14px', fontWeight: 'bold', textAlign: 'center', marginBottom: '2px' }}>
+                 Starting Supply: {INITIAL_SUPPLY.toLocaleString()}
+            </div>
+            <div style={{ fontSize: '14px', fontWeight: 'bold', textAlign: 'center', marginBottom: '2px' }}>
+                 Tokens Destroyed: 00000
+            </div>
+            <div style={{ fontSize: '18px', fontWeight: 'bold', textAlign: 'center', marginBottom: '2px' }}>
+                 Remaining Supply: {totalSupply}
+            </div>
+
+
+
+
+
           </Box>
 
             {/* Adjusted Flex container for equal height columns */}
             <Flex direction={{ base: "column", md: "row" }} gap={4}>
 
             <Box flex={1} bg="gray.300" p={4} display="flex" flexDirection="column">
-              Connected Users Token Statistics and rewards Values to date
+
+              <div style={{ fontSize: '24px', fontWeight: 'bold', textAlign: 'center', marginBottom: '60px' }}>
+                Connected Users Token Statistics and rewards Values to date
+              </div>
 
 
-
-
-              <div style={{ paddingTop: '20px' }}>
-
-              Connected user rewards to date: token A: 34 TOKENA ($0.78 USD)</div>
-              <div>Connected user rewards to date: token B: 18000 TOKENB ($0.53 USD)</div>
-
-
-              <div style={{ paddingTop: '20px' }}>
-              Reward recieved valued to date at $1.31 USD</div>
 
 
               <Box display='flex' flexDirection='column' alignItems='center' justifyContent='center' marginTop='4'>
@@ -1465,7 +1563,35 @@ Unstake
                                                                                 >
                                                                                   Claim Tokens
                                                                                 </Button>
+
+
+
                           {rewardsToClaim}
+                                                                              </Box>
+<Box display='flex' flexDirection='column' alignItems='center' justifyContent='center' marginTop='4'>
+
+                          <Button
+                           onClick={addTokenToWallet}
+                           textColor='white'
+                           bg='blue'
+                           _hover={{ bg: 'blue' }}
+                         >
+                           Claim Tokens
+                            Add Token to Wallet
+                          </Button>
+
+                                                                              </Box>
+<Box display='flex' flexDirection='column' alignItems='center' justifyContent='center' marginTop='4'>
+
+                                                    <Button
+                                                     onClick={copyToClipboard}
+                                                     textColor='white'
+                                                     bg='blue'
+                                                     _hover={{ bg: 'blue' }}
+                                                   >
+                                                     Copy
+                                                    </Button>
+                                                    {copySuccess && <div>{copySuccess}</div>}
                                                                               </Box>
                       </Box>
                     </TabPanel>
@@ -1476,29 +1602,31 @@ Unstake
 
             <Box minH="200px" bg="gray.200" p={4}>
 
-  Multiple Staking Lock Periods: Choose from 30-day, 90-day, and 180-day lock periods to stake your tokens.
-  Token Statistics: View detailed statistics of your tokens, including available, staked, and total balances.
-  Total Statistics: Access aggregated statistics to understand the overall staking landscape.
-  Liquidity Pools Tracker: Monitor the value of the token's LP and other pools directly from the DApp.
-  Swapper DApp: Easily buy the DApp's token with the native currency or sell it back to the native currency without affecting the network's value stability.
-  NFT Minting: Projects with NFT collections can utilize our DApp for their minting process.
-  Comprehensive Token Information: Find all the information about the token, including its utility, benefits, and roadmap.
-  Live Price Data: Stay updated with live price data for both the DApp's token and the native currency.
+          <div style={{ fontSize: '16px', fontWeight: 'normal', textAlign: 'center', marginBottom: '20px' }}>
+            Multiple Staking Lock Periods: Choose from 30-day, 90-day, and 180-day lock periods to stake your tokens.
+            Token Statistics: View detailed statistics of your tokens, including available, staked, and total balances.
+            Total Statistics: Access aggregated statistics to understand the overall staking landscape.
+            Liquidity Pools Tracker: Monitor the value of the token's LP and other pools directly from the DApp.
+            Swapper DApp: Easily buy the DApp's token with the native currency or sell it back to the native currency without affecting the network's value stability.
+            NFT Minting: Projects with NFT collections can utilize our DApp for their minting process.
+            Comprehensive Token Information: Find all the information about the token, including its utility, benefits, and roadmap.
+            Live Price Data: Stay updated with live price data for both the DApp's token and the native currency.
+            </div>
 
             </Box>
 
 
             <Box minH="100px" bg="gray.300" p={4}>
-            <div>
-PST: ${tokenPriceUSD}
+            <div style={{ fontSize: '16px', fontWeight: 'normal', textAlign: 'center', marginBottom: '5px' }}>
+DappToken: ${tokenPriceUSD}
 </div>
-<div>
-ANU: ${anuPriceUSD}
+<div style={{ fontSize: '16px', fontWeight: 'normal', textAlign: 'center', marginBottom: '5px' }}>
+A1: ${anuPriceUSD}
 </div>
-<div>
-BTM: ${btmPriceUSD}
+<div style={{ fontSize: '16px', fontWeight: 'normal', textAlign: 'center', marginBottom: '5px' }}>
+B2: ${btmPriceUSD}
 </div>
-<div>
+<div style={{ fontSize: '16px', fontWeight: 'normal', textAlign: 'center', marginBottom: '5px' }}>
 PWR: ${pwrPriceUSD}
 </div>
             </Box>

@@ -44,12 +44,12 @@ const bsc: Chain = {
 };
 
 const { chains, provider } = configureChains(
-  [maxxChain],
+  [bsc],
   [
     jsonRpcProvider({
       rpc: () => {
         return {
-          http: "https://mainrpc4.maxxchain.org/",
+          http: "https://bsc-dataseed.binance.org/",
         };
       },
     }),

@@ -32,7 +32,8 @@ import tokenAbi from './tokenAbi.json';
 import './styles.css';
 
 const CONTRACT_ADDRESS = '0xaddresshere';
-const TOKEN_ADDRESS = '0x3e69bA6Dd72e39A1694B85775944f713Fe0a0e9B'; //og lastman
+const TOKEN_ADDRESS = '0x5097fccd1e58fc18717c6bfc8ca0e6dc0e006758'; //og reflectr
+// const TOKEN_ADDRESS = '0x3e69bA6Dd72e39A1694B85775944f713Fe0a0e9B'; //og lastman
 
 const getExplorerLink = () => `https://bscscan.com/address/${CONTRACT_ADDRESS}`;
 const BLOCK_RATE_SECONDS = 3; // BSC block rate
@@ -181,7 +182,7 @@ const App = () => {
 
    // Fetch Market Cap and Total Reserve data
    useEffect(() => {
-     const url = `https://api.geckoterminal.com/api/v2/networks/maxxchain/tokens/${TOKEN_ADDRESS}`;
+     const url = `https://api.geckoterminal.com/api/v2/networks/bsc/tokens/${TOKEN_ADDRESS}`;
 
      fetch(url)
        .then(response => response.json())
@@ -313,7 +314,7 @@ const App = () => {
           const btmAddress = '0xc27bbd4276f9eb2d6f2c4623612412d52d7bb43d'; // Your btm address
 
           useEffect(() => {
-            const url = `https://api.geckoterminal.com/api/v2/simple/networks/maxxchain/token_price/${btmAddress}`;
+            const url = `https://api.geckoterminal.com/api/v2/simple/networks/bsc/token_price/${btmAddress}`;
 
             fetch(url)
               .then(response => response.json())
@@ -339,7 +340,7 @@ const App = () => {
         const anuAddress = '0x6cb6c8d16e7b6fd5a815702b824e6dfdf148a7d9'; // Your anu address
 
         useEffect(() => {
-          const url = `https://api.geckoterminal.com/api/v2/simple/networks/maxxchain/token_price/${anuAddress}`;
+          const url = `https://api.geckoterminal.com/api/v2/simple/networks/bsc/token_price/${anuAddress}`;
 
           fetch(url)
             .then(response => response.json())
@@ -364,7 +365,7 @@ const App = () => {
     const tokenAddress = '0x3e69ba6dd72e39a1694b85775944f713fe0a0e9b'; // Your token address
 
     useEffect(() => {
-      const url = `https://api.geckoterminal.com/api/v2/simple/networks/maxxchain/token_price/${tokenAddress}`;
+      const url = `https://api.geckoterminal.com/api/v2/simple/networks/bsc/token_price/${tokenAddress}`;
 
       fetch(url)
         .then(response => response.json())
@@ -386,7 +387,7 @@ const App = () => {
    const pwrTokenAddress = '0xa29d0ee618f33d8efe9a20557fd0ef63dd050859'; // PWR token address on BSC
 
    useEffect(() => {
-     const url = `https://api.geckoterminal.com/api/v2/simple/networks/maxxchain/token_price/${pwrTokenAddress}`;
+     const url = `https://api.geckoterminal.com/api/v2/simple/networks/bsc/token_price/${pwrTokenAddress}`;
 
      fetch(url)
        .then(response => response.json())

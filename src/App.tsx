@@ -38,7 +38,114 @@ const getExplorerLink = () => `https://bscscan.com/address/${CONTRACT_ADDRESS}`;
 const BLOCK_RATE_SECONDS = 3; // BSC block rate
 
 
+
+const TOKEN_IMAGE = 'https://raw.githubusercontent.com/ArielRin/PangeaPage-Update/master/Web/pangeapage/src/pangeatoken.png';
+const TOKEN_SYMBOL = 'PRT';
+const TOKEN_DECIMALS = 18;
+
+const INITIAL_SUPPLY = 1000000; //  set at 1,000,000
+
+
 const App = () => {
+
+  // add token to metamask
+  // ##############################################################
+  // ##############################################################
+  const handleAddToken = () => {
+    if (window.ethereum) {
+      window.ethereum.request({
+        method: 'wallet_watchAsset',
+        params: {
+          type: 'ERC20',
+          options: {
+            address: TOKEN_ADDRESS,
+            symbol: TOKEN_SYMBOL,
+            decimals: TOKEN_DECIMALS,
+            image: 'https://raw.githubusercontent.com/ArielRin/PangeaPage-Update/master/Web/pangeapage/src/pangeatoken.png',
+          },
+        },
+      })
+      .then((success) => {
+        if (success) {
+          console.log('Token successfully added to wallet!');
+        } else {
+          console.log('Token not added to wallet.');
+        }
+      })
+      .catch(console.error);
+    } else {
+      console.log('MetaMask is not installed!');
+    }
+  };
+
+   // ##############################################################
+   // ##############################################################
+   const addTokenToWallet = async () => {
+      if (window.ethereum) {
+        try {
+          const wasAdded = await window.ethereum.request({
+            method: 'wallet_watchAsset',
+            params: {
+              type: 'ERC20',
+              options: {
+                address: TOKEN_ADDRESS,
+                symbol: TOKEN_SYMBOL,
+                decimals: TOKEN_DECIMALS,
+                image: 'https://raw.githubusercontent.com/ArielRin/PangeaPage-Update/master/Web/pangeapage/src/pangeatoken.png',
+              },
+            },
+          });
+
+          if (wasAdded) {
+            console.log('Token was added to wallet!');
+          } else {
+            console.log('Token was not added to wallet.');
+          }
+        } catch (error) {
+          console.error('Error adding token to wallet', error);
+        }
+      } else {
+        console.log('Ethereum object does not exist!');
+      }
+    };
+
+   // ##############################################################
+
+
+   //fetch  supply data of PRT
+   // ##############################################################
+   // ##############################################################
+   // const [totalSupply, setTotalSupply] = useState('Loading...');
+     const [tokensRemoved, setTokensRemoved] = useState('Calculating...');
+
+     useEffect(() => {
+       const url = `https://api.geckoterminal.com/api/v2/networks/maxxchain/tokens/${TOKEN_ADDRESS}`;
+
+       fetch(url)
+         .then(response => response.json())
+         .then(data => {
+           if (data && data.data && data.data.attributes && data.data.attributes.total_supply) {
+             const totalSupplyWei = data.data.attributes.total_supply;
+             const totalSupplyEth = totalSupplyWei / 1e18; // Convert wei to ether
+             setTotalSupply(totalSupplyEth.toLocaleString(undefined, { maximumFractionDigits: 2 }));
+
+             // Calculate tokens removed from supply
+             const removedTokens = INITIAL_SUPPLY - totalSupplyEth;
+             setTokensRemoved(removedTokens.toLocaleString(undefined, { maximumFractionDigits: 2 }));
+           } else {
+             setTotalSupply('Data not available');
+             setTokensRemoved('Data not available');
+           }
+         })
+         .catch(error => {
+           console.error('Error fetching total supply:', error);
+           setTotalSupply('Error fetching data');
+           setTokensRemoved('Error fetching data');
+         });
+     }, []);
+   // ##############################################################
+   // ##############################################################
+
 
 
   const { address } = useAccount();
@@ -91,7 +198,7 @@ const App = () => {
         const fetchRewardsToClaim = async () => {
           if (address) {
             try {
-              const provider = new ethers.providers.Web3Provider(window.ethereum);
+              const provider = new ethers.providers.Web3Provider(window.ethereum as ethers.providers.ExternalProvider);
               const tokenContract = new ethers.Contract(TOKEN_ADDRESS, tokenAbi, provider);
 
               const rewards = await tokenContract.withdrawableDividendOf(address);
@@ -117,46 +224,64 @@ const App = () => {
 
 
 
-  // Function to handle adding token to MetaMask
-  const handleAddToken = async () => {
-    if (window.ethereum) {
-      try {
-        // MetaMask request to watch the asset
-        await window.ethereum.request({
-          method: 'wallet_watchAsset',
-          params: {
-            type: 'ERC20', // Use 'ERC721' for NFTs
-            options: {
-              address: TOKEN_ADDRESS, // The address that the token is at
-              symbol: 'LASTMAN', // A ticker symbol or shorthand, up to 5 characters
-              decimals: 18, // The number of decimals in the token
-              image: tokenSvg, // A string url of the token logo
-            },
-          },
-        });
-      } catch (error) {
-        console.error(error);
-      }
-    } else {
-      console.log('MetaMask is not installed!');
-    }
-  };
+
+        //fetch btm pricePerBtm in usd
+        const [btmPriceUSD, setBtmPriceUSD] = useState('Loading...');
+          const btmAddress = '0xc27bbd4276f9eb2d6f2c4623612412d52d7bb43d'; // Your btm address
+
+          useEffect(() => {
+            const url = `https://api.geckoterminal.com/api/v2/simple/networks/maxxchain/token_price/${btmAddress}`;
+
+            fetch(url)
+              .then(response => response.json())
+              .then(data => {
+                if (data && data.data && data.data.attributes && data.data.attributes.token_prices) {
+                  const price = data.data.attributes.token_prices[btmAddress];
+                  setBtmPriceUSD(`${parseFloat(price).toFixed(6)} USD`); // Format the price to 6 decimal places
+                } else {
+                  setBtmPriceUSD('Price not available');
+                }
+              })
+              .catch(error => {
+                console.error('Error fetching btm price:', error);
+                setBtmPriceUSD('Error fetching price');
+              });
+          }, []);
 
 
 
 
+      //fetch anu pricePerAnu in usd
+      const [anuPriceUSD, setAnuPriceUSD] = useState('Loading...');
+        const anuAddress = '0x6cb6c8d16e7b6fd5a815702b824e6dfdf148a7d9'; // Your anu address
 
+        useEffect(() => {
+          const url = `https://api.geckoterminal.com/api/v2/simple/networks/maxxchain/token_price/${anuAddress}`;
 
-
+          fetch(url)
+            .then(response => response.json())
+            .then(data => {
+        if (data && data.data && data.data.attributes && data.data.attributes.token_prices) {
+                const price = data.data.attributes.token_prices[anuAddress];
+                setAnuPriceUSD(`${parseFloat(price).toFixed(6)} USD`); // Format the price to 6 decimal places
+              } else {
+                setAnuPriceUSD('Price not available');
+              }
+            })
+            .catch(error => {
+              console.error('Error fetching anu price:', error);
+              setAnuPriceUSD('Error fetching price');
+            });
+        }, []);
 
 
 
   //fetch token pricePerToken in usd
   const [tokenPriceUSD, setTokenPriceUSD] = useState('Loading...');
-    const tokenAddress = '0xa7efd5d0575cd4682b0c83155bb9e4ff1a85a6f9'; // Your token address
+    const tokenAddress = '0x3e69ba6dd72e39a1694b85775944f713fe0a0e9b'; // Your token address
 
     useEffect(() => {
-      const url = `https://api.geckoterminal.com/api/v2/simple/networks/bsc/token_price/${tokenAddress}`;
+      const url = `https://api.geckoterminal.com/api/v2/simple/networks/maxxchain/token_price/${tokenAddress}`;
 
       fetch(url)
         .then(response => response.json())
@@ -174,64 +299,67 @@ const App = () => {
         });
     }, []);
 
-    const [xrpPriceUSD, setXrpPriceUSD] = useState('Loading...');
-   const xrpTokenAddress = '0x1d2f0da169ceb9fc7b3144628db156f3f6c60dbe'; // XRP token address on BSC
+    const [pwrPriceUSD, setPwrPriceUSD] = useState('Loading...');
+   const pwrTokenAddress = '0xa29d0ee618f33d8efe9a20557fd0ef63dd050859'; // PWR token address on BSC
 
    useEffect(() => {
-     const url = `https://api.geckoterminal.com/api/v2/simple/networks/bsc/token_price/${xrpTokenAddress}`;
+     const url = `https://api.geckoterminal.com/api/v2/simple/networks/maxxchain/token_price/${pwrTokenAddress}`;
 
      fetch(url)
        .then(response => response.json())
        .then(data => {
          if (data && data.data && data.data.attributes && data.data.attributes.token_prices) {
-           const price = data.data.attributes.token_prices[xrpTokenAddress];
-           setXrpPriceUSD(`${parseFloat(price).toFixed(6)} USD`); // Format the price to 6 decimal places
+           const price = data.data.attributes.token_prices[pwrTokenAddress];
+           setPwrPriceUSD(`${parseFloat(price).toFixed(6)} USD`); // Format the price to 6 decimal places
          } else {
-           setXrpPriceUSD('Price not available');
+           setPwrPriceUSD('Price not available');
          }
        })
        .catch(error => {
-         console.error('Error fetching XRP price:', error);
-         setXrpPriceUSD('Error fetching price');
+         console.error('Error fetching PWR price:', error);
+         setPwrPriceUSD('Error fetching price');
        });
    }, []);
 
-   const [bnbPriceUSD, setBnbPriceUSD] = useState('Loading...');
-  const bnbTokenAddress = '0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c'; // BNB token address on BSC
-
-  useEffect(() => {
-    const url = `https://api.geckoterminal.com/api/v2/simple/networks/bsc/token_price/${bnbTokenAddress}`;
-
-    fetch(url)
-      .then(response => response.json())
-      .then(data => {
-        if (data && data.data && data.data.attributes && data.data.attributes.token_prices) {
-          const price = data.data.attributes.token_prices[bnbTokenAddress];
-          setBnbPriceUSD(`${parseFloat(price).toFixed(2)} USD`); // Format the price to 6 decimal places
-        } else {
-          setBnbPriceUSD('Price not available');
-        }
-      })
-      .catch(error => {
-        console.error('Error fetching BNB price:', error);
-        setBnbPriceUSD('Error fetching price');
-      });
-  }, []);
+  //  const [bnbPriceUSD, setBnbPriceUSD] = useState('Loading...');
+  // const bnbTokenAddress = '0xa29d0ee618f33d8efe9a20557fd0ef63dd050859'; // BNB token address on BSC
+  //
+  // useEffect(() => {
+  //   const url = `https://api.geckoterminal.com/api/v2/simple/networks/maxchain/token_price/${bnbTokenAddress}`;
+  //
+  //   fetch(url)
+  //     .then(response => response.json())
+  //     .then(data => {
+  //       if (data && data.data && data.data.attributes && data.data.attributes.token_prices) {
+  //         const price = data.data.attributes.token_prices[bnbTokenAddress];
+  //         setBnbPriceUSD(`${parseFloat(price).toFixed(6)} USD`); // Format the price to 6 decimal places
+  //       } else {
+  //         setBnbPriceUSD('Price not available');
+  //       }
+  //     })
+  //     .catch(error => {
+  //       console.error('Error fetching BNB price:', error);
+  //       setBnbPriceUSD('Error fetching price');
+  //     });
+  // }, []);
 
   const [rewardsValueInUSD, setRewardsValueInUSD] = useState('Loading...');
 
     useEffect(() => {
       // Calculate rewards in USD
-      const xrpPrice = parseFloat(xrpPriceUSD.replace(' USD', ''));
+      const pwrPrice = parseFloat(pwrPriceUSD.replace(' USD', ''));
       const rewardsAmount = parseFloat(rewardsToClaim);
 
-      if (!isNaN(xrpPrice) && !isNaN(rewardsAmount)) {
-        const calculatedValue = (rewardsAmount * xrpPrice).toFixed(2); // Format the result to 2 decimal places
+      if (!isNaN(pwrPrice) && !isNaN(rewardsAmount)) {
+        const calculatedValue = (rewardsAmount * pwrPrice).toFixed(2); // Format the result to 2 decimal places
         setRewardsValueInUSD(`${calculatedValue} USD`);
       } else {
         setRewardsValueInUSD('Calculating...');
       }
-    }, [xrpPriceUSD, rewardsToClaim]);
+    }, [pwrPriceUSD, rewardsToClaim]);
+
+
+
 
 
     // fetch token balance
@@ -241,7 +369,7 @@ const App = () => {
       const fetchTokenBalance = async () => {
         if (address) {
           try {
-            const provider = new ethers.providers.Web3Provider(window.ethereum);
+            const provider = new ethers.providers.Web3Provider(window.ethereum as ethers.providers.ExternalProvider);
             const tokenContract = new ethers.Contract(TOKEN_ADDRESS, tokenAbi, provider);
 
             const balance = await tokenContract.balanceOf(address);
@@ -323,7 +451,7 @@ const App = () => {
          const fetchUserStakedStatus = async () => {
            if (address) {
              try {
-               const provider = new ethers.providers.Web3Provider(window.ethereum);
+               const provider = new ethers.providers.Web3Provider(window.ethereum as ethers.providers.ExternalProvider);
                const tokenContract = new ethers.Contract(TOKEN_ADDRESS, tokenAbi, provider);
 
                const isStaked = await tokenContract._isStaked1Month(address);
@@ -345,7 +473,7 @@ const App = () => {
            const fetchTokensStaked1Month = async () => {
              if (address) {
                try {
-                 const provider = new ethers.providers.Web3Provider(window.ethereum);
+                 const provider = new ethers.providers.Web3Provider(window.ethereum as ethers.providers.ExternalProvider);
                  const tokenContract = new ethers.Contract(TOKEN_ADDRESS, tokenAbi, provider);
 
                  const tokens = await tokenContract.tokensStaked1Month(address);
@@ -359,37 +487,48 @@ const App = () => {
 
            fetchTokensStaked1Month();
          }, [address]); // Fetch when the address changes
+         const [availableBalance, setAvailableBalance] = useState('Loading...');
 
+          // Assuming TOKEN_ADDRESS and tokenAbi are defined elsewhere in your code
+          useEffect(() => {
+            const fetchBalances = async () => {
+              if (address) {
+                try {
+                  const provider = new ethers.providers.Web3Provider(window.ethereum as ethers.providers.ExternalProvider);
+                  const tokenContract = new ethers.Contract(TOKEN_ADDRESS, tokenAbi, provider);
 
-      // available balance after staking locks
-      const [availableBalance, setAvailableBalance] = useState('Loading...');
+                  // Fetch the balance and staked amounts
+                  const balancePromise = tokenContract.balanceOf(address);
+                  const staked1MonthPromise = tokenContract.tokensStaked1Month(address);
+                  const staked3MonthsPromise = tokenContract.tokensStaked3Months(address); // Assuming a similar method exists
+                  const staked6MonthsPromise = tokenContract.tokensStaked6Months(address); // Assuming a similar method exists
 
-      useEffect(() => {
-        const fetchBalances = async () => {
-          if (address) {
-            try {
-              const provider = new ethers.providers.Web3Provider(window.ethereum);
-              const tokenContract = new ethers.Contract(TOKEN_ADDRESS, tokenAbi, provider);
+                  // Use Promise.all to fetch all values concurrently
+                  const [balance, staked1Month, staked3Months, staked6Months] = await Promise.all([
+                    balancePromise,
+                    staked1MonthPromise,
+                    staked3MonthsPromise,
+                    staked6MonthsPromise,
+                  ]);
 
-              const [balance, tokensStaked] = await Promise.all([
-                tokenContract.balanceOf(address),
-                tokenContract.tokensStaked1Month(address),
-              ]);
+                  // Calculate the total staked amount using BigNumber to prevent precision loss
+                  const totalStaked = staked1Month.add(staked3Months).add(staked6Months);
 
-              const available = balance.sub(tokensStaked);
-              // Format balance and set it to 2 decimal places
-              const formattedAvailable = ethers.utils.formatUnits(available, 'ether');
-              setAvailableBalance(parseFloat(formattedAvailable).toFixed(2)); // Now the balance is a string with 2 decimal places
-            } catch (error) {
-              console.error('Error fetching balances:', error);
-              setAvailableBalance('Error');
-            }
-          }
-        };
+                  // Calculate the available balance
+                  const available = balance.sub(totalStaked);
 
-        fetchBalances();
-      }, [address]); // Fetch when the address changes
+                  // Format the available balance for display
+                  const formattedAvailable = ethers.utils.formatUnits(available, 'ether');
+                  setAvailableBalance(parseFloat(formattedAvailable).toFixed(2));
+                } catch (error) {
+                  console.error('Error fetching balances:', error);
+                  setAvailableBalance('Error');
+                }
+              }
+            };
 
+            fetchBalances();
+          }, [address]); // Re-run the effect if the user's address changes
 
 
         const [unlockTime, setUnlockTime] = useState('Loading...');
@@ -398,7 +537,7 @@ const App = () => {
           const fetchUnlockTime = async () => {
             if (address) {
               try {
-                const provider = new ethers.providers.Web3Provider(window.ethereum);
+                const provider = new ethers.providers.Web3Provider(window.ethereum as ethers.providers.ExternalProvider);
                 const tokenContract = new ethers.Contract(TOKEN_ADDRESS, tokenAbi, provider);
 
                 const stakedTimestamp = await tokenContract._staked1MonthTimestamp(address);
@@ -435,7 +574,7 @@ const App = () => {
           const fetchStakedTimestamp = async () => {
             if (address) {
               try {
-                const provider = new ethers.providers.Web3Provider(window.ethereum);
+                const provider = new ethers.providers.Web3Provider(window.ethereum as ethers.providers.ExternalProvider);
                 const tokenContract = new ethers.Contract(TOKEN_ADDRESS, tokenAbi, provider);
 
                 const timestamp = await tokenContract._staked1MonthTimestamp(address);
@@ -458,7 +597,7 @@ const App = () => {
          const fetchStakedBlockNumber = async () => {
            if (address) {
              try {
-               const provider = new ethers.providers.Web3Provider(window.ethereum);
+               const provider = new ethers.providers.Web3Provider(window.ethereum as ethers.providers.ExternalProvider);
                const tokenContract = new ethers.Contract(TOKEN_ADDRESS, tokenAbi, provider);
 
                const stakedTimestampBN = await tokenContract._staked1MonthTimestamp(address);
@@ -489,7 +628,7 @@ const App = () => {
           const fetchUnlockDate = async () => {
             if (address) {
               try {
-                const provider = new ethers.providers.Web3Provider(window.ethereum);
+                const provider = new ethers.providers.Web3Provider(window.ethereum as ethers.providers.ExternalProvider);
                 const tokenContract = new ethers.Contract(TOKEN_ADDRESS, tokenAbi, provider);
 
                 const stakedTimestampBN = await tokenContract._staked1MonthTimestamp(address);
@@ -579,7 +718,7 @@ const App = () => {
          const fetchUserStaked3MonthsStatus = async () => {
            if (address) {
              try {
-               const provider = new ethers.providers.Web3Provider(window.ethereum);
+               const provider = new ethers.providers.Web3Provider(window.ethereum as ethers.providers.ExternalProvider);
                const tokenContract = new ethers.Contract(TOKEN_ADDRESS, tokenAbi, provider);
 
                const isStaked = await tokenContract._isStaked3Months(address);
@@ -606,7 +745,7 @@ const App = () => {
               const fetchTokensStaked3Months = async () => {
                 if (address) {
                   try {
-                    const provider = new ethers.providers.Web3Provider(window.ethereum);
+                    const provider = new ethers.providers.Web3Provider(window.ethereum as ethers.providers.ExternalProvider);
                     const tokenContract = new ethers.Contract(TOKEN_ADDRESS, tokenAbi, provider);
 
                     const tokens = await tokenContract.tokensStaked3Months(address);
@@ -629,7 +768,7 @@ const App = () => {
            const fetchBalances3Months = async () => {
              if (address) {
                try {
-                 const provider = new ethers.providers.Web3Provider(window.ethereum);
+                 const provider = new ethers.providers.Web3Provider(window.ethereum as ethers.providers.ExternalProvider);
                  const tokenContract = new ethers.Contract(TOKEN_ADDRESS, tokenAbi, provider);
 
                  const [balance, tokensStaked3Months] = await Promise.all([
@@ -659,10 +798,10 @@ const App = () => {
              const fetchUnlockTime3Months = async () => {
                if (address) {
                  try {
-                   const provider = new ethers.providers.Web3Provider(window.ethereum);
+                   const provider = new ethers.providers.Web3Provider(window.ethereum as ethers.providers.ExternalProvider);
                    const tokenContract = new ethers.Contract(TOKEN_ADDRESS, tokenAbi, provider);
 
-                   const stakedTimestamp3Months = await tokenContract._staked1MonthTimestamp(address);
+                   const stakedTimestamp3Months = await tokenContract._staked3MonthsTimestamp(address);
                    const currentBlock = await provider.getBlock('latest');
                    const currentTime = currentBlock.timestamp;
 
@@ -696,10 +835,10 @@ const App = () => {
              const fetchStakedTimestamp3Months = async () => {
                if (address) {
                  try {
-                   const provider = new ethers.providers.Web3Provider(window.ethereum);
+                   const provider = new ethers.providers.Web3Provider(window.ethereum as ethers.providers.ExternalProvider);
                    const tokenContract = new ethers.Contract(TOKEN_ADDRESS, tokenAbi, provider);
 
-                   const timestamp = await tokenContract._staked1MonthTimestamp(address);
+                   const timestamp = await tokenContract._staked3MonthsTimestamp(address);
                    const date = new Date(timestamp.toNumber() * 1000).toLocaleString(); // Convert timestamp to readable date
                    setStakedTimestamp3Months(date);
                  } catch (error) {
@@ -719,10 +858,10 @@ const App = () => {
             const fetchStakedBlockNumber3Months = async () => {
               if (address) {
                 try {
-                  const provider = new ethers.providers.Web3Provider(window.ethereum);
+                  const provider = new ethers.providers.Web3Provider(window.ethereum as ethers.providers.ExternalProvider);
                   const tokenContract = new ethers.Contract(TOKEN_ADDRESS, tokenAbi, provider);
 
-                  const stakedTimestamp3MonthsBN = await tokenContract._staked1MonthTimestamp(address);
+                  const stakedTimestamp3MonthsBN = await tokenContract._staked3MonthsTimestamp(address);
                   const stakedTimestamp3Months = stakedTimestamp3MonthsBN.toNumber();
 
                   const currentBlock = await provider.getBlock('latest');
@@ -750,15 +889,15 @@ const App = () => {
              const fetchUnlockDate3Months = async () => {
                if (address) {
                  try {
-                   const provider = new ethers.providers.Web3Provider(window.ethereum);
+                   const provider = new ethers.providers.Web3Provider(window.ethereum as ethers.providers.ExternalProvider);
                    const tokenContract = new ethers.Contract(TOKEN_ADDRESS, tokenAbi, provider);
 
-                   const stakedTimestamp3MonthsBN = await tokenContract._staked1MonthTimestamp(address);
+                   const stakedTimestamp3MonthsBN = await tokenContract._staked3MonthsTimestamp(address);
                    const stakedTimestamp3Months = stakedTimestamp3MonthsBN.toNumber();
 
                    // Add 30 days to the staked timestamp
                    const unlockTime3Monthsstamp = new Date(stakedTimestamp3Months * 1000);
-                   unlockTime3Monthsstamp.setDate(unlockTime3Monthsstamp.getDate() + 30);
+                   unlockTime3Monthsstamp.setDate(unlockTime3Monthsstamp.getDate() + 90);
 
                    setUnlockDate3Months(unlockTime3Monthsstamp.toLocaleDateString());
                  } catch (error) {
@@ -843,7 +982,7 @@ const App = () => {
              const fetchUserStaked6MonthsStatus = async () => {
                if (address) {
                  try {
-                   const provider = new ethers.providers.Web3Provider(window.ethereum);
+                   const provider = new ethers.providers.Web3Provider(window.ethereum as ethers.providers.ExternalProvider);
                    const tokenContract = new ethers.Contract(TOKEN_ADDRESS, tokenAbi, provider);
 
                    const isStaked = await tokenContract._isStaked6Months(address);
@@ -870,7 +1009,7 @@ const App = () => {
                   const fetchTokensStaked6Months = async () => {
                     if (address) {
                       try {
-                        const provider = new ethers.providers.Web3Provider(window.ethereum);
+                        const provider = new ethers.providers.Web3Provider(window.ethereum as ethers.providers.ExternalProvider);
                         const tokenContract = new ethers.Contract(TOKEN_ADDRESS, tokenAbi, provider);
 
                         const tokens = await tokenContract.tokensStaked6Months(address);
@@ -893,7 +1032,7 @@ const App = () => {
                const fetchBalances6Months = async () => {
                  if (address) {
                    try {
-                     const provider = new ethers.providers.Web3Provider(window.ethereum);
+                     const provider = new ethers.providers.Web3Provider(window.ethereum as ethers.providers.ExternalProvider);
                      const tokenContract = new ethers.Contract(TOKEN_ADDRESS, tokenAbi, provider);
 
                      const [balance, tokensStaked6Months] = await Promise.all([
@@ -923,10 +1062,10 @@ const App = () => {
                  const fetchUnlockTime6Months = async () => {
                    if (address) {
                      try {
-                       const provider = new ethers.providers.Web3Provider(window.ethereum);
+                       const provider = new ethers.providers.Web3Provider(window.ethereum as ethers.providers.ExternalProvider);
                        const tokenContract = new ethers.Contract(TOKEN_ADDRESS, tokenAbi, provider);
 
-                       const stakedTimestamp6Months = await tokenContract._staked1MonthTimestamp(address);
+                       const stakedTimestamp6Months = await tokenContract._staked6MonthsTimestamp(address);
                        const currentBlock = await provider.getBlock('latest');
                        const currentTime = currentBlock.timestamp;
 
@@ -960,10 +1099,10 @@ const App = () => {
                  const fetchStakedTimestamp6Months = async () => {
                    if (address) {
                      try {
-                       const provider = new ethers.providers.Web3Provider(window.ethereum);
+                       const provider = new ethers.providers.Web3Provider(window.ethereum as ethers.providers.ExternalProvider);
                        const tokenContract = new ethers.Contract(TOKEN_ADDRESS, tokenAbi, provider);
 
-                       const timestamp = await tokenContract._staked1MonthTimestamp(address);
+                       const timestamp = await tokenContract._staked6MonthsTimestamp(address);
                        const date = new Date(timestamp.toNumber() * 1000).toLocaleString(); // Convert timestamp to readable date
                        setStakedTimestamp6Months(date);
                      } catch (error) {
@@ -983,10 +1122,10 @@ const App = () => {
                 const fetchStakedBlockNumber6Months = async () => {
                   if (address) {
                     try {
-                      const provider = new ethers.providers.Web3Provider(window.ethereum);
+                      const provider = new ethers.providers.Web3Provider(window.ethereum as ethers.providers.ExternalProvider);
                       const tokenContract = new ethers.Contract(TOKEN_ADDRESS, tokenAbi, provider);
 
-                      const stakedTimestamp6MonthsBN = await tokenContract._staked1MonthTimestamp(address);
+                      const stakedTimestamp6MonthsBN = await tokenContract._staked6MonthsTimestamp(address);
                       const stakedTimestamp6Months = stakedTimestamp6MonthsBN.toNumber();
 
                       const currentBlock = await provider.getBlock('latest');
@@ -1014,15 +1153,15 @@ const App = () => {
                  const fetchUnlockDate6Months = async () => {
                    if (address) {
                      try {
-                       const provider = new ethers.providers.Web3Provider(window.ethereum);
+                       const provider = new ethers.providers.Web3Provider(window.ethereum as ethers.providers.ExternalProvider);
                        const tokenContract = new ethers.Contract(TOKEN_ADDRESS, tokenAbi, provider);
 
-                       const stakedTimestamp6MonthsBN = await tokenContract._staked1MonthTimestamp(address);
+                       const stakedTimestamp6MonthsBN = await tokenContract._staked6MonthsTimestamp(address);
                        const stakedTimestamp6Months = stakedTimestamp6MonthsBN.toNumber();
 
                        // Add 30 days to the staked timestamp
                        const unlockTime6Monthsstamp = new Date(stakedTimestamp6Months * 1000);
-                       unlockTime6Monthsstamp.setDate(unlockTime6Monthsstamp.getDate() + 30);
+                       unlockTime6Monthsstamp.setDate(unlockTime6Monthsstamp.getDate() + 180);
 
                        setUnlockDate6Months(unlockTime6Monthsstamp.toLocaleDateString());
                      } catch (error) {
@@ -1039,6 +1178,12 @@ const App = () => {
 // ######################################################################################################################################################################
 
 
+  // Calculate total staked across all periods and format it
+  const totalStakedAllPeriods = (
+    parseFloat(tokensStaked1Month) +
+    parseFloat(tokensStaked3Months) +
+    parseFloat(tokensStaked6Months)
+  ).toFixed(3); // Converts to string with 3 decimal places
 
 
 
@@ -1077,18 +1222,30 @@ const App = () => {
 
 
 
-                <div style={{ paddingTop: '20px' }}> Your Total Token Balance: {tokenBalance} </div>
-                <div>  your Staked Balance all pools: {tokensStaked1Month}</div>
-                <div>Available Balance: {availableBalance} Tokens</div>
-
 
               <div style={{ paddingTop: '20px' }}>
+
               Connected user rewards to date: token A: 34 TOKENA ($0.78 USD)</div>
               <div>Connected user rewards to date: token B: 18000 TOKENB ($0.53 USD)</div>
 
 
               <div style={{ paddingTop: '20px' }}>
               Reward recieved valued to date at $1.31 USD</div>
+
+
+              <Box display='flex' flexDirection='column' alignItems='center' justifyContent='center' marginTop='4'>
+
+              <div style={{ fontSize: '20px', fontWeight: 'bold', textAlign: 'center', marginBottom: '20px' }}>
+              Available Balance: {availableBalance} Tokens
+              </div>
+              <div style={{ fontSize: '18px', fontWeight: 'bold', textAlign: 'center', marginBottom: '20px' }}>
+               Your Total Token Balance: {tokenBalance}
+               </div>
+              <div style={{ fontSize: '18px', fontWeight: 'bold', textAlign: 'center', marginBottom: '20px' }}>
+              your Staked Balance all pools: {totalStakedAllPeriods}
+              </div>
+
+              </Box>
 
 
 
@@ -1133,6 +1290,11 @@ value={stakeAmount}
 onChange={(e) => setStakeAmount(e.target.value)}
 size='md'
 width='250px'
+bg="white"
+color="black"
+borderColor="gray.990" // Sets the border color
+borderWidth="1px" // Sets the border width
+borderStyle="solid" // Sets the border style
 />
 <Button
 onClick={onStakeClick}
@@ -1185,11 +1347,16 @@ Unstake
                     {/* Staking Section */}
                     <Box display='flex' flexDirection='column' alignItems='center' justifyContent='center' marginTop='4'>
                     <Input
-                    placeholder='Enter amount to stake 30 Days'
+                    placeholder='Enter amount to stake 90 Days'
                     value={stakeAmount3Months}
                     onChange={(e) => setStakeAmount3Months(e.target.value)}
                     size='md'
                     width='250px'
+                    bg="white"
+                    color="black"
+                    borderColor="gray.990" // Sets the border color
+                    borderWidth="1px" // Sets the border width
+                    borderStyle="solid" // Sets the border style
                     />
                     <Button
                     onClick={onStakeClick3Months}
@@ -1248,6 +1415,11 @@ Unstake
                       onChange={(e) => setStakeAmount6Months(e.target.value)}
                       size='md'
                       width='250px'
+                      bg="white"
+                      color="black"
+                      borderColor="gray.990" // Sets the border color
+                      borderWidth="1px" // Sets the border width
+                      borderStyle="solid" // Sets the border style
                       />
                       <Button
                       onClick={onStakeClick6Months}
@@ -1280,7 +1452,21 @@ Unstake
                         </TabPanel>
                     <TabPanel>
                       <Box minH="350px">
-                        Add More stuff to More
+
+                                                                                {/* Claim Section */}
+                                                                              <Box display='flex' flexDirection='column' alignItems='center' justifyContent='center' marginTop='4'>
+
+                                                                                Add More stuff to the More TAB
+                                                                                <Button
+                                                                                  onClick={onClaimClick}
+                                                                                  textColor='white'
+                                                                                  bg='blue'
+                                                                                  _hover={{ bg: 'blue' }}
+                                                                                >
+                                                                                  Claim Tokens
+                                                                                </Button>
+                          {rewardsToClaim}
+                                                                              </Box>
                       </Box>
                     </TabPanel>
                   </TabPanels>
@@ -1302,8 +1488,19 @@ Unstake
             </Box>
 
 
-            <Box h="100px" bg="gray.300" p={4}>
-              Content for Forth Row
+            <Box minH="100px" bg="gray.300" p={4}>
+            <div>
+PST: ${tokenPriceUSD}
+</div>
+<div>
+ANU: ${anuPriceUSD}
+</div>
+<div>
+BTM: ${btmPriceUSD}
+</div>
+<div>
+PWR: ${pwrPriceUSD}
+</div>
             </Box>
 
 

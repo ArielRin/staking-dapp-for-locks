@@ -1280,8 +1280,7 @@ const App = () => {
             <ConnectButton />
           </Flex>
         </Box>
-
-        <Container maxW="container.xl" p={4}>
+        <Container maxW="container.xl" p={0} >
           <Flex direction="column" gap={4}>
           <Box minH="400px" bg="gray.200" p={4}>
             {/* Use the paddingTop for the first div after the heading */}
@@ -1618,13 +1617,13 @@ Unstake
 
             <Box minH="100px" bg="gray.300" p={4}>
             <div style={{ fontSize: '16px', fontWeight: 'normal', textAlign: 'center', marginBottom: '5px' }}>
-DappToken: ${tokenPriceUSD}
+PST: ${tokenPriceUSD}
 </div>
 <div style={{ fontSize: '16px', fontWeight: 'normal', textAlign: 'center', marginBottom: '5px' }}>
-A1: ${anuPriceUSD}
+ANU: ${anuPriceUSD}
 </div>
 <div style={{ fontSize: '16px', fontWeight: 'normal', textAlign: 'center', marginBottom: '5px' }}>
-B2: ${btmPriceUSD}
+BTM: ${btmPriceUSD}
 </div>
 <div style={{ fontSize: '16px', fontWeight: 'normal', textAlign: 'center', marginBottom: '5px' }}>
 PWR: ${pwrPriceUSD}
@@ -1675,6 +1674,7 @@ PWR: ${pwrPriceUSD}
 
           </Flex>
         </Container>
+
 
         <Box p={4} color="white" bg="black" textAlign="center">
           © 2024 In Haus Development

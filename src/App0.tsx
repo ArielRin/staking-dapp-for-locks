@@ -1,7 +1,40 @@
-import React from 'react';
-import { Box, Flex, Text, Link, Container, Spacer, useBreakpointValue, Tabs, TabList, TabPanels, Tab, TabPanel } from '@chakra-ui/react';
+
+
+import React, { useEffect, useState } from 'react';
+
+import {
+  Box,
+  Flex,
+  Text,
+  Link,
+  Container,
+  Spacer,
+  useBreakpointValue,
+  Tabs,
+  TabList,
+  TabPanels,
+  Tab,
+  TabPanel,
+  Input,
+  Button,
+  useToast,
+} from '@chakra-ui/react';
+
+import Web3 from 'web3';
 import { ConnectButton } from '@rainbow-me/rainbowkit';
-import './styles.css'; // Assuming this CSS file contains necessary custom styles
+import { ethers } from 'ethers';
+import { useAccount, useContractWrite } from 'wagmi';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import abiFile from './abiFile.json';
+import tokenAbi from './tokenAbi.json';
+import './styles.css';
+
+const CONTRACT_ADDRESS = '0xaddresshere';
+const TOKEN_ADDRESS = '0x3e69bA6Dd72e39A1694B85775944f713Fe0a0e9B'; //og lastman
+
+const getExplorerLink = () => `https://bscscan.com/address/${CONTRACT_ADDRESS}`;
+const BLOCK_RATE_SECONDS = 3; // BSC block rate
 
 const App = () => {
   // Use Chakra UI's useBreakpointValue hook to adjust layout for different screen sizes

@@ -48,7 +48,7 @@ const BLOCK_RATE_SECONDS = 3; // BSC block rate
 
 
 
-const TOKEN_IMAGE = 'https://65c07cdf9ae486f52b2a680b--scintillating-dodol-c0690e.netlify.app/assets/pst.eb207ef1.png';
+const TOKEN_IMAGE = 'https://raw.githubusercontent.com/ArielRin/staking-dapp-for-locks/master/src/pst.png';
 const TOKEN_SYMBOL = 'PST';
 const TOKEN_DECIMALS = 18;
 
@@ -70,7 +70,7 @@ const App = () => {
             address: TOKEN_ADDRESS,
             symbol: TOKEN_SYMBOL,
             decimals: TOKEN_DECIMALS,
-            image: 'https://65c07cdf9ae486f52b2a680b--scintillating-dodol-c0690e.netlify.app/assets/pst.eb207ef1.png',
+            image: 'https://raw.githubusercontent.com/ArielRin/staking-dapp-for-locks/master/src/pst.png',
           },
         },
       })

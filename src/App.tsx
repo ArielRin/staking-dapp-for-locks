@@ -40,7 +40,7 @@ import anuLogo from './anu.png';
 
 import pw3Logo from './pw3.png';
 
-const CONTRACT_ADDRESS = '0xaddresshere';
+const CONTRACT_ADDRESS = '0xaA0015FbB55b0f9E3dF74e0827a63099e4201E38'; // Live BTM_NFT
 const TOKEN_ADDRESS = '0x3e69bA6Dd72e39A1694B85775944f713Fe0a0e9B'; //og lastman
 
 const getExplorerLink = () => `https://bscscan.com/address/${CONTRACT_ADDRESS}`;
@@ -48,7 +48,7 @@ const BLOCK_RATE_SECONDS = 3; // BSC block rate
 
 
 
-const TOKEN_IMAGE = 'https://raw.githubusercontent.com/ArielRin/staking-dapp-for-locks/master/src/pst.png';
+const TOKEN_IMAGE = 'https://65c07cdf9ae486f52b2a680b--scintillating-dodol-c0690e.netlify.app/assets/pst.eb207ef1.png';
 const TOKEN_SYMBOL = 'PST';
 const TOKEN_DECIMALS = 18;
 
@@ -70,7 +70,7 @@ const App = () => {
             address: TOKEN_ADDRESS,
             symbol: TOKEN_SYMBOL,
             decimals: TOKEN_DECIMALS,
-            image: 'https://raw.githubusercontent.com/ArielRin/staking-dapp-for-locks/master/src/pst.png',
+            image: 'https://65c07cdf9ae486f52b2a680b--scintillating-dodol-c0690e.netlify.app/assets/pst.eb207ef1.png',
           },
         },
       })
@@ -1426,13 +1426,6 @@ const App = () => {
                                                                                     </div>
                                                                                 </Box>
 
-                                                                      <Box minH="20px" bg="gray.800" p={4} borderRadius="lg">
-
-                                                                    <div style={{ fontSize: '16px', fontWeight: 'normal', textAlign: 'center', marginBottom: '20px' }}>
-                                                                      Token Information on selected token, sort of an itro for sean to provide for each token used
-                                                                      </div>
-
-                                                                      </Box>
 
 
 
@@ -1473,8 +1466,11 @@ const App = () => {
 
             <Box flex={1} bg="gray.800" p={4} display="flex" flexDirection="column" borderRadius="lg">
 
+
+                                      <img src={tokenLogo} alt="Main Text Logo" className="logobody" />
+
               <div style={{ fontSize: '24px', fontWeight: 'bold', textAlign: 'center', marginTop: '60px' }}>
-                Users Power Surge (PST) Token Statistics
+                Your Power Surge (PST) Token Statistics
               </div>
 
 
@@ -1485,28 +1481,41 @@ const App = () => {
               <div style={{ fontSize: '20px', fontWeight: 'bold', textAlign: 'center', marginBottom: '20px' }}>
               Available Balance: {availableBalance} Tokens
               </div>
-              <div style={{ fontSize: '18px', fontWeight: 'bold', textAlign: 'center', marginBottom: '20px' }}>
+              <div style={{ fontSize: '16px', fontWeight: 'bold', textAlign: 'center', marginBottom: '20px' }}>
                Your Total Token Balance: {tokenBalance}
                </div>
-              <div style={{ fontSize: '18px', fontWeight: 'bold', textAlign: 'center', marginBottom: '20px' }}>
+              <div style={{ fontSize: '16px', fontWeight: 'bold', textAlign: 'center', marginBottom: '20px' }}>
               Your Total Staked Balance: {totalStakedAllPeriods}
               </div>
 
-              <div style={{ fontSize: '14px', fontWeight: 'bold', textAlign: 'center', marginBottom: '0px' }}>
-                  Tokens Burned
-              </div>
-              <div style={{ fontSize: '14px', fontWeight: 'bold', textAlign: 'center', marginBottom: '0px' }}>
-                  Liquidity
-              </div>
-              <div style={{ fontSize: '14px', fontWeight: 'bold', textAlign: 'center', marginBottom: '0px' }}>
-                  Market Cap
-              </div>
-              <div style={{ fontSize: '14px', fontWeight: 'bold', textAlign: 'center', marginBottom: '0px' }}>
-                  Price
-              </div>
+
+
+
+                <a href="https://maxxswap.org/#/swap?outputCurrency=0x3e69bA6Dd72e39A1694B85775944f713Fe0a0e9B&inputCurrency=ETH"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  style={{
+                    padding: '8px 16px',
+                    fontSize: '16px',
+                    fontWeight: 'bold',
+                    color: 'white',
+                    backgroundColor: 'blue',
+                    textDecoration: 'none',
+                    textAlign: 'center',
+                    borderRadius: '4px',
+                    display: 'inline-block'
+                  }}
+                  onMouseOver={(e) => {
+                    e.currentTarget.style.backgroundColor = '#0000ff'; // Darker blue on hover
+                  }}
+                  onMouseOut={(e) => {
+                    e.currentTarget.style.backgroundColor = 'blue'; // Original blue
+                  }}
+                >
+                  Buy Now
+                </a>
 
               </Box>
-
 
 
 
@@ -1809,13 +1818,14 @@ Unstake
 
 
 
+
           </Flex>
         </Container>
 
 
         </Box>
         <Box p={4} color="white" bg="black" textAlign="center">
-          © 2024 In Haus Development
+          © InHaus Development 2024
         </Box>
       </>
     );
@@ -1870,6 +1880,20 @@ Unstake
 
 
 
+
+                                                                                //
+                                                                                //   <Box minH="20px" bg="gray.800" p={4} borderRadius="lg">
+                                                                                //
+                                                                                // <div style={{ fontSize: '16px', fontWeight: 'normal', textAlign: 'center', marginBottom: '20px' }}>
+                                                                                //   Token Information on selected token, sort of an itro for sean to provide for each token used
+                                                                                //   </div>
+                                                                                //
+                                                                                //   </Box>
+                                                                                //
+                                                                                //
+                                                                                //
+
+
                                           //   <Box flex="1" minW="240px" bg="gray.800" p={4} m={2} textAlign="center" borderRadius="lg">
                                           //     <div style={{ fontSize: '16px', fontWeight: 'bolder', marginBottom: '0px' }}>
                                           //       PWR: ${pwrPriceUSD}
@@ -1903,34 +1927,54 @@ Unstake
                                           //               {/* Mint NFT Section */}
                                           // <Box flex={1} bg="gray.800" p={4} display="flex" flexDirection="column">
                                           //   <VStack spacing={4}>
-                                          //     <Text fontSize="xl" fontWeight="bold">NFT Name: NameNFT</Text>
-                                          //     <Text>SYMBOL: NFTSYMBOL</Text>
-                                          //     <Text>Cost to Mint: 10USD</Text>
-                                          //     <Text>NFT Supply: 23/70</Text>
-                                          //     <Button colorScheme="blue" size="md">
-                                          //       Mint Now
-                                          //     </Button>
+                                          // <Box marginTop='4' display='flex' alignItems='center' justifyContent='center'>
+                                          //   <Button
+                                          //     marginTop='1'
+                                          //     textColor='white'
+                                          //     bg='#058ba1'
+                                          //     _hover={{
+                                          //       bg: '#4d9795',
+                                          //     }}
+                                          //     onClick={handleDecrement}
+                                          //     disabled={!isConnected || mintLoading || mintAmount === 1}
+                                          //   >
+                                          //     -
+                                          //   </Button>
+                                          //   <Text marginX='3' textAlign='center' fontSize='lg'>
+                                          //     {mintAmount}
+                                          //   </Text>
+                                          //   <Button
+                                          //     marginTop='1'
+                                          //     textColor='white'
+                                          //     bg='#058ba1'
+                                          //     _hover={{
+                                          //       bg: '#4d9795',
+                                          //     }}
+                                          //     onClick={handleIncrement}
+                                          //     disabled={!isConnected || mintLoading || mintAmount === 200}
+                                          //   >
+                                          //     +
+                                          //   </Button>
+                                          // </Box>
+                                          // <Box marginTop='2' display='flex' alignItems='center' justifyContent='center'>
+                                          //   <Button
+                                          //     disabled={!isConnected || mintLoading}
+                                          //     marginTop='6'
+                                          //     onClick={onMintClick}
+                                          //     textColor='white'
+                                          //     bg='#058ba1'
+                                          //     _hover={{
+                                          //       bg: '#4d9795',
+                                          //     }}
+                                          //   >
+                                          //     {isConnected ? `Mint ${mintAmount} Now` : ' Mint on (Connect Wallet)'}
+                                          //   </Button>
+                                          // </Box>
                                           //   </VStack>
                                           // </Box>
+                                                      //
+                                                      // </Box>
                                           //
-                                          //             </Box>
                                           //
-                                          //
-                                          //               <Box flex={1} bg="gray.300" p={4} display="flex" flexDirection="column" borderRadius="lg">
-                                          //                 Mint NFT section collection 2
-                                          //
-                                          //                 {/* Mint NFT Section */}
-                                          // <Box flex={1} bg="gray.800" p={4} display="flex" flexDirection="column">
-                                          //   <VStack spacing={4}>
-                                          //     <Text fontSize="xl" fontWeight="bold">NFT Name: NameNFT</Text>
-                                          //     <Text>SYMBOL: NFTSYMBOL</Text>
-                                          //     <Text>Cost to Mint: 10USD</Text>
-                                          //     <Text>NFT Supply: 23/70</Text>
-                                          //     <Button colorScheme="blue" size="md">
-                                          //       Mint Now
-                                          //     </Button>
-                                          //   </VStack>
-                                          // </Box>
-                                          //               </Box>
                                           //
                                           //             </Flex>

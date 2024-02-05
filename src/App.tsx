@@ -34,6 +34,12 @@ import './styles.css';
 
 import tokenLogo from './pst.png';
 
+import btmLogo from './BTM.png';
+
+import anuLogo from './anu.png';
+
+import pw3Logo from './pw3.png';
+
 const CONTRACT_ADDRESS = '0xaddresshere';
 const TOKEN_ADDRESS = '0x3e69bA6Dd72e39A1694B85775944f713Fe0a0e9B'; //og lastman
 
@@ -1311,7 +1317,7 @@ const App = () => {
       <ToastContainer />
         <Box p={4} color="white" bg="black">
           <Flex justifyContent="space-between" alignItems="center">
-            <Text style={headerTextStyle}>Staking for Locks</Text>
+            <Text style={headerTextStyle}>Power of 3 Dapp</Text>
             <ConnectButton />
           </Flex>
         </Box>
@@ -1319,47 +1325,182 @@ const App = () => {
         <Box p={0}  bg="black" >
         <Container maxW="container.xl" p={4} color="white">
           <Flex direction="column" gap={4}>
-                      <Box minH="100px" bg="gray.800" p={4} borderRadius="lg">
 
-                      <img src={tokenLogo} alt="Main Text Logo" className="logobody" />
+                      <Box minH="270px" bg="black" p={4} borderRadius="lg">
 
+                          <img src={pw3Logo} alt="Main Text Logo" className="logobody" />
 
-                                    <div style={{ fontSize: '48px', fontWeight: 'bolder', textAlign: 'center', marginBottom: '0px' }}>
-                        Power Surge
-                      </div>
-                                    <div style={{ fontSize: '16px', fontWeight: 'bolder', textAlign: 'center', marginBottom: '0px' }}>
-                        Rewards Dapp on Maxx Chain
-                      </div>
-                                </Box>
-          <Box minH="200px" bg="gray.800" p={4} borderRadius="lg">
-
-
-                        <div style={{ fontSize: '16px', fontWeight: 'normal', textAlign: 'center', marginBottom: '20px' }}>
-
-            </div>
-
-            <div style={{ fontSize: '20px', fontWeight: 'bold', textAlign: 'center', marginBottom: '20px' }}>
-                 Current Market Cap: {marketCap}
-                 </div>
-            <div style={{ fontSize: '20px', fontWeight: 'bold', textAlign: 'center', marginBottom: '20px' }}>
-                 Total Liquidity: {totalLiquidityUSD} USD Value</div>
-
-
-            <div style={{ fontSize: '14px', fontWeight: 'bold', textAlign: 'center', marginBottom: '2px' }}>
-                 Starting Supply: {INITIAL_SUPPLY.toLocaleString()}
-            </div>
-            <div style={{ fontSize: '14px', fontWeight: 'bold', textAlign: 'center', marginBottom: '2px' }}>
-                 Tokens Destroyed: 00000
-            </div>
-            <div style={{ fontSize: '18px', fontWeight: 'bold', textAlign: 'center', marginBottom: '2px' }}>
-                 Remaining Supply: {totalSupply}
-            </div>
+                          <div style={{ fontSize: '48px', fontWeight: 'bolder', textAlign: 'center', marginTop: '8px', marginBottom: '20px' }}>
+                              Power of 3
+                          </div>
+                      </Box>
 
 
 
 
+                                                          {/* Adjusted Flex container for equal height columns */}
+                                                          <Flex direction={{ base: "column", md: "row" }} gap={4}>
+                                                            <Box flex={1} bg="gray.800" p={4} display="flex" flexDirection="column" borderRadius="lg">
 
-          </Box>
+                                                                                  <img src={tokenLogo} alt="Main Text Logo" className="logobody" />
+
+
+                                                                                                                                                                                        <div style={{ fontSize: '20px', fontWeight: 'bolder', textAlign: 'center', marginBottom: '30px', marginTop: '30px' }}>
+                                                                  Power Surge
+                                                              </div>
+
+                                                              {/* Mint NFT Section */}
+                                              <Box flex={1} bg="gray.800" p={4} display="flex" flexDirection="column">
+                                                <VStack spacing={4}>
+                                                <div style={{ fontSize: '14px', fontWeight: 'bold', textAlign: 'center', marginBottom: '0px' }}>
+                                                    Tokens Burned
+                                                </div>
+                                                <div style={{ fontSize: '14px', fontWeight: 'bold', textAlign: 'center', marginBottom: '0px' }}>
+                                                    Liquidity
+                                                </div>
+                                                <div style={{ fontSize: '14px', fontWeight: 'bold', textAlign: 'center', marginBottom: '0px' }}>
+                                                    Market Cap
+                                                </div>
+                                                <div style={{ fontSize: '14px', fontWeight: 'bold', textAlign: 'center', marginBottom: '0px' }}>
+                                                    Price
+                                                </div>
+                                                  <div style={{ fontSize: '16px', fontWeight: 'bolder', marginBottom: '0px' }}>
+                                                    PST: ${tokenPriceUSD}
+                                                  </div>
+                                                <div style={{ fontSize: '10px', fontWeight: 'bold', textAlign: 'center', marginBottom: '0px' }}>
+                                                    0x3e69ba6dd72e39a1694b85775944f713fe0a0e9b
+                                                </div>
+
+        <Box display='flex' flexDirection='column' alignItems='center' justifyContent='center' marginTop='4'>
+
+        <Button
+        onClick={addTokenToWallet}
+        textColor='white'
+        bg='blue'
+        _hover={{ bg: 'blue' }}
+        >
+
+        Add to Wallet
+        </Button>
+
+                                                </Box>
+
+                                                </VStack>
+                                              </Box>
+                                                            </Box>
+
+                                                          <Box  flex={1} bg="gray.800" p={4} display="flex" flexDirection="column" borderRadius="lg">
+
+                                                                                <img src={anuLogo} alt="Main Text Logo" className="logobody"  />
+
+
+                                                                                                                <div style={{ fontSize: '20px', fontWeight: 'bolder', textAlign: 'center', marginBottom: '30px', marginTop: '30px' }}>
+                                                                                                                    Anunaki
+                                                                                                                </div>
+
+                                                                                                                {/* Mint NFT Section */}
+                                                                                                <Box flex={1} bg="gray.800" p={4} display="flex" flexDirection="column">
+                                                                                                  <VStack spacing={4}>
+                                                                                                  <div style={{ fontSize: '14px', fontWeight: 'bold', textAlign: 'center', marginBottom: '0px' }}>
+                                                                                                      Tokens Burned
+                                                                                                  </div>
+                                                                                                  <div style={{ fontSize: '14px', fontWeight: 'bold', textAlign: 'center', marginBottom: '0px' }}>
+                                                                                                      Liquidity
+                                                                                                  </div>
+                                                                                                  <div style={{ fontSize: '14px', fontWeight: 'bold', textAlign: 'center', marginBottom: '0px' }}>
+                                                                                                      Market Cap
+                                                                                                  </div>
+                                                                                                  <div style={{ fontSize: '14px', fontWeight: 'bold', textAlign: 'center', marginBottom: '0px' }}>
+                                                                                                      Price
+                                                                                                  </div>
+
+                                                                                                    <div style={{ fontSize: '16px', fontWeight: 'bolder', marginBottom: '0px' }}>
+                                                                                                      ANU: ${anuPriceUSD}
+                                                                                                    </div>
+                                                                                                  <div style={{ fontSize: '10px', fontWeight: 'bold', textAlign: 'center', marginBottom: '0px' }}>
+                                                                                                      0x6CB6c8D16e7B6Fd5A815702B824e6Dfdf148a7D9
+                                                                                                  </div>
+
+                    <Box display='flex' flexDirection='column' alignItems='center' justifyContent='center' marginTop='4'>
+
+                                              <Button
+                                               onClick={addTokenToWallet}
+                                               textColor='white'
+                                               bg='blue'
+                                               _hover={{ bg: 'blue' }}
+                                             >
+
+                                                Add to Wallet
+                                              </Button>
+
+                                                                                                  </Box>
+                                                </VStack>
+                                              </Box>
+
+                                                          </Box>
+
+
+                                                            <Box flex={1} bg="gray.800" p={4} display="flex" flexDirection="column" borderRadius="lg">
+
+                                                                                  <img src={btmLogo} alt="Main Text Logo" className="logobody" />
+
+                                                                                                                                                                                        <div style={{ fontSize: '20px', fontWeight: 'bolder', textAlign: 'center', marginBottom: '30px', marginTop: '30px' }}>
+                                                                                                                      Bitmaxx
+                                                                                                                  </div>
+
+                                                                                                                  {/* Mint NFT Section */}
+                                                                                                  <Box flex={1} bg="gray.800" p={4} display="flex" flexDirection="column">
+                                                                                                    <VStack spacing={4}>
+                                                                                                    <div style={{ fontSize: '14px', fontWeight: 'bold', textAlign: 'center', marginBottom: '0px' }}>
+                                                                                                        Tokens Burned
+                                                                                                    </div>
+                                                                                                    <div style={{ fontSize: '14px', fontWeight: 'bold', textAlign: 'center', marginBottom: '0px' }}>
+                                                                                                        Liquidity
+                                                                                                    </div>
+                                                                                                    <div style={{ fontSize: '14px', fontWeight: 'bold', textAlign: 'center', marginBottom: '0px' }}>
+                                                                                                        Market Cap
+                                                                                                    </div>
+                                                                                                    <div style={{ fontSize: '14px', fontWeight: 'bold', textAlign: 'center', marginBottom: '0px' }}>
+                                                                                                        Price
+                                                                                                    </div>
+
+                                                                                                      <div style={{ fontSize: '16px', fontWeight: 'bolder', marginBottom: '0px' }}>
+                                                                                                        BTM: ${btmPriceUSD}
+                                                                                                      </div>
+                                                                                                    <div style={{ fontSize: '10px', fontWeight: 'bold', textAlign: 'center', marginBottom: '0px' }}>
+                                                                                                        0xc27BbD4276F9eb2D6F2c4623612412d52D7Bb43D
+                                                                                                    </div>
+
+                      <Box display='flex' flexDirection='column' alignItems='center' justifyContent='center' marginTop='4'>
+
+                                                <Button
+                                                 onClick={addTokenToWallet}
+                                                 textColor='white'
+                                                 bg='blue'
+                                                 _hover={{ bg: 'blue' }}
+                                               >
+
+                                                  Add to Wallet
+                                                </Button>
+
+                                                                                                    </Box>
+
+                                                </VStack>
+                                              </Box>
+                                                            </Box>
+
+                                                          </Flex>
+
+
+
+
+
+
+
+
+
+
+
 
             {/* Adjusted Flex container for equal height columns */}
             <Flex direction={{ base: "column", md: "row" }} gap={4}>
@@ -1676,29 +1817,6 @@ Unstake
             </Flex>
 
 
-                              <Flex wrap="wrap" justifyContent="space-between" alignItems="center">
-                                <Box flex="1" minW="240px" bg="gray.800" p={4} m={2} textAlign="center" borderRadius="lg">
-                                  <div style={{ fontSize: '16px', fontWeight: 'bolder', marginBottom: '0px' }}>
-                                    PST: ${tokenPriceUSD}
-                                  </div>
-                                </Box>
-                                <Box flex="1" minW="240px" bg="gray.800" p={4} m={2} textAlign="center" borderRadius="lg">
-                                  <div style={{ fontSize: '16px', fontWeight: 'bolder', marginBottom: '0px' }}>
-                                    ANU: ${anuPriceUSD}
-                                  </div>
-                                </Box>
-                                <Box flex="1" minW="240px" bg="gray.800" p={4} m={2} textAlign="center" borderRadius="lg">
-                                  <div style={{ fontSize: '16px', fontWeight: 'bolder', marginBottom: '0px' }}>
-                                    BTM: ${btmPriceUSD}
-                                  </div>
-                                </Box>
-                                <Box flex="1" minW="240px" bg="gray.800" p={4} m={2} textAlign="center" borderRadius="lg">
-                                  <div style={{ fontSize: '16px', fontWeight: 'bolder', marginBottom: '0px' }}>
-                                    PWR: ${pwrPriceUSD}
-                                  </div>
-                                </Box>
-                              </Flex>
-
 
             <Box minH="500px" bg="grey.700">
 
@@ -1732,7 +1850,7 @@ Unstake
                           Mint NFT section collection 1
 
                           {/* Mint NFT Section */}
-            <Box flex={1} bg="gray.300" p={4} display="flex" flexDirection="column">
+            <Box flex={1} bg="gray.800" p={4} display="flex" flexDirection="column">
               <VStack spacing={4}>
                 <Text fontSize="xl" fontWeight="bold">NFT Name: NameNFT</Text>
                 <Text>SYMBOL: NFTSYMBOL</Text>
@@ -1751,7 +1869,7 @@ Unstake
                             Mint NFT section collection 2
 
                             {/* Mint NFT Section */}
-            <Box flex={1} bg="gray.300" p={4} display="flex" flexDirection="column">
+            <Box flex={1} bg="gray.800" p={4} display="flex" flexDirection="column">
               <VStack spacing={4}>
                 <Text fontSize="xl" fontWeight="bold">NFT Name: NameNFT</Text>
                 <Text>SYMBOL: NFTSYMBOL</Text>
@@ -1766,6 +1884,10 @@ Unstake
 
                         </Flex>
 
+
+
+
+
           </Flex>
         </Container>
 
@@ -1779,3 +1901,72 @@ Unstake
   };
 
   export default App;
+
+
+
+            //
+            //             <Box minH="100px" bg="gray.800" p={4} borderRadius="lg">
+            //
+            //             <img src={tokenLogo} alt="Main Text Logo" className="logobody" />
+            //
+            //
+            //                           <div style={{ fontSize: '48px', fontWeight: 'bolder', textAlign: 'center', marginBottom: '0px' }}>
+            //               Power Surge
+            //             </div>
+            //                           <div style={{ fontSize: '16px', fontWeight: 'bolder', textAlign: 'center', marginBottom: '0px' }}>
+            //               Rewards Dapp on Maxx Chain
+            //             </div>
+            //                       </Box>
+            // <Box minH="200px" bg="gray.800" p={4} borderRadius="lg">
+            //
+            //
+            //               <div style={{ fontSize: '16px', fontWeight: 'normal', textAlign: 'center', marginBottom: '20px' }}>
+            //
+            //   </div>
+            //
+            //   <div style={{ fontSize: '20px', fontWeight: 'bold', textAlign: 'center', marginBottom: '20px' }}>
+            //        Current Market Cap: {marketCap}
+            //        </div>
+            //   <div style={{ fontSize: '20px', fontWeight: 'bold', textAlign: 'center', marginBottom: '20px' }}>
+            //        Total Liquidity: {totalLiquidityUSD} USD Value</div>
+            //
+            //
+            //   <div style={{ fontSize: '14px', fontWeight: 'bold', textAlign: 'center', marginBottom: '2px' }}>
+            //        Starting Supply: {INITIAL_SUPPLY.toLocaleString()}
+            //   </div>
+            //   <div style={{ fontSize: '14px', fontWeight: 'bold', textAlign: 'center', marginBottom: '2px' }}>
+            //        Tokens Destroyed: 00000
+            //   </div>
+            //   <div style={{ fontSize: '18px', fontWeight: 'bold', textAlign: 'center', marginBottom: '2px' }}>
+            //        Remaining Supply: {totalSupply}
+            //   </div>
+            //
+            //
+            //
+            //
+            //
+            // </Box>
+                                          //
+                                          //
+                                          // <Flex wrap="wrap" justifyContent="space-between" alignItems="center">
+                                          //   <Box flex="1" minW="240px" bg="gray.800" p={4} m={2} textAlign="center" borderRadius="lg">
+                                          //     <div style={{ fontSize: '16px', fontWeight: 'bolder', marginBottom: '0px' }}>
+                                          //       PST: ${tokenPriceUSD}
+                                          //     </div>
+                                          //   </Box>
+                                          //   <Box flex="1" minW="240px" bg="gray.800" p={4} m={2} textAlign="center" borderRadius="lg">
+                                          //     <div style={{ fontSize: '16px', fontWeight: 'bolder', marginBottom: '0px' }}>
+                                          //       ANU: ${anuPriceUSD}
+                                          //     </div>
+                                          //   </Box>
+                                          //   <Box flex="1" minW="240px" bg="gray.800" p={4} m={2} textAlign="center" borderRadius="lg">
+                                          //     <div style={{ fontSize: '16px', fontWeight: 'bolder', marginBottom: '0px' }}>
+                                          //       BTM: ${btmPriceUSD}
+                                          //     </div>
+                                          //   </Box>
+                                          //   <Box flex="1" minW="240px" bg="gray.800" p={4} m={2} textAlign="center" borderRadius="lg">
+                                          //     <div style={{ fontSize: '16px', fontWeight: 'bolder', marginBottom: '0px' }}>
+                                          //       PWR: ${pwrPriceUSD}
+                                          //     </div>
+                                          //   </Box>
+                                          // </Flex>

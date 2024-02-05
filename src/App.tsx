@@ -39,6 +39,7 @@ import btmLogo from './BTM.png';
 import anuLogo from './anu.png';
 
 import pw3Logo from './pw3.png';
+import backgroundImage from './bkg.png';
 
 const CONTRACT_ADDRESS = '0xaA0015FbB55b0f9E3dF74e0827a63099e4201E38'; // Live BTM_NFT
 const TOKEN_ADDRESS = '0x3e69bA6Dd72e39A1694B85775944f713Fe0a0e9B'; //og lastman
@@ -143,37 +144,13 @@ const App = () => {
    //fetch  supply data of PRT
    // ##############################################################
    // ##############################################################
-   // const [totalSupply, setTotalSupply] = useState('Loading...');
-   // const [tokensRemoved, setTokensRemoved] = useState<string>('Calculating...');
-   //
-   // useEffect(() => {
-   //   const fetchSupplyData = async () => {
-   //     const url = `https://api.geckoterminal.com/api/v2/networks/maxxchain/tokens/${TOKEN_ADDRESS}`;
-   //
-   //     try {
-   //       const response = await fetch(url);
-   //       const data = await response.json();
-   //       if (data && data.data && data.data.attributes && data.data.attributes.total_supply) {
-   //         const totalSupplyWei = data.data.attributes.total_supply;
-   //         // Assuming INITIAL_SUPPLY is defined and is a number
-   //         const totalSupplyEth = totalSupplyWei / 1e18;
-   //         setTotalSupply(totalSupplyEth.toLocaleString(undefined, { maximumFractionDigits: 2 }));
-   //
-   //         const removedTokens = INITIAL_SUPPLY - totalSupplyEth;
-   //         setTokensRemoved(removedTokens.toLocaleString(undefined, { maximumFractionDigits: 2 }));
-   //       } else {
-   //         setTotalSupply('Data not available');
-   //         setTokensRemoved('Data not available');
-   //       }
-   //     } catch (error) {
-   //       console.error('Error fetching supply data:', error);
-   //       setTotalSupply('Error fetching data');
-   //       setTokensRemoved('Error fetching data');
-   //     }
-   //   };
-   //
-   //   fetchSupplyData();
-   // }, []);
+
+
+
+
+
+
+
 
 
    // ##############################################################
@@ -260,7 +237,6 @@ const App = () => {
 
     const account = useAccount();
     const [contractName, setContractName] = useState('');
-    const [totalSupply, setTotalSupply] = useState(0);
     const [loading, setLoading] = useState(true);
 
 
@@ -467,7 +443,7 @@ const App = () => {
             const balance = await tokenContract.balanceOf(address);
             // Format balance and set it to 2 decimal places
             const formattedBalance = ethers.utils.formatUnits(balance, 'ether');
-            setTokenBalance(parseFloat(formattedBalance).toFixed(2)); // Now the balance is a string with 2 decimal places
+            setTokenBalance(parseFloat(formattedBalance).toFixed(0)); // Now the balance is a string with 2 decimal places
           } catch (error) {
             console.error('Error fetching balance:', error);
             setTokenBalance('Error');
@@ -611,7 +587,7 @@ const App = () => {
 
                   // Format the available balance for display
                   const formattedAvailable = ethers.utils.formatUnits(available, 'ether');
-                  setAvailableBalance(parseFloat(formattedAvailable).toFixed(2));
+                  setAvailableBalance(parseFloat(formattedAvailable).toFixed(0));
                 } catch (error) {
                   console.error('Error fetching balances:', error);
                   setAvailableBalance('Error');
@@ -871,7 +847,7 @@ const App = () => {
                  const available = balance.sub(tokensStaked3Months);
                  // Format balance and set it to 2 decimal places
                  const formattedAvailable = ethers.utils.formatUnits(available, 'ether');
-                 setAvailableBalance3Months(parseFloat(formattedAvailable).toFixed(2)); // Now the balance is a string with 2 decimal places
+                 setAvailableBalance3Months(parseFloat(formattedAvailable).toFixed(0)); // Now the balance is a string with 2 decimal places
                } catch (error) {
                  console.error('Error fetching balances:', error);
                  setAvailableBalance3Months('Error');
@@ -1135,7 +1111,7 @@ const App = () => {
                      const available = balance.sub(tokensStaked6Months);
                      // Format balance and set it to 2 decimal places
                      const formattedAvailable = ethers.utils.formatUnits(available, 'ether');
-                     setAvailableBalance6Months(parseFloat(formattedAvailable).toFixed(2)); // Now the balance is a string with 2 decimal places
+                     setAvailableBalance6Months(parseFloat(formattedAvailable).toFixed(0)); // Now the balance is a string with 2 decimal places
                    } catch (error) {
                      console.error('Error fetching balances:', error);
                      setAvailableBalance6Months('Error');
@@ -1275,41 +1251,94 @@ const App = () => {
     parseFloat(tokensStaked1Month) +
     parseFloat(tokensStaked3Months) +
     parseFloat(tokensStaked6Months)
-  ).toFixed(3); // Converts to string with 3 decimal places
+  ).toFixed(0); // Converts to string with 3 decimal places
 
 
-  //
-  // const [dividendBalance, setDividendBalance] = useState('Loading...');
-  //
-  //  // Function to request access to the user's ETH account
-  //  async function requestAccount() {
-  //    await window.ethereum.request({ method: 'eth_requestAccounts' });
-  //  }
-  //
-  //  useEffect(() => {
-  //    async function fetchDividendBalance() {
-  //      if (typeof window.ethereum !== 'undefined') {
-  //        await requestAccount(); // Request user's account access
-  //          const provider = new ethers.providers.Web3Provider(window.ethereum as ethers.providers.ExternalProvider);
-  //        const signer = provider.getSigner();
-  //        const contract = new ethers.Contract(TOKEN_ADDRESS, tokenAbi, signer);
-  //
-  //        try {
-  //          const address = await signer.getAddress();
-  //          const balance = await contract.dividendTokenBalanceOf(address);
-  //          // Assuming the balance is returned in wei, convert it to ether
-  //          const balanceInEther = ethers.utils.formatEther(balance);
-  //          setDividendBalance(`${parseFloat(balanceInEther).toFixed(3)}`); // Format the price to 6 decimal places
-  //
-  //        } catch (err) {
-  //          console.error(err);
-  //          setDividendBalance('Failed to load');
-  //        }
-  //      }
-  //    }
-  //
-  //    fetchDividendBalance();
-  //  }, []);
+  // useState import statement is assumed to be already there
+  const [dividendBalance, setDividendBalance] = useState('Loading...');
+
+  useEffect(() => {
+    const fetchDividendBalance = async () => {
+      if (typeof window.ethereum !== 'undefined') {
+        try {
+          await window.ethereum.request({ method: 'eth_requestAccounts' }); // Request user's account access
+          const provider = new ethers.providers.Web3Provider(window.ethereum as ethers.providers.ExternalProvider);
+          const signer = provider.getSigner();
+          const contract = new ethers.Contract(TOKEN_ADDRESS, tokenAbi, signer);
+
+          const address = await signer.getAddress();
+          const balance = await contract.dividendTokenBalanceOf(address);
+          // Assuming the balance is returned in wei, convert it to ether
+          const balanceInEther = ethers.utils.formatEther(balance);
+          setDividendBalance(`${parseFloat(balanceInEther).toFixed(0)}`); // Format the balance to no decimal places
+
+        } catch (err) {
+          console.error('Failed to load dividend balance:', err);
+          setDividendBalance('Failed to load');
+        }
+      } else {
+        setDividendBalance('Ethereum object not found');
+      }
+    };
+
+    fetchDividendBalance();
+  }, []); // This effect does not depend on any changing values and thus runs only on component mount
+
+
+
+
+
+  // Function to handle clicking the Max button
+  const handleMaxClick = () => {
+    // Convert availableBalance to a number, round it down to the nearest whole number, and then set it as the new stakeAmount
+    const maxStakeAmount = Math.floor(Number(availableBalance)).toString();
+    setStakeAmount(maxStakeAmount);
+  };
+
+
+
+
+
+// ####################################################################################################################################
+// ####################################################################################################################################
+// ####################################################################################################################################
+
+const [totalSupply, setTotalSupply] = useState('Loading...');
+
+useEffect(() => {
+const fetchTotalSupply = async () => {
+  if (window.ethereum) {
+    const provider = new ethers.providers.Web3Provider(window.ethereum as ethers.providers.ExternalProvider);
+    try {
+      await provider.send("eth_requestAccounts", []);
+      const contract = new ethers.Contract(TOKEN_ADDRESS, tokenAbi, provider);
+      const supply = await contract.totalSupply();
+      const supplyInEther = ethers.utils.formatEther(supply);
+      const supplyRounded = parseFloat(supplyInEther).toFixed(0);
+      const supplyFormatted = parseInt(supplyRounded, 10).toLocaleString('en-US');
+      setTotalSupply(supplyFormatted);
+    } catch (error) {
+      console.error("Error fetching total supply:", error instanceof Error ? error.message : error);
+      setTotalSupply(`Error: ${error instanceof Error ? error.message : String(error)}`);
+    }
+  } else {
+    setTotalSupply('Ethereum object not found. Please install MetaMask.');
+  }
+};
+
+fetchTotalSupply();
+}, []);
+
+
+
+
+
+
+    // ####################################################################################################################################
+    // ####################################################################################################################################
+    // ####################################################################################################################################
+
+
 
 
   return (
@@ -1430,7 +1459,7 @@ const App = () => {
 
 
                                                                       <Flex wrap="wrap" justifyContent="space-between" alignItems="center">
-                                                                        <Box flex="1" minW="240px" bg="gray.800" p={4} m={2} textAlign="center" borderRadius="lg">
+                                                                        <Box flex="1" minW="160px" bg="gray.800" p={4} m={2} textAlign="center" borderRadius="lg">
                                                                           <div style={{ fontSize: '16px', fontWeight: 'bolder', marginBottom: '0px' }}>
                                                                             Market Cap
                                                                           </div>
@@ -1448,10 +1477,18 @@ const App = () => {
                                                                         </Box>
                                                                         <Box flex="1" minW="240px" bg="gray.800" p={4} m={2} textAlign="center" borderRadius="lg">
                                                                           <div style={{ fontSize: '16px', fontWeight: 'bolder', marginBottom: '0px' }}>
-                                                                           Supply
+                                                                           Initial Supply
                                                                           </div>
                                                                           <div style={{ fontSize: '16px', fontWeight: 'bolder', marginBottom: '0px' }}>
                                                                             100,000,000
+                                                                          </div>
+                                                                        </Box>
+                                                                        <Box flex="1" minW="240px" bg="gray.800" p={4} m={2} textAlign="center" borderRadius="lg">
+                                                                          <div style={{ fontSize: '16px', fontWeight: 'bolder', marginBottom: '0px' }}>
+                                                                           Remaining Supply
+                                                                          </div>
+                                                                          <div style={{ fontSize: '16px', fontWeight: 'bolder', marginBottom: '0px' }}>
+                                                                            {totalSupply}
                                                                           </div>
                                                                         </Box>
                                                                       </Flex>
@@ -1464,62 +1501,97 @@ const App = () => {
             {/* Adjusted Flex container for equal height columns */}
             <Flex direction={{ base: "column", md: "row" }} gap={4}>
 
-            <Box flex={1} bg="gray.800" p={4} display="flex" flexDirection="column" borderRadius="lg">
+            <Box
+                 flex={1}
+                 p={4}
+                 display="flex"
+                 flexDirection="column"
+                 borderRadius="lg"
+                 bg="gray.800"
+                 bgImage={`url(${backgroundImage})`}
+                 bgPosition="center"
+                 bgRepeat="no-repeat"
+                 bgSize="cover"
+               >
+                 <div style={{ fontSize: '24px', fontWeight: 'bold', textAlign: 'center', marginTop: '220px' }}>
+                   Your Power Surge (PST) Token Statistics
+                 </div>
 
 
-                                      <img src={tokenLogo} alt="Main Text Logo" className="logobody" />
+                               <Box display='flex' flexDirection='column' alignItems='center' justifyContent='center' marginTop='4' >
 
-              <div style={{ fontSize: '24px', fontWeight: 'bold', textAlign: 'center', marginTop: '60px' }}>
-                Your Power Surge (PST) Token Statistics
-              </div>
-
-
-
-
-              <Box display='flex' flexDirection='column' alignItems='center' justifyContent='center' marginTop='4' >
-
-              <div style={{ fontSize: '20px', fontWeight: 'bold', textAlign: 'center', marginBottom: '20px' }}>
-              Available Balance: {availableBalance} Tokens
-              </div>
-              <div style={{ fontSize: '16px', fontWeight: 'bold', textAlign: 'center', marginBottom: '20px' }}>
-               Your Total Token Balance: {tokenBalance}
-               </div>
-              <div style={{ fontSize: '16px', fontWeight: 'bold', textAlign: 'center', marginBottom: '20px' }}>
-              Your Total Staked Balance: {totalStakedAllPeriods}
-              </div>
+                               <div style={{ fontSize: '20px', fontWeight: 'bold', textAlign: 'center', marginBottom: '20px' }}>
+                               Available Balance: {availableBalance} Tokens
+                               </div>
+                               <div style={{ fontSize: '12px', fontWeight: 'bold', textAlign: 'center', marginBottom: '20px' }}>
+                                Your Total Token Balance: {tokenBalance}
+                                </div>
+                               <div style={{ fontSize: '16px', fontWeight: 'bold', textAlign: 'center', marginBottom: '20px' }}>
+                               Your Total Staked Balance: {totalStakedAllPeriods}
+                               </div>
 
 
+                             <div style={{ fontSize: '16px', fontWeight: 'bold', textAlign: 'center', marginBottom: '0px' }}>
+                             Current Staking Boost
+                             </div>
 
+                                <div>
 
-                <a href="https://maxxswap.org/#/swap?outputCurrency=0x3e69bA6Dd72e39A1694B85775944f713Fe0a0e9B&inputCurrency=ETH"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  style={{
-                    padding: '8px 16px',
-                    fontSize: '16px',
-                    fontWeight: 'bold',
-                    color: 'white',
-                    backgroundColor: 'blue',
-                    textDecoration: 'none',
-                    textAlign: 'center',
-                    borderRadius: '4px',
-                    display: 'inline-block'
-                  }}
-                  onMouseOver={(e) => {
-                    e.currentTarget.style.backgroundColor = '#0000ff'; // Darker blue on hover
-                  }}
-                  onMouseOut={(e) => {
-                    e.currentTarget.style.backgroundColor = 'blue'; // Original blue
-                  }}
-                >
-                  Buy Now
-                </a>
-
-              </Box>
+                                <div style={{ fontSize: '24px', fontWeight: 'bold', textAlign: 'center', marginBottom: '20px' }}>
+                                {
+                                  tokenBalance !== 'Loading...' && dividendBalance !== 'Loading...' && parseFloat(tokenBalance) !== 0
+                                  ? (parseFloat(dividendBalance) / parseFloat(tokenBalance)).toFixed(3)
+                                  : 'N/A'
+                                }x  Reflections Multiplier
+                                </div>
+                                </div>
 
 
 
-            </Box>
+
+
+
+                                 <a href="https://maxxswap.org/#/swap?outputCurrency=0x3e69bA6Dd72e39A1694B85775944f713Fe0a0e9B&inputCurrency=ETH"
+                                   target="_blank"
+                                   rel="noopener noreferrer"
+                                   style={{
+                                     padding: '8px 16px',
+                                     fontSize: '16px',
+                                     fontWeight: 'bold',
+                                     color: 'white',
+                                     backgroundColor: 'blue',
+                                     textDecoration: 'none',
+                                     textAlign: 'center',
+                                     borderRadius: '4px',
+                                     display: 'inline-block'
+                                   }}
+                                   onMouseOver={(e) => {
+                                     e.currentTarget.style.backgroundColor = '#0000ff'; // Darker blue on hover
+                                   }}
+                                   onMouseOut={(e) => {
+                                     e.currentTarget.style.backgroundColor = 'blue'; // Original blue
+                                   }}
+                                 >
+                                   Buy Now
+                                 </a>
+
+                               </Box>
+               </Box>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
               <Box flex={1} bg="gray.800" p={4} display="flex" flexDirection="column" borderRadius="lg">
@@ -1553,18 +1625,26 @@ const App = () => {
 
 {/* Staking Section */}
 <Box display='flex' flexDirection='column' alignItems='center' justifyContent='center' marginTop='4'>
-<Input
-placeholder='Enter amount to stake 30 Days'
-value={stakeAmount}
-onChange={(e) => setStakeAmount(e.target.value)}
-size='md'
-width='250px'
-bg="white"
-color="black"
-borderColor="gray.990" // Sets the border color
-borderWidth="1px" // Sets the border width
-borderStyle="solid" // Sets the border style
-/>
+<Flex alignItems="center" justifyContent="center" marginTop="4">
+  <Input
+    placeholder='Enter amount to stake'
+    value={stakeAmount}
+    onChange={(e) => setStakeAmount(e.target.value)}
+    size='md'
+    bg="white"
+    color="black"
+    borderColor="gray.990"
+    type="number"
+  />
+  <Button
+    onClick={handleMaxClick}
+    ml="2" // Margin left for spacing
+    bg='gray.600'
+    _hover={{ bg: 'gray.500' }}
+  >
+    Max
+  </Button>
+</Flex>
 <Button
 onClick={onStakeClick}
 marginTop='2'
@@ -1587,15 +1667,12 @@ Unstake
 </Button>
 </Box>
 
-                    <div style={{ fontSize: '14px', fontWeight: 'bold', textAlign: 'center', marginBottom: '0px' }}>
-                    30 Day active Stake: {userStaked}
-                    </div>
 
-                                        <div style={{ fontSize: '14px', fontWeight: 'bold', textAlign: 'center', marginBottom: '0px' }}>
+                    <div style={{ fontSize: '18px', fontWeight: 'bold', textAlign: 'center', marginTop: '5px'}}>
                                         Your Tokens Staked for 1 Month: {tokensStaked1Month}
                                         </div>
 
-                                                            <div style={{ fontSize: '14px', fontWeight: 'bold', textAlign: 'center', marginBottom: '0px' }}>
+                                                            <div style={{ fontSize: '14px', fontWeight: 'bold', textAlign: 'center', marginTop: '15px' }}>
                                                             Staked on: {stakedTimestamp}
                                                             </div>
 
@@ -1627,18 +1704,29 @@ Unstake
 
                     {/* Staking Section */}
                     <Box display='flex' flexDirection='column' alignItems='center' justifyContent='center' marginTop='4'>
-                    <Input
-                    placeholder='Enter amount to stake 90 Days'
-                    value={stakeAmount3Months}
-                    onChange={(e) => setStakeAmount3Months(e.target.value)}
-                    size='md'
-                    width='250px'
-                    bg="white"
-                    color="black"
-                    borderColor="gray.990" // Sets the border color
-                    borderWidth="1px" // Sets the border width
-                    borderStyle="solid" // Sets the border style
-                    />
+                    <Flex alignItems="center" justifyContent="center" marginTop="4">
+                      <Input
+                        placeholder='Enter amount to stake 90 Days'
+                        value={stakeAmount3Months}
+                        onChange={(e) => setStakeAmount(e.target.value)}
+                        size='md'
+                        bg="white"
+                        color="black"
+                        borderColor="gray.990"
+                        type="number"
+                        // Convert availableBalance to a number before using Math.floor
+                        max={Math.floor(+availableBalance).toString()} // Convert to string after calculation
+                      />
+                      <Button
+                        onClick={() => setStakeAmount3Months(Math.floor(+availableBalance).toString())} // Convert to number, then back to string
+                        ml="2"
+                        bg='gray.600'
+                        _hover={{ bg: 'gray.500' }}
+                      >
+                        Max
+                      </Button>
+                    </Flex>
+
                     <Button
                     onClick={onStakeClick3Months}
                     marginTop='2'
@@ -1661,21 +1749,27 @@ Unstake
                     </Button>
                     </Box>
 
-                    <div style={{ fontSize: '14px', fontWeight: 'bold', textAlign: 'center', marginBottom: '0px' }}>
-                    90 Day active Stake: {userStaked3Months}
-                    </div>
-
-                    <div style={{ fontSize: '14px', fontWeight: 'bold', textAlign: 'center', marginBottom: '0px' }}>
+                    <div style={{ fontSize: '18px', fontWeight: 'bold', textAlign: 'center', marginTop: '5px' }}>
                     Your Tokens Staked for 3 Month: {tokensStaked3Months}
                     </div>
 
-                    <div style={{ fontSize: '14px', fontWeight: 'bold', textAlign: 'center', marginBottom: '0px' }}>
+
+                                        <div style={{ fontSize: '14px', fontWeight: 'bold', textAlign: 'center', marginTop: '15px' }}>
                     Staked on: {stakedTimestamp3Months}
                     </div>
 
                     <div style={{ fontSize: '14px', fontWeight: 'bold', textAlign: 'center', marginBottom: '0px' }}>
                     Unlock Date: {unlockDate3Months}
                     </div>
+
+
+
+
+
+
+
+
+
 
                     </Box>
                         </Box>
@@ -1702,18 +1796,28 @@ Unstake
 
                       {/* Staking Section */}
                       <Box display='flex' flexDirection='column' alignItems='center' justifyContent='center' marginTop='4'>
-                      <Input
-                      placeholder='Enter amount to stake 180 Days'
-                      value={stakeAmount6Months}
-                      onChange={(e) => setStakeAmount6Months(e.target.value)}
-                      size='md'
-                      width='250px'
-                      bg="white"
-                      color="black"
-                      borderColor="gray.990" // Sets the border color
-                      borderWidth="1px" // Sets the border width
-                      borderStyle="solid" // Sets the border style
-                      />
+                      <Flex alignItems="center" justifyContent="center" marginTop="4">
+            <Input
+              placeholder='Enter amount to stake 180 Days'
+              value={stakeAmount6Months}
+              onChange={(e) => setStakeAmount(e.target.value)}
+              size='md'
+              bg="white"
+              color="black"
+              borderColor="gray.990"
+              type="number"
+              // Convert availableBalance to a number before using Math.floor
+              max={Math.floor(+availableBalance).toString()} // Convert to string after calculation
+            />
+            <Button
+              onClick={() => setStakeAmount6Months(Math.floor(+availableBalance).toString())} // Convert to number, then back to string
+              ml="2"
+              bg='gray.600'
+              _hover={{ bg: 'gray.500' }}
+            >
+              Max
+            </Button>
+          </Flex>
                       <Button
                       onClick={onStakeClick6Months}
                       marginTop='2'
@@ -1736,13 +1840,11 @@ Unstake
                       </Button>
                       </Box>
 
-                      <div style={{ fontSize: '14px', fontWeight: 'bold', textAlign: 'center', marginBottom: '0px' }}>
-                      180 Day active Stake: {userStaked6Months}
-                      </div>
-                      <div style={{ fontSize: '14px', fontWeight: 'bold', textAlign: 'center', marginBottom: '0px' }}>
+                      <div style={{ fontSize: '18px', fontWeight: 'bold', textAlign: 'center', marginTop: '5px' , }}>
                       Your Tokens Staked for 6 Month: {tokensStaked6Months}
                       </div>
-                      <div style={{ fontSize: '14px', fontWeight: 'bold', textAlign: 'center', marginBottom: '0px' }}>
+
+                                          <div style={{ fontSize: '14px', fontWeight: 'bold', textAlign: 'center', marginTop: '15px' }}>
                       Staked on: {stakedTimestamp6Months}
                       </div>
                       <div style={{ fontSize: '14px', fontWeight: 'bold', textAlign: 'center', marginBottom: '0px' }}>
@@ -1780,8 +1882,8 @@ Unstake
                            bg='blue'
                            _hover={{ bg: 'blue' }}
                          >
-                           Claim Tokens
-                            Add Token to Wallet
+
+                            Add PST to Wallet
                           </Button>
 
                                                                               </Box>
@@ -1797,6 +1899,13 @@ Unstake
                                                     </Button>
                                                     {copySuccess && <div>{copySuccess}</div>}
                                                                               </Box>
+
+                                                                             <div style={{ fontSize: '12px', fontWeight: 'bold', textAlign: 'center', marginBottom: '0px' }}>
+                                                                             Balance of dividend tokens {dividendBalance} PSTTRACKER Token
+                                                                             </div>
+                                                                                           <div style={{ fontSize: '12px', fontWeight: 'bold', textAlign: 'center', marginBottom: '0px' }}>
+                                                                                           Available Balance: {availableBalance} Tokens
+                                                                                           </div>
                       </Box>
                     </TabPanel>
                   </TabPanels>

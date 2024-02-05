@@ -31,6 +31,9 @@ import abiFile from './abiFile.json';
 import tokenAbi from './tokenAbi.json';
 import './styles.css';
 
+
+import tokenLogo from './pst.png';
+
 const CONTRACT_ADDRESS = '0xaddresshere';
 const TOKEN_ADDRESS = '0x3e69bA6Dd72e39A1694B85775944f713Fe0a0e9B'; //og lastman
 
@@ -39,7 +42,7 @@ const BLOCK_RATE_SECONDS = 3; // BSC block rate
 
 
 
-const TOKEN_IMAGE = 'https://raw.githubusercontent.com/ArielRin/staking-dapp-for-locks/master/src/favicon.png';
+const TOKEN_IMAGE = 'https://raw.githubusercontent.com/ArielRin/staking-dapp-for-locks/master/src/pst.png';
 const TOKEN_SYMBOL = 'PST';
 const TOKEN_DECIMALS = 18;
 
@@ -61,7 +64,7 @@ const App = () => {
             address: TOKEN_ADDRESS,
             symbol: TOKEN_SYMBOL,
             decimals: TOKEN_DECIMALS,
-            image: 'https://raw.githubusercontent.com/ArielRin/staking-dapp-for-locks/master/src/favicon.png',
+            image: 'https://raw.githubusercontent.com/ArielRin/staking-dapp-for-locks/master/src/pst.png',
           },
         },
       })
@@ -91,7 +94,7 @@ const App = () => {
                 address: TOKEN_ADDRESS,
                 symbol: TOKEN_SYMBOL,
                 decimals: TOKEN_DECIMALS,
-                image: 'https://raw.githubusercontent.com/ArielRin/staking-dapp-for-locks/master/src/favicon.png',
+                image: 'https://raw.githubusercontent.com/ArielRin/staking-dapp-for-locks/master/src/pst.png',
               },
             },
           });
@@ -1269,30 +1272,70 @@ const App = () => {
   ).toFixed(3); // Converts to string with 3 decimal places
 
 
+  //
+  // const [dividendBalance, setDividendBalance] = useState('Loading...');
+  //
+  //  // Function to request access to the user's ETH account
+  //  async function requestAccount() {
+  //    await window.ethereum.request({ method: 'eth_requestAccounts' });
+  //  }
+  //
+  //  useEffect(() => {
+  //    async function fetchDividendBalance() {
+  //      if (typeof window.ethereum !== 'undefined') {
+  //        await requestAccount(); // Request user's account access
+  //          const provider = new ethers.providers.Web3Provider(window.ethereum as ethers.providers.ExternalProvider);
+  //        const signer = provider.getSigner();
+  //        const contract = new ethers.Contract(TOKEN_ADDRESS, tokenAbi, signer);
+  //
+  //        try {
+  //          const address = await signer.getAddress();
+  //          const balance = await contract.dividendTokenBalanceOf(address);
+  //          // Assuming the balance is returned in wei, convert it to ether
+  //          const balanceInEther = ethers.utils.formatEther(balance);
+  //          setDividendBalance(`${parseFloat(balanceInEther).toFixed(3)}`); // Format the price to 6 decimal places
+  //
+  //        } catch (err) {
+  //          console.error(err);
+  //          setDividendBalance('Failed to load');
+  //        }
+  //      }
+  //    }
+  //
+  //    fetchDividendBalance();
+  //  }, []);
 
 
   return (
       <>
       <ToastContainer />
-        <Box p={4} color="white" bg="blue.500">
+        <Box p={4} color="white" bg="black">
           <Flex justifyContent="space-between" alignItems="center">
             <Text style={headerTextStyle}>Staking for Locks</Text>
             <ConnectButton />
           </Flex>
         </Box>
-        <Container maxW="container.xl" p={0} >
-          <Flex direction="column" gap={4}>
-          <Box minH="400px" bg="gray.200" p={4}>
-            {/* Use the paddingTop for the first div after the heading */}
 
-                          <div style={{ fontSize: '24px', fontWeight: 'bold', textAlign: 'center', marginBottom: '60px' }}>
-              Token General Info
-            </div>
+        <Box p={0}  bg="black" >
+        <Container maxW="container.xl" p={4} color="white">
+          <Flex direction="column" gap={4}>
+                      <Box minH="100px" bg="gray.800" p={4} borderRadius="lg">
+
+                      <img src={tokenLogo} alt="Main Text Logo" className="logobody" />
+
+
+                                    <div style={{ fontSize: '48px', fontWeight: 'bolder', textAlign: 'center', marginBottom: '0px' }}>
+                        Power Surge
+                      </div>
+                                    <div style={{ fontSize: '16px', fontWeight: 'bolder', textAlign: 'center', marginBottom: '0px' }}>
+                        Rewards Dapp on Maxx Chain
+                      </div>
+                                </Box>
+          <Box minH="200px" bg="gray.800" p={4} borderRadius="lg">
+
 
                         <div style={{ fontSize: '16px', fontWeight: 'normal', textAlign: 'center', marginBottom: '20px' }}>
-              Description of Dapp here Talk about the features of this page at least 100-200 words
-              Token Information Find all relevant information about TokenDapp, including its purpose, benefits, and
-              how it integrates with our DApp, in the token information section.
+
             </div>
 
             <div style={{ fontSize: '20px', fontWeight: 'bold', textAlign: 'center', marginBottom: '20px' }}>
@@ -1321,16 +1364,16 @@ const App = () => {
             {/* Adjusted Flex container for equal height columns */}
             <Flex direction={{ base: "column", md: "row" }} gap={4}>
 
-            <Box flex={1} bg="gray.300" p={4} display="flex" flexDirection="column">
+            <Box flex={1} bg="gray.800" p={4} display="flex" flexDirection="column" borderRadius="lg">
 
-              <div style={{ fontSize: '24px', fontWeight: 'bold', textAlign: 'center', marginBottom: '60px' }}>
+              <div style={{ fontSize: '24px', fontWeight: 'bold', textAlign: 'center', marginTop: '60px' }}>
                 Connected Users Token Statistics and rewards Values to date
               </div>
 
 
 
 
-              <Box display='flex' flexDirection='column' alignItems='center' justifyContent='center' marginTop='4'>
+              <Box display='flex' flexDirection='column' alignItems='center' justifyContent='center' marginTop='4' >
 
               <div style={{ fontSize: '20px', fontWeight: 'bold', textAlign: 'center', marginBottom: '20px' }}>
               Available Balance: {availableBalance} Tokens
@@ -1339,7 +1382,7 @@ const App = () => {
                Your Total Token Balance: {tokenBalance}
                </div>
               <div style={{ fontSize: '18px', fontWeight: 'bold', textAlign: 'center', marginBottom: '20px' }}>
-              your Staked Balance all pools: {totalStakedAllPeriods}
+              Your Total Staked Balance: {totalStakedAllPeriods}
               </div>
 
               </Box>
@@ -1350,7 +1393,7 @@ const App = () => {
             </Box>
 
 
-              <Box flex={1} bg="gray.300" p={4} display="flex" flexDirection="column">
+              <Box flex={1} bg="gray.800" p={4} display="flex" flexDirection="column" borderRadius="lg">
                 {/* Tabs in Left Column */}
                 <Tabs isFitted variant="enclosed" flex="1">
                   <TabList mb="1em">
@@ -1404,7 +1447,7 @@ Stake for 30 Days
 </Button>
 </Box>
 {/* Unstake Section */}
-<Box display='flex' flexDirection='column' alignItems='center' justifyContent='center' marginTop='4'>
+<Box display='flex' flexDirection='column' alignItems='center' justifyContent='center' marginTop='4'marginBottom='4'>
 <Button
 onClick={onUnstake1MonthClick}
 textColor='white'
@@ -1414,10 +1457,22 @@ _hover={{ bg: 'Blue' }}
 Unstake
 </Button>
 </Box>
-<div>30 Day active Stake: {userStaked}</div>
-<div>Your Tokens Staked for 1 Month: {tokensStaked1Month}</div>
-<div>Staked on: {stakedTimestamp}</div>
-<div>Unlock Date: {unlockDate}</div>
+
+                    <div style={{ fontSize: '14px', fontWeight: 'bold', textAlign: 'center', marginBottom: '0px' }}>
+                    30 Day active Stake: {userStaked}
+                    </div>
+
+                                        <div style={{ fontSize: '14px', fontWeight: 'bold', textAlign: 'center', marginBottom: '0px' }}>
+                                        Your Tokens Staked for 1 Month: {tokensStaked1Month}
+                                        </div>
+
+                                                            <div style={{ fontSize: '14px', fontWeight: 'bold', textAlign: 'center', marginBottom: '0px' }}>
+                                                            Staked on: {stakedTimestamp}
+                                                            </div>
+
+                                                                                <div style={{ fontSize: '14px', fontWeight: 'bold', textAlign: 'center', marginBottom: '0px' }}>
+                                                                                Unlock Date: {unlockDate}
+                                                                                </div>
 
 </Box>
                       </Box>
@@ -1466,7 +1521,7 @@ Unstake
                     </Button>
                     </Box>
                     {/* Unstake Section */}
-                    <Box display='flex' flexDirection='column' alignItems='center' justifyContent='center' marginTop='4'>
+                    <Box display='flex' flexDirection='column' alignItems='center' justifyContent='center' marginTop='4' marginBottom='4' >
                     <Button
                     onClick={onUnstake3MonthsClick}
                     textColor='white'
@@ -1476,10 +1531,22 @@ Unstake
                     Unstake
                     </Button>
                     </Box>
-                    <div>90 Day active Stake: {userStaked3Months}</div>
-                    <div>Your Tokens Staked for 3 Month: {tokensStaked3Months}</div>
-                    <div>Staked on: {stakedTimestamp3Months}</div>
-                    <div>Unlock Date: {unlockDate3Months}</div>
+
+                    <div style={{ fontSize: '14px', fontWeight: 'bold', textAlign: 'center', marginBottom: '0px' }}>
+                    90 Day active Stake: {userStaked3Months}
+                    </div>
+
+                    <div style={{ fontSize: '14px', fontWeight: 'bold', textAlign: 'center', marginBottom: '0px' }}>
+                    Your Tokens Staked for 3 Month: {tokensStaked3Months}
+                    </div>
+
+                    <div style={{ fontSize: '14px', fontWeight: 'bold', textAlign: 'center', marginBottom: '0px' }}>
+                    Staked on: {stakedTimestamp3Months}
+                    </div>
+
+                    <div style={{ fontSize: '14px', fontWeight: 'bold', textAlign: 'center', marginBottom: '0px' }}>
+                    Unlock Date: {unlockDate3Months}
+                    </div>
 
                     </Box>
                         </Box>
@@ -1529,7 +1596,7 @@ Unstake
                       </Button>
                       </Box>
                       {/* Unstake Section */}
-                      <Box display='flex' flexDirection='column' alignItems='center' justifyContent='center' marginTop='4'>
+                      <Box display='flex' flexDirection='column' alignItems='center' justifyContent='center' marginTop='4' marginBottom='4' >
                       <Button
                       onClick={onUnstake6MonthsClick}
                       textColor='white'
@@ -1539,10 +1606,19 @@ Unstake
                       Unstake
                       </Button>
                       </Box>
-                      <div>180 Day active Stake: {userStaked6Months}</div>
-                      <div>Your Tokens Staked for 6 Month: {tokensStaked6Months}</div>
-                      <div>Staked on: {stakedTimestamp6Months}</div>
-                      <div>Unlock Date: {unlockDate6Months}</div>
+
+                      <div style={{ fontSize: '14px', fontWeight: 'bold', textAlign: 'center', marginBottom: '0px' }}>
+                      180 Day active Stake: {userStaked6Months}
+                      </div>
+                      <div style={{ fontSize: '14px', fontWeight: 'bold', textAlign: 'center', marginBottom: '0px' }}>
+                      Your Tokens Staked for 6 Month: {tokensStaked6Months}
+                      </div>
+                      <div style={{ fontSize: '14px', fontWeight: 'bold', textAlign: 'center', marginBottom: '0px' }}>
+                      Staked on: {stakedTimestamp6Months}
+                      </div>
+                      <div style={{ fontSize: '14px', fontWeight: 'bold', textAlign: 'center', marginBottom: '0px' }}>
+                      Unlock Date: {unlockDate6Months}
+                      </div>
 
                       </Box>
                           </Box>
@@ -1599,42 +1675,60 @@ Unstake
               </Box>
             </Flex>
 
-            <Box minH="200px" bg="gray.200" p={4}>
 
-          <div style={{ fontSize: '16px', fontWeight: 'normal', textAlign: 'center', marginBottom: '20px' }}>
-            Multiple Staking Lock Periods: Choose from 30-day, 90-day, and 180-day lock periods to stake your tokens.
-            Token Statistics: View detailed statistics of your tokens, including available, staked, and total balances.
-            Total Statistics: Access aggregated statistics to understand the overall staking landscape.
-            Liquidity Pools Tracker: Monitor the value of the token's LP and other pools directly from the DApp.
-            Swapper DApp: Easily buy the DApp's token with the native currency or sell it back to the native currency without affecting the network's value stability.
-            NFT Minting: Projects with NFT collections can utilize our DApp for their minting process.
-            Comprehensive Token Information: Find all the information about the token, including its utility, benefits, and roadmap.
-            Live Price Data: Stay updated with live price data for both the DApp's token and the native currency.
-            </div>
+                              <Flex wrap="wrap" justifyContent="space-between" alignItems="center">
+                                <Box flex="1" minW="240px" bg="gray.800" p={4} m={2} textAlign="center" borderRadius="lg">
+                                  <div style={{ fontSize: '16px', fontWeight: 'bolder', marginBottom: '0px' }}>
+                                    PST: ${tokenPriceUSD}
+                                  </div>
+                                </Box>
+                                <Box flex="1" minW="240px" bg="gray.800" p={4} m={2} textAlign="center" borderRadius="lg">
+                                  <div style={{ fontSize: '16px', fontWeight: 'bolder', marginBottom: '0px' }}>
+                                    ANU: ${anuPriceUSD}
+                                  </div>
+                                </Box>
+                                <Box flex="1" minW="240px" bg="gray.800" p={4} m={2} textAlign="center" borderRadius="lg">
+                                  <div style={{ fontSize: '16px', fontWeight: 'bolder', marginBottom: '0px' }}>
+                                    BTM: ${btmPriceUSD}
+                                  </div>
+                                </Box>
+                                <Box flex="1" minW="240px" bg="gray.800" p={4} m={2} textAlign="center" borderRadius="lg">
+                                  <div style={{ fontSize: '16px', fontWeight: 'bolder', marginBottom: '0px' }}>
+                                    PWR: ${pwrPriceUSD}
+                                  </div>
+                                </Box>
+                              </Flex>
+
+
+            <Box minH="500px" bg="grey.700">
+
+
+          <iframe  height="490px" width="100%" id="geckoterminal-embed" title="GeckoTerminal Embed" src="https://www.geckoterminal.com/maxxchain/pools/0x65011afc895f47d6bc2b190b6993dfc8cd415839?embed=1&info=0&swaps=0" frameBorder="0" allowFullScreen></iframe>
+
+
 
             </Box>
+                        <Box minH="200px" bg="gray.800" p={4} borderRadius="lg">
 
+                      <div style={{ fontSize: '16px', fontWeight: 'normal', textAlign: 'center', marginBottom: '20px' }}>
+                        Multiple Staking Lock Periods: Choose from 30-day, 90-day, and 180-day lock periods to stake your tokens.
+                        Token Statistics: View detailed statistics of your tokens, including available, staked, and total balances.
+                        Total Statistics: Access aggregated statistics to understand the overall staking landscape.
+                        Liquidity Pools Tracker: Monitor the value of the token's LP and other pools directly from the DApp.
+                        Swapper DApp: Easily buy the DApp's token with the native currency or sell it back to the native currency without affecting the network's value stability.
+                        NFT Minting: Projects with NFT collections can utilize our DApp for their minting process.
+                        Comprehensive Token Information: Find all the information about the token, including its utility, benefits, and roadmap.
+                        Live Price Data: Stay updated with live price data for both the DApp's token and the native currency.
+                        </div>
 
-            <Box minH="100px" bg="gray.300" p={4}>
-            <div style={{ fontSize: '16px', fontWeight: 'normal', textAlign: 'center', marginBottom: '5px' }}>
-PST: ${tokenPriceUSD}
-</div>
-<div style={{ fontSize: '16px', fontWeight: 'normal', textAlign: 'center', marginBottom: '5px' }}>
-ANU: ${anuPriceUSD}
-</div>
-<div style={{ fontSize: '16px', fontWeight: 'normal', textAlign: 'center', marginBottom: '5px' }}>
-BTM: ${btmPriceUSD}
-</div>
-<div style={{ fontSize: '16px', fontWeight: 'normal', textAlign: 'center', marginBottom: '5px' }}>
-PWR: ${pwrPriceUSD}
-</div>
-            </Box>
+                        </Box>
+
 
 
                         {/* Adjusted Flex container for equal height columns */}
                         <Flex direction={{ base: "column", md: "row" }} gap={4}>
 
-                        <Box  flex={1} bg="gray.300" p={4} display="flex" flexDirection="column">
+                        <Box  flex={1} bg="gray.300" p={4} display="flex" flexDirection="column" borderRadius="lg">
                           Mint NFT section collection 1
 
                           {/* Mint NFT Section */}
@@ -1653,7 +1747,7 @@ PWR: ${pwrPriceUSD}
                         </Box>
 
 
-                          <Box flex={1} bg="gray.300" p={4} display="flex" flexDirection="column">
+                          <Box flex={1} bg="gray.300" p={4} display="flex" flexDirection="column" borderRadius="lg">
                             Mint NFT section collection 2
 
                             {/* Mint NFT Section */}
@@ -1676,6 +1770,7 @@ PWR: ${pwrPriceUSD}
         </Container>
 
 
+        </Box>
         <Box p={4} color="white" bg="black" textAlign="center">
           © 2024 In Haus Development
         </Box>

@@ -1352,18 +1352,6 @@ const App = () => {
                                                               {/* Mint NFT Section */}
                                               <Box flex={1} bg="gray.800" p={4} display="flex" flexDirection="column">
                                                 <VStack spacing={4}>
-                                                <div style={{ fontSize: '14px', fontWeight: 'bold', textAlign: 'center', marginBottom: '0px' }}>
-                                                    Tokens Burned
-                                                </div>
-                                                <div style={{ fontSize: '14px', fontWeight: 'bold', textAlign: 'center', marginBottom: '0px' }}>
-                                                    Liquidity
-                                                </div>
-                                                <div style={{ fontSize: '14px', fontWeight: 'bold', textAlign: 'center', marginBottom: '0px' }}>
-                                                    Market Cap
-                                                </div>
-                                                <div style={{ fontSize: '14px', fontWeight: 'bold', textAlign: 'center', marginBottom: '0px' }}>
-                                                    Price
-                                                </div>
                                                   <div style={{ fontSize: '16px', fontWeight: 'bolder', marginBottom: '0px' }}>
                                                     PST: ${tokenPriceUSD}
                                                   </div>
@@ -1371,19 +1359,6 @@ const App = () => {
                                                     0x3e69ba6dd72e39a1694b85775944f713fe0a0e9b
                                                 </div>
 
-        <Box display='flex' flexDirection='column' alignItems='center' justifyContent='center' marginTop='4'>
-
-        <Button
-        onClick={addTokenToWallet}
-        textColor='white'
-        bg='blue'
-        _hover={{ bg: 'blue' }}
-        >
-
-        Add to Wallet
-        </Button>
-
-                                                </Box>
 
                                                 </VStack>
                                               </Box>
@@ -1401,18 +1376,6 @@ const App = () => {
                                                                                                                 {/* Mint NFT Section */}
                                                                                                 <Box flex={1} bg="gray.800" p={4} display="flex" flexDirection="column">
                                                                                                   <VStack spacing={4}>
-                                                                                                  <div style={{ fontSize: '14px', fontWeight: 'bold', textAlign: 'center', marginBottom: '0px' }}>
-                                                                                                      Tokens Burned
-                                                                                                  </div>
-                                                                                                  <div style={{ fontSize: '14px', fontWeight: 'bold', textAlign: 'center', marginBottom: '0px' }}>
-                                                                                                      Liquidity
-                                                                                                  </div>
-                                                                                                  <div style={{ fontSize: '14px', fontWeight: 'bold', textAlign: 'center', marginBottom: '0px' }}>
-                                                                                                      Market Cap
-                                                                                                  </div>
-                                                                                                  <div style={{ fontSize: '14px', fontWeight: 'bold', textAlign: 'center', marginBottom: '0px' }}>
-                                                                                                      Price
-                                                                                                  </div>
 
                                                                                                     <div style={{ fontSize: '16px', fontWeight: 'bolder', marginBottom: '0px' }}>
                                                                                                       ANU: ${anuPriceUSD}
@@ -1421,19 +1384,6 @@ const App = () => {
                                                                                                       0x6CB6c8D16e7B6Fd5A815702B824e6Dfdf148a7D9
                                                                                                   </div>
 
-                    <Box display='flex' flexDirection='column' alignItems='center' justifyContent='center' marginTop='4'>
-
-                                              <Button
-                                               onClick={addTokenToWallet}
-                                               textColor='white'
-                                               bg='blue'
-                                               _hover={{ bg: 'blue' }}
-                                             >
-
-                                                Add to Wallet
-                                              </Button>
-
-                                                                                                  </Box>
                                                 </VStack>
                                               </Box>
 
@@ -1451,18 +1401,6 @@ const App = () => {
                                                                                                                   {/* Mint NFT Section */}
                                                                                                   <Box flex={1} bg="gray.800" p={4} display="flex" flexDirection="column">
                                                                                                     <VStack spacing={4}>
-                                                                                                    <div style={{ fontSize: '14px', fontWeight: 'bold', textAlign: 'center', marginBottom: '0px' }}>
-                                                                                                        Tokens Burned
-                                                                                                    </div>
-                                                                                                    <div style={{ fontSize: '14px', fontWeight: 'bold', textAlign: 'center', marginBottom: '0px' }}>
-                                                                                                        Liquidity
-                                                                                                    </div>
-                                                                                                    <div style={{ fontSize: '14px', fontWeight: 'bold', textAlign: 'center', marginBottom: '0px' }}>
-                                                                                                        Market Cap
-                                                                                                    </div>
-                                                                                                    <div style={{ fontSize: '14px', fontWeight: 'bold', textAlign: 'center', marginBottom: '0px' }}>
-                                                                                                        Price
-                                                                                                    </div>
 
                                                                                                       <div style={{ fontSize: '16px', fontWeight: 'bolder', marginBottom: '0px' }}>
                                                                                                         BTM: ${btmPriceUSD}
@@ -1471,19 +1409,6 @@ const App = () => {
                                                                                                         0xc27BbD4276F9eb2D6F2c4623612412d52D7Bb43D
                                                                                                     </div>
 
-                      <Box display='flex' flexDirection='column' alignItems='center' justifyContent='center' marginTop='4'>
-
-                                                <Button
-                                                 onClick={addTokenToWallet}
-                                                 textColor='white'
-                                                 bg='blue'
-                                                 _hover={{ bg: 'blue' }}
-                                               >
-
-                                                  Add to Wallet
-                                                </Button>
-
-                                                                                                    </Box>
 
                                                 </VStack>
                                               </Box>
@@ -1493,9 +1418,50 @@ const App = () => {
 
 
 
+                                                                      <Box minH="20px" bg="gray.800" p={4} borderRadius="lg">
+
+
+                                                                                    <div style={{ fontSize: '32px', fontWeight: 'bolder', textAlign: 'center', marginTop: '8px', marginBottom: '20px' }}>
+                                                                                        Power Surge Token
+                                                                                    </div>
+                                                                                </Box>
+
+                                                                      <Box minH="20px" bg="gray.800" p={4} borderRadius="lg">
+
+                                                                    <div style={{ fontSize: '16px', fontWeight: 'normal', textAlign: 'center', marginBottom: '20px' }}>
+                                                                      Token Information on selected token, sort of an itro for sean to provide for each token used
+                                                                      </div>
+
+                                                                      </Box>
 
 
 
+                                                                      <Flex wrap="wrap" justifyContent="space-between" alignItems="center">
+                                                                        <Box flex="1" minW="240px" bg="gray.800" p={4} m={2} textAlign="center" borderRadius="lg">
+                                                                          <div style={{ fontSize: '16px', fontWeight: 'bolder', marginBottom: '0px' }}>
+                                                                            Market Cap
+                                                                          </div>
+                                                                          <div style={{ fontSize: '16px', fontWeight: 'bolder', marginBottom: '0px' }}>
+                                                                            {marketCap}
+                                                                          </div>
+                                                                        </Box>
+                                                                        <Box flex="1" minW="240px" bg="gray.800" p={4} m={2} textAlign="center" borderRadius="lg">
+                                                                          <div style={{ fontSize: '16px', fontWeight: 'bolder', marginBottom: '0px' }}>
+                                                                            Liquidity
+                                                                          </div>
+                                                                          <div style={{ fontSize: '16px', fontWeight: 'bolder', marginBottom: '0px' }}>
+                                                                            {totalLiquidityUSD}
+                                                                          </div>
+                                                                        </Box>
+                                                                        <Box flex="1" minW="240px" bg="gray.800" p={4} m={2} textAlign="center" borderRadius="lg">
+                                                                          <div style={{ fontSize: '16px', fontWeight: 'bolder', marginBottom: '0px' }}>
+                                                                           Supply
+                                                                          </div>
+                                                                          <div style={{ fontSize: '16px', fontWeight: 'bolder', marginBottom: '0px' }}>
+                                                                            100,000,000
+                                                                          </div>
+                                                                        </Box>
+                                                                      </Flex>
 
 
 
@@ -1508,7 +1474,7 @@ const App = () => {
             <Box flex={1} bg="gray.800" p={4} display="flex" flexDirection="column" borderRadius="lg">
 
               <div style={{ fontSize: '24px', fontWeight: 'bold', textAlign: 'center', marginTop: '60px' }}>
-                Connected Users Token Statistics and rewards Values to date
+                Users Power Surge (PST) Token Statistics
               </div>
 
 
@@ -1524,6 +1490,19 @@ const App = () => {
                </div>
               <div style={{ fontSize: '18px', fontWeight: 'bold', textAlign: 'center', marginBottom: '20px' }}>
               Your Total Staked Balance: {totalStakedAllPeriods}
+              </div>
+
+              <div style={{ fontSize: '14px', fontWeight: 'bold', textAlign: 'center', marginBottom: '0px' }}>
+                  Tokens Burned
+              </div>
+              <div style={{ fontSize: '14px', fontWeight: 'bold', textAlign: 'center', marginBottom: '0px' }}>
+                  Liquidity
+              </div>
+              <div style={{ fontSize: '14px', fontWeight: 'bold', textAlign: 'center', marginBottom: '0px' }}>
+                  Market Cap
+              </div>
+              <div style={{ fontSize: '14px', fontWeight: 'bold', textAlign: 'center', marginBottom: '0px' }}>
+                  Price
               </div>
 
               </Box>
@@ -1826,64 +1805,6 @@ Unstake
 
 
             </Box>
-                        <Box minH="200px" bg="gray.800" p={4} borderRadius="lg">
-
-                      <div style={{ fontSize: '16px', fontWeight: 'normal', textAlign: 'center', marginBottom: '20px' }}>
-                        Multiple Staking Lock Periods: Choose from 30-day, 90-day, and 180-day lock periods to stake your tokens.
-                        Token Statistics: View detailed statistics of your tokens, including available, staked, and total balances.
-                        Total Statistics: Access aggregated statistics to understand the overall staking landscape.
-                        Liquidity Pools Tracker: Monitor the value of the token's LP and other pools directly from the DApp.
-                        Swapper DApp: Easily buy the DApp's token with the native currency or sell it back to the native currency without affecting the network's value stability.
-                        NFT Minting: Projects with NFT collections can utilize our DApp for their minting process.
-                        Comprehensive Token Information: Find all the information about the token, including its utility, benefits, and roadmap.
-                        Live Price Data: Stay updated with live price data for both the DApp's token and the native currency.
-                        </div>
-
-                        </Box>
-
-
-
-                        {/* Adjusted Flex container for equal height columns */}
-                        <Flex direction={{ base: "column", md: "row" }} gap={4}>
-
-                        <Box  flex={1} bg="gray.300" p={4} display="flex" flexDirection="column" borderRadius="lg">
-                          Mint NFT section collection 1
-
-                          {/* Mint NFT Section */}
-            <Box flex={1} bg="gray.800" p={4} display="flex" flexDirection="column">
-              <VStack spacing={4}>
-                <Text fontSize="xl" fontWeight="bold">NFT Name: NameNFT</Text>
-                <Text>SYMBOL: NFTSYMBOL</Text>
-                <Text>Cost to Mint: 10USD</Text>
-                <Text>NFT Supply: 23/70</Text>
-                <Button colorScheme="blue" size="md">
-                  Mint Now
-                </Button>
-              </VStack>
-            </Box>
-
-                        </Box>
-
-
-                          <Box flex={1} bg="gray.300" p={4} display="flex" flexDirection="column" borderRadius="lg">
-                            Mint NFT section collection 2
-
-                            {/* Mint NFT Section */}
-            <Box flex={1} bg="gray.800" p={4} display="flex" flexDirection="column">
-              <VStack spacing={4}>
-                <Text fontSize="xl" fontWeight="bold">NFT Name: NameNFT</Text>
-                <Text>SYMBOL: NFTSYMBOL</Text>
-                <Text>Cost to Mint: 10USD</Text>
-                <Text>NFT Supply: 23/70</Text>
-                <Button colorScheme="blue" size="md">
-                  Mint Now
-                </Button>
-              </VStack>
-            </Box>
-                          </Box>
-
-                        </Flex>
-
 
 
 
@@ -1946,27 +1867,70 @@ Unstake
             //
             //
             // </Box>
-                                          //
-                                          //
-                                          // <Flex wrap="wrap" justifyContent="space-between" alignItems="center">
-                                          //   <Box flex="1" minW="240px" bg="gray.800" p={4} m={2} textAlign="center" borderRadius="lg">
-                                          //     <div style={{ fontSize: '16px', fontWeight: 'bolder', marginBottom: '0px' }}>
-                                          //       PST: ${tokenPriceUSD}
-                                          //     </div>
-                                          //   </Box>
-                                          //   <Box flex="1" minW="240px" bg="gray.800" p={4} m={2} textAlign="center" borderRadius="lg">
-                                          //     <div style={{ fontSize: '16px', fontWeight: 'bolder', marginBottom: '0px' }}>
-                                          //       ANU: ${anuPriceUSD}
-                                          //     </div>
-                                          //   </Box>
-                                          //   <Box flex="1" minW="240px" bg="gray.800" p={4} m={2} textAlign="center" borderRadius="lg">
-                                          //     <div style={{ fontSize: '16px', fontWeight: 'bolder', marginBottom: '0px' }}>
-                                          //       BTM: ${btmPriceUSD}
-                                          //     </div>
-                                          //   </Box>
+
+
+
                                           //   <Box flex="1" minW="240px" bg="gray.800" p={4} m={2} textAlign="center" borderRadius="lg">
                                           //     <div style={{ fontSize: '16px', fontWeight: 'bolder', marginBottom: '0px' }}>
                                           //       PWR: ${pwrPriceUSD}
                                           //     </div>
                                           //   </Box>
-                                          // </Flex>
+
+
+                                          //             <Box minH="200px" bg="gray.800" p={4} borderRadius="lg">
+                                          //
+                                          //           <div style={{ fontSize: '16px', fontWeight: 'normal', textAlign: 'center', marginBottom: '20px' }}>
+                                          //             Multiple Staking Lock Periods: Choose from 30-day, 90-day, and 180-day lock periods to stake your tokens.
+                                          //             Token Statistics: View detailed statistics of your tokens, including available, staked, and total balances.
+                                          //             Total Statistics: Access aggregated statistics to understand the overall staking landscape.
+                                          //             Liquidity Pools Tracker: Monitor the value of the token's LP and other pools directly from the DApp.
+                                          //             Swapper DApp: Easily buy the DApp's token with the native currency or sell it back to the native currency without affecting the network's value stability.
+                                          //             NFT Minting: Projects with NFT collections can utilize our DApp for their minting process.
+                                          //             Comprehensive Token Information: Find all the information about the token, including its utility, benefits, and roadmap.
+                                          //             Live Price Data: Stay updated with live price data for both the DApp's token and the native currency.
+                                          //             </div>
+                                          //
+                                          //             </Box>
+                                          //
+                                          //
+                                          //
+                                          //             {/* Adjusted Flex container for equal height columns */}
+                                          //             <Flex direction={{ base: "column", md: "row" }} gap={4}>
+                                          //
+                                          //             <Box  flex={1} bg="gray.300" p={4} display="flex" flexDirection="column" borderRadius="lg">
+                                          //               Mint NFT section collection 1
+                                          //
+                                          //               {/* Mint NFT Section */}
+                                          // <Box flex={1} bg="gray.800" p={4} display="flex" flexDirection="column">
+                                          //   <VStack spacing={4}>
+                                          //     <Text fontSize="xl" fontWeight="bold">NFT Name: NameNFT</Text>
+                                          //     <Text>SYMBOL: NFTSYMBOL</Text>
+                                          //     <Text>Cost to Mint: 10USD</Text>
+                                          //     <Text>NFT Supply: 23/70</Text>
+                                          //     <Button colorScheme="blue" size="md">
+                                          //       Mint Now
+                                          //     </Button>
+                                          //   </VStack>
+                                          // </Box>
+                                          //
+                                          //             </Box>
+                                          //
+                                          //
+                                          //               <Box flex={1} bg="gray.300" p={4} display="flex" flexDirection="column" borderRadius="lg">
+                                          //                 Mint NFT section collection 2
+                                          //
+                                          //                 {/* Mint NFT Section */}
+                                          // <Box flex={1} bg="gray.800" p={4} display="flex" flexDirection="column">
+                                          //   <VStack spacing={4}>
+                                          //     <Text fontSize="xl" fontWeight="bold">NFT Name: NameNFT</Text>
+                                          //     <Text>SYMBOL: NFTSYMBOL</Text>
+                                          //     <Text>Cost to Mint: 10USD</Text>
+                                          //     <Text>NFT Supply: 23/70</Text>
+                                          //     <Button colorScheme="blue" size="md">
+                                          //       Mint Now
+                                          //     </Button>
+                                          //   </VStack>
+                                          // </Box>
+                                          //               </Box>
+                                          //
+                                          //             </Flex>

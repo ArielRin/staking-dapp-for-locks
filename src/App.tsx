@@ -40,6 +40,9 @@ import anuLogo from './anu.png';
 
 import pw3Logo from './pw3.png';
 import backgroundImage from './bkg.png';
+import backgroundImageStake from './stake.png';
+
+
 
 const CONTRACT_ADDRESS = '0xaA0015FbB55b0f9E3dF74e0827a63099e4201E38'; // Live BTM_NFT
 const TOKEN_ADDRESS = '0x3e69bA6Dd72e39A1694B85775944f713Fe0a0e9B'; //og lastman
@@ -1594,7 +1597,18 @@ fetchTotalSupply();
 
 
 
-              <Box flex={1} bg="gray.800" p={4} display="flex" flexDirection="column" borderRadius="lg">
+
+                           <Box
+                                flex={1}
+                                p={4}
+                                display="flex"
+                                flexDirection="column"
+                                borderRadius="lg"
+                                bg="gray.800"
+                                bgPosition="center"
+                                bgRepeat="no-repeat"
+                                bgSize="cover"
+                              >
                 {/* Tabs in Left Column */}
                 <Tabs isFitted variant="enclosed" flex="1">
                   <TabList mb="1em">
@@ -1615,7 +1629,7 @@ fetchTotalSupply();
                         style={{ backgroundColor: '' }} // Light dark grey color
                         >
 
-                        <div style={{ fontSize: '24px', fontWeight: 'bold', textAlign: 'center', marginBottom: '20px' }}>
+                        <div style={{ fontSize: '42px', fontWeight: 'bold', textAlign: 'center', marginBottom: '20px' }}>
                           30 Day Staking Pool
                         </div>
 
@@ -1694,7 +1708,7 @@ Unstake
                           style={{ backgroundColor: '' }} // Light dark grey color
                           >
 
-                          <div style={{ fontSize: '24px', fontWeight: 'bold', textAlign: 'center', marginBottom: '20px' }}>
+                                                  <div style={{ fontSize: '42px', fontWeight: 'bold', textAlign: 'center', marginBottom: '20px' }}>
                             90 Day Staking Pool
                           </div>
 
@@ -1785,7 +1799,7 @@ Unstake
                             style={{ backgroundColor: '' }} // Light dark grey color
                             >
 
-                            <div style={{ fontSize: '24px', fontWeight: 'bold', textAlign: 'center', marginBottom: '20px' }}>
+                                                    <div style={{ fontSize: '42px', fontWeight: 'bold', textAlign: 'center', marginBottom: '20px' }}>
                               180 Day Staking Pool
                             </div>
 

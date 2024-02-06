@@ -1524,6 +1524,7 @@ fetchTotalSupply();
 
                                <Box display='flex' flexDirection='column' alignItems='center' justifyContent='center' marginTop='4' >
 
+
                                <div style={{ fontSize: '20px', fontWeight: 'bold', textAlign: 'center', marginBottom: '20px' }}>
                                Available Balance: {availableBalance} Tokens
                                </div>
@@ -1534,6 +1535,7 @@ fetchTotalSupply();
                                Your Total Staked Balance: {totalStakedAllPeriods}
                                </div>
 
+                               <Box flex={1} bg="rgba(20, 20, 20, 0.75)" borderRadius="lg" p={4} display="flex" flexDirection="column">
 
                              <div style={{ fontSize: '16px', fontWeight: 'bold', textAlign: 'center', marginBottom: '0px' }}>
                              Current Staking Boost
@@ -1549,6 +1551,8 @@ fetchTotalSupply();
                                 }x  Reflections Multiplier
                                 </div>
                                 </div>
+
+                             </Box>
 
 
 

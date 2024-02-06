@@ -45,7 +45,8 @@ import backgroundImageStake from './stake.png';
 
 
 const CONTRACT_ADDRESS = '0xaA0015FbB55b0f9E3dF74e0827a63099e4201E38'; // Live BTM_NFT
-const TOKEN_ADDRESS = '0x3e69bA6Dd72e39A1694B85775944f713Fe0a0e9B'; //og lastman
+const TOKEN_ADDRESS = '0x28836b4787175770370c291Bd44e29d84B07102C'; //og PTSD Lols
+// const TOKEN_ADDRESS = '0x3e69bA6Dd72e39A1694B85775944f713Fe0a0e9B'; //og PST
 
 const getExplorerLink = () => `https://bscscan.com/address/${CONTRACT_ADDRESS}`;
 const BLOCK_RATE_SECONDS = 3; // BSC block rate
@@ -1639,6 +1640,7 @@ fetchTotalSupply();
 
 {/* Staking Section */}
 <Box display='flex' flexDirection='column' alignItems='center' justifyContent='center' marginTop='4'>
+
 <Flex alignItems="center" justifyContent="center" marginTop="4">
   <Input
     placeholder='Enter amount to stake'
@@ -1650,15 +1652,18 @@ fetchTotalSupply();
     borderColor="gray.990"
     type="number"
   />
-  <Button
-    onClick={handleMaxClick}
-    ml="2" // Margin left for spacing
+
+<Button
+    onClick={() => setStakeAmount(Math.floor(+availableBalance - 1).toString())} // Subtract 1 from available balance, convert to number, then back to string
+    ml="2"
     bg='gray.600'
     _hover={{ bg: 'gray.500' }}
-  >
+    >
     Max
-  </Button>
+</Button>
 </Flex>
+
+
 <Button
 onClick={onStakeClick}
 marginTop='2'
@@ -1720,25 +1725,24 @@ Unstake
                     <Box display='flex' flexDirection='column' alignItems='center' justifyContent='center' marginTop='4'>
                     <Flex alignItems="center" justifyContent="center" marginTop="4">
                       <Input
-                        placeholder='Enter amount to stake 90 Days'
+                        placeholder='Enter amount to stake'
                         value={stakeAmount3Months}
-                        onChange={(e) => setStakeAmount(e.target.value)}
+                        onChange={(e) => setStakeAmount3Months(e.target.value)}
                         size='md'
                         bg="white"
                         color="black"
                         borderColor="gray.990"
                         type="number"
-                        // Convert availableBalance to a number before using Math.floor
-                        max={Math.floor(+availableBalance).toString()} // Convert to string after calculation
                       />
-                      <Button
-                        onClick={() => setStakeAmount3Months(Math.floor(+availableBalance).toString())} // Convert to number, then back to string
+
+                    <Button
+                        onClick={() => setStakeAmount3Months(Math.floor(+availableBalance - 1).toString())} // Subtract 1 from available balance, convert to number, then back to string
                         ml="2"
                         bg='gray.600'
                         _hover={{ bg: 'gray.500' }}
-                      >
+                        >
                         Max
-                      </Button>
+                    </Button>
                     </Flex>
 
                     <Button
@@ -1811,27 +1815,26 @@ Unstake
                       {/* Staking Section */}
                       <Box display='flex' flexDirection='column' alignItems='center' justifyContent='center' marginTop='4'>
                       <Flex alignItems="center" justifyContent="center" marginTop="4">
-            <Input
-              placeholder='Enter amount to stake 180 Days'
-              value={stakeAmount6Months}
-              onChange={(e) => setStakeAmount(e.target.value)}
-              size='md'
-              bg="white"
-              color="black"
-              borderColor="gray.990"
-              type="number"
-              // Convert availableBalance to a number before using Math.floor
-              max={Math.floor(+availableBalance).toString()} // Convert to string after calculation
-            />
-            <Button
-              onClick={() => setStakeAmount6Months(Math.floor(+availableBalance).toString())} // Convert to number, then back to string
-              ml="2"
-              bg='gray.600'
-              _hover={{ bg: 'gray.500' }}
-            >
-              Max
-            </Button>
-          </Flex>
+                        <Input
+                          placeholder='Enter amount to stake'
+                          value={stakeAmount6Months}
+                          onChange={(e) => setStakeAmount6Months(e.target.value)}
+                          size='md'
+                          bg="white"
+                          color="black"
+                          borderColor="gray.990"
+                          type="number"
+                        />
+
+                      <Button
+                          onClick={() => setStakeAmount6Months(Math.floor(+availableBalance - 1).toString())} // Subtract 1 from available balance, convert to number, then back to string
+                          ml="2"
+                          bg='gray.600'
+                          _hover={{ bg: 'gray.500' }}
+                          >
+                          Max
+                      </Button>
+                      </Flex>
                       <Button
                       onClick={onStakeClick6Months}
                       marginTop='2'

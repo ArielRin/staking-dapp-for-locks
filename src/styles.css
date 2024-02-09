@@ -165,3 +165,29 @@ header {
     min-width: 100%;
   }
 }
+
+
+
+.social-links {
+    display: flex;
+}
+
+.social-links p {
+    margin: 0; /* Removes default paragraph margins for cleaner spacing */
+    padding-right: 15px; /* Adds right padding to each link */
+    font-size: 0.9rem;
+}
+
+
+
+.social-links {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+.social-icon {
+  width: 20px;
+  height: auto;
+  margin-right: 14px;
+}

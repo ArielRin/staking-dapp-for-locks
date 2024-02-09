@@ -4,6 +4,7 @@ import React, { useEffect, useState } from 'react';
 import {
   Box,
   Flex,
+  Image,
   Text,
   Link,
   Container,
@@ -43,10 +44,18 @@ import backgroundImage from './bkg.png';
 import backgroundImageStake from './stake.png';
 
 
+import twitterImage from "./twitter.png";
+import telegramImage from "./telegram.png";
+import binanceImage from "./binance.png";
+import githubImage from "./github.png";
+import inHausImage from "./dh_clear.png";
+import maxxchainImage from "./maxxchain.png";
+
+
 
 const CONTRACT_ADDRESS = '0xaA0015FbB55b0f9E3dF74e0827a63099e4201E38'; // Live BTM_NFT
-const TOKEN_ADDRESS = '0x28836b4787175770370c291Bd44e29d84B07102C'; //og PTSD Lols
-// const TOKEN_ADDRESS = '0x3e69bA6Dd72e39A1694B85775944f713Fe0a0e9B'; //og PST
+const TOKEN_ADDRESS = '0xF1725D071179351933217Cc0545e358dC00f7Ce1'; //og PTSD Lols
+// const TOKEN_ADDRESS = '0xF1725D071179351933217Cc0545e358dC00f7Ce1'; //og PST
 
 const getExplorerLink = () => `https://bscscan.com/address/${CONTRACT_ADDRESS}`;
 const BLOCK_RATE_SECONDS = 3; // BSC block rate
@@ -221,6 +230,134 @@ const App = () => {
 
 
 
+
+// ##################################################################################################################################
+// ##################################################################################################################################
+// ##################################################################################################################################
+// ##################################################################################################################################
+// ##################################################################################################################################
+// ##################################################################################################################################
+   const [bmtMarketCap, setBmtMarketCap] = useState('Loading...');
+   const [bmtTotalReserveInUSD, setBmtTotalReserveInUSD] = useState('Loading...');
+   const [bmtPricePoolUSD, setBmtPricePoolUSD] = useState('Loading...');
+   bmtPricePoolUSD
+
+   // ... (existing useEffect hooks)
+
+   // Fetch Market Cap and Total Reserve data for BMT Token
+   useEffect(() => {
+     const bmtTokenAddress = '0x2c5Cb1C18a344D4F1472a904a077CF0B97886719';
+     const url = `https://api.geckoterminal.com/api/v2/networks/maxxchain/tokens/${bmtTokenAddress}`;
+
+     fetch(url)
+       .then(response => response.json())
+       .then(data => {
+         if (data && data.data && data.data.attributes) {
+           // Renamed from fdvUsd to bmtFdvUsd
+           if (data.data.attributes.fdv_usd) {
+             const bmtFdvUsd = data.data.attributes.fdv_usd;
+             setBmtMarketCap(`${parseFloat(bmtFdvUsd).toLocaleString('en-US', { style: 'currency', currency: 'USD' })}`);
+           } else {
+             setBmtMarketCap('Market Cap not available');
+           }
+
+           // Renamed from reserveUsd to bmtReserveUsd
+           if (data.data.attributes.total_reserve_in_usd) {
+             const bmtReserveUsd = data.data.attributes.total_reserve_in_usd;
+             setBmtTotalReserveInUSD(`${parseFloat(bmtReserveUsd).toLocaleString('en-US', { style: 'currency', currency: 'USD' })}`);
+           } else {
+             setBmtTotalReserveInUSD('Total Reserve not available');
+           }
+
+                    // Renamed from reserveUsd to bmtPricePoolUSD
+                    if (data.data.attributes.price_usd) {
+                      const bmtPricePoolUSD = data.data.attributes.price_usd;
+                      setBmtPricePoolUSD(`${parseFloat(bmtPricePoolUSD).toLocaleString('en-US', { style: 'currency', currency: 'USD' })}`);
+                    } else {
+                      setBmtPricePoolUSD('Total Reserve not available');
+                    }
+         } else {
+           setBmtMarketCap('Data not available');
+           setBmtTotalReserveInUSD('Data not available');
+           setBmtPricePoolUSD('Data not available');
+         }
+
+       })
+       .catch(error => {
+         console.error('Error fetching data for BMT:', error);
+         setBmtMarketCap('Error fetching data');
+         setBmtTotalReserveInUSD('Error fetching data');
+         setBmtPricePoolUSD('Error fetching data');
+       });
+   }, []);
+
+   // ##################################################################################################################################
+
+   const [antMarketCap, setAntMarketCap] = useState('Loading...');
+const [antTotalReserveInUSD, setAntTotalReserveInUSD] = useState('Loading...');
+
+// Fetch Market Cap and Total Reserve data for ANT Token
+useEffect(() => {
+  const antTokenAddress = '0xf60264e9793dabedd2ca0f0e7d4974d3203cd8a0';
+  const url = `https://api.geckoterminal.com/api/v2/networks/maxxchain/tokens/${antTokenAddress}`;
+
+  fetch(url)
+    .then(response => response.json())
+    .then(data => {
+      if (data && data.data && data.data.attributes) {
+        // Market Cap
+        if (data.data.attributes.fdv_usd) {
+          const antFdvUsd = data.data.attributes.fdv_usd;
+          setAntMarketCap(`${parseFloat(antFdvUsd).toLocaleString('en-US', { style: 'currency', currency: 'USD' })}`);
+        } else {
+          setAntMarketCap('Market Cap not available');
+        }
+
+        // Total Reserve in USD
+        if (data.data.attributes.total_reserve_in_usd) {
+          const antReserveUsd = data.data.attributes.total_reserve_in_usd;
+          setAntTotalReserveInUSD(`${parseFloat(antReserveUsd).toLocaleString('en-US', { style: 'currency', currency: 'USD' })}`);
+        } else {
+          setAntTotalReserveInUSD('Total Reserve not available');
+        }
+      } else {
+        setAntMarketCap('Data not available');
+        setAntTotalReserveInUSD('Data not available');
+      }
+    })
+    .catch(error => {
+      console.error('Error fetching data for ANT:', error);
+      setAntMarketCap('Error fetching data');
+      setAntTotalReserveInUSD('Error fetching data');
+    });
+}, []);
+   // ##################################################################################################################################
+   // ##################################################################################################################################
+   // ##################################################################################################################################
+   // ##################################################################################################################################
+   // ##################################################################################################################################
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
   const { address } = useAccount();
   const isConnected = !!address;
 
@@ -299,7 +436,7 @@ const App = () => {
 
         //fetch btm pricePerBtm in usd
         const [btmPriceUSD, setBtmPriceUSD] = useState('Loading...');
-          const btmAddress = '0xc27bbd4276f9eb2d6f2c4623612412d52d7bb43d'; // Your btm address
+          const btmAddress = '0x2c5Cb1C18a344D4F1472a904a077CF0B97886719'; // Your btm address
 
           useEffect(() => {
             const url = `https://api.geckoterminal.com/api/v2/simple/networks/maxxchain/token_price/${btmAddress}`;
@@ -325,7 +462,7 @@ const App = () => {
 
       //fetch anu pricePerAnu in usd
       const [anuPriceUSD, setAnuPriceUSD] = useState('Loading...');
-        const anuAddress = '0x6cb6c8d16e7b6fd5a815702b824e6dfdf148a7d9'; // Your anu address
+        const anuAddress = '0xf60264e9793dabedd2ca0f0e7d4974d3203cd8a0'; // Your anu address
 
         useEffect(() => {
           const url = `https://api.geckoterminal.com/api/v2/simple/networks/maxxchain/token_price/${anuAddress}`;
@@ -350,7 +487,7 @@ const App = () => {
 
   //fetch token pricePerToken in usd
   const [tokenPriceUSD, setTokenPriceUSD] = useState('Loading...');
-    const tokenAddress = '0x3e69ba6dd72e39a1694b85775944f713fe0a0e9b'; // Your token address
+    const tokenAddress = '0xF1725D071179351933217Cc0545e358dC00f7Ce1'; // Your token address
 
     useEffect(() => {
       const url = `https://api.geckoterminal.com/api/v2/simple/networks/maxxchain/token_price/${tokenAddress}`;
@@ -1339,6 +1476,29 @@ fetchTotalSupply();
 
 
     // ####################################################################################################################################
+
+
+
+  const [totalDividends, setTotalDividends] = useState('Loading...');
+
+  useEffect(() => {
+    const fetchTotalDividends = async () => {
+      try {
+      const provider = new ethers.providers.Web3Provider(window.ethereum as ethers.providers.ExternalProvider);
+        const contract = new ethers.Contract(TOKEN_ADDRESS, tokenAbi, provider);
+        const total = await contract.getTotalDividendsDistributed();
+
+        // Assuming the function returns a BigNumber, format it
+        const formattedTotal = ethers.utils.formatEther(total);
+        setTotalDividends(formattedTotal);
+      } catch (error) {
+        console.error('Error fetching total dividends:', error);
+        setTotalDividends('Error');
+      }
+    };
+
+    fetchTotalDividends();
+  }, []);
     // ####################################################################################################################################
     // ####################################################################################################################################
 
@@ -1388,8 +1548,11 @@ fetchTotalSupply();
                                                   <div style={{ fontSize: '16px', fontWeight: 'bolder', marginBottom: '0px' }}>
                                                     PST: ${tokenPriceUSD}
                                                   </div>
+                                                  <div style={{ fontSize: '16px', fontWeight: 'bolder', marginBottom: '0px' }}>
+                                                    M/Cap: {marketCap}
+                                                  </div>
                                                 <div style={{ fontSize: '10px', fontWeight: 'bold', textAlign: 'center', marginBottom: '0px' }}>
-                                                    0x3e69ba6dd72e39a1694b85775944f713fe0a0e9b
+                                                    0xF1725D071179351933217Cc0545e358dC00f7Ce1
                                                 </div>
 
 
@@ -1411,10 +1574,13 @@ fetchTotalSupply();
                                                                                                   <VStack spacing={4}>
 
                                                                                                     <div style={{ fontSize: '16px', fontWeight: 'bolder', marginBottom: '0px' }}>
-                                                                                                      ANU: ${anuPriceUSD}
+                                                                                                      ANT: ${anuPriceUSD}
+                                                                                                    </div>
+                                                                                                    <div style={{ fontSize: '16px', fontWeight: 'bolder', marginBottom: '0px' }}>
+                                                                                                      M/Cap: {antMarketCap}
                                                                                                     </div>
                                                                                                   <div style={{ fontSize: '10px', fontWeight: 'bold', textAlign: 'center', marginBottom: '0px' }}>
-                                                                                                      0x6CB6c8D16e7B6Fd5A815702B824e6Dfdf148a7D9
+                                                                                                      0xf60264e9793dabedd2ca0f0e7d4974d3203cd8a0
                                                                                                   </div>
 
                                                 </VStack>
@@ -1436,11 +1602,22 @@ fetchTotalSupply();
                                                                                                     <VStack spacing={4}>
 
                                                                                                       <div style={{ fontSize: '16px', fontWeight: 'bolder', marginBottom: '0px' }}>
-                                                                                                        BTM: ${btmPriceUSD}
+                                                                                                        BMT: ${btmPriceUSD}
                                                                                                       </div>
+                                                                                                      <div style={{ fontSize: '16px', fontWeight: 'bolder', marginBottom: '0px' }}>
+                                                                                                        M/Cap: {bmtMarketCap}
+                                                                                                      </div>
+
                                                                                                     <div style={{ fontSize: '10px', fontWeight: 'bold', textAlign: 'center', marginBottom: '0px' }}>
                                                                                                         0xc27BbD4276F9eb2D6F2c4623612412d52D7Bb43D
                                                                                                     </div>
+
+
+
+
+
+
+
 
 
                                                 </VStack>
@@ -1559,7 +1736,7 @@ fetchTotalSupply();
 
 
 
-                                 <a href="https://maxxswap.org/#/swap?outputCurrency=0x3e69bA6Dd72e39A1694B85775944f713Fe0a0e9B&inputCurrency=ETH"
+                                 <a href="https://maxxswap.org/#/swap?outputCurrency=0xF1725D071179351933217Cc0545e358dC00f7Ce1&inputCurrency=ETH"
                                    target="_blank"
                                    rel="noopener noreferrer"
                                    style={{
@@ -1882,18 +2059,8 @@ Unstake
                                                                               <Box display='flex' flexDirection='column' alignItems='center' justifyContent='center' marginTop='4'>
 
                                                                                 Add More stuff to the More TAB
-                                                                                <Button
-                                                                                  onClick={onClaimClick}
-                                                                                  textColor='white'
-                                                                                  bg='blue'
-                                                                                  _hover={{ bg: 'blue' }}
-                                                                                >
-                                                                                  Claim Tokens
-                                                                                </Button>
 
 
-
-                          {rewardsToClaim}
                                                                               </Box>
 <Box display='flex' flexDirection='column' alignItems='center' justifyContent='center' marginTop='4'>
 
@@ -1924,13 +2091,38 @@ Unstake
                                                                              <div style={{ fontSize: '12px', fontWeight: 'bold', textAlign: 'center', marginBottom: '0px' }}>
                                                                              Balance of dividend tokens {dividendBalance} PSTTRACKER Token
                                                                              </div>
+
+                                                                             <div style={{ fontSize: '12px', fontWeight: 'bold', textAlign: 'center', marginBottom: '0px' }}>
+                                                                                <Text>Total Dividends Distributed: {totalDividends}</Text>
+                                                                             </div>
+
+
                                                                                            <div style={{ fontSize: '12px', fontWeight: 'bold', textAlign: 'center', marginBottom: '0px' }}>
                                                                                            Available Balance: {availableBalance} Tokens
                                                                                            </div>
+
+
+                                                                                           <Box display='flex' flexDirection='column' alignItems='center' justifyContent='center' marginTop='4'>
+                                                                                                           <Button
+                                                                                                             onClick={onClaimClick}
+                                                                                                             textColor='white'
+                                                                                                             bg='blue'
+                                                                                                             _hover={{ bg: 'blue' }}
+                                                                                                           >
+                                                                                                             Harvest Rewards
+                                                                                                           </Button>
+                                                                                           {rewardsToClaim}
+
+
+
+                                                                                                                                   </Box>
                       </Box>
+
                     </TabPanel>
                   </TabPanels>
                 </Tabs>
+
+
               </Box>
             </Flex>
 
@@ -1939,7 +2131,7 @@ Unstake
             <Box minH="500px" bg="grey.700">
 
 
-          <iframe  height="490px" width="100%" id="geckoterminal-embed" title="GeckoTerminal Embed" src="https://www.geckoterminal.com/maxxchain/pools/0x65011afc895f47d6bc2b190b6993dfc8cd415839?embed=1&info=0&swaps=0" frameBorder="0" allowFullScreen></iframe>
+          <iframe  height="490px" width="100%" id="geckoterminal-embed" title="GeckoTerminal Embed" src="https://www.geckoterminal.com/maxxchain/pools/0x18af145720cd2a7e4f570962ee4e8e51084cb922?embed=1&info=0&swaps=0" frameBorder="0" allowFullScreen></iframe>
 
 
 
@@ -1954,9 +2146,60 @@ Unstake
 
 
         </Box>
-        <Box p={4} color="white" bg="black" textAlign="center">
-          © InHaus Development 2024
-        </Box>
+
+      <Box
+        p={4}
+        color="white"
+        bg="black"
+        textAlign="center" // Align text and content to the center
+        display="flex" // Use Flexbox
+        flexDirection="column" // Stack items vertically
+        alignItems="center" // Center items horizontally
+        justifyContent="center" // Center items vertically (if there's height specified)
+        className="black-section"
+      >
+        <div
+          className="social-links"
+          style={{ display: "flex", justifyContent: "center", gap: "20px" }}
+        >
+          {/* Using Chakra UI's Link and Image components for better integration */}
+          <Link
+            href="https://t.me/pwro3"
+            isExternal
+          >
+            <Image src={twitterImage} alt="Twitter" className="social-icon" />
+          </Link>
+          <Link href="https://t.me/pwro3" isExternal>
+            <Image src={telegramImage} alt="Telegram" className="social-icon" />
+          </Link>
+          <Link
+            href="https://scan.maxxchain.org/address/0xF1725D071179351933217Cc0545e358dC00f7Ce1"
+            isExternal
+          >
+            <Image src={maxxchainImage} alt="Maxx Explorer" className="social-icon" />
+          </Link>
+          <Link
+            href="https://github.com/ArielRin/power-of-3-public-data"
+            isExternal
+          >
+            <Image src={githubImage} alt="GitHub" className="social-icon" />
+          </Link>
+          <Link href="https://t.me/InHausDevelopment/1" isExternal>
+            <Image src={inHausImage} alt="InHaus" className="social-icon" />
+          </Link>
+        </div>
+        <div
+          style={{ fontSize: "16px", fontWeight: "bolder", marginTop: "5px" }}
+        >
+          The Power of 3 2024
+        </div>
+
+        <div
+          style={{ fontSize: "6px", fontWeight: "bolder", marginTop: "15px" }}
+        >
+          Site by ©InHaus Development.
+        </div>
+      </Box>
       </>
     );
   };

@@ -2171,17 +2171,20 @@ Unstake
 
         </Box>
 
-      <Box
-        p={4}
-        color="white"
-        bg="black"
-        textAlign="center" // Align text and content to the center
-        display="flex" // Use Flexbox
-        flexDirection="column" // Stack items vertically
-        alignItems="center" // Center items horizontally
-        justifyContent="center" // Center items vertically (if there's height specified)
-        className="black-section"
-      >
+
+        <Box
+          p={4}
+          color="white"
+          bg="black"
+          marginTop="15px"
+          textAlign="center" // Align text and content to the center
+          display="flex" // Use Flexbox
+          flexDirection="column" // Stack items vertically
+          alignItems="center" // Center items horizontally
+          justifyContent="center" // Center items vertically (if there's height specified)
+          className="black-section"
+        >
+      
         <div
           className="social-links"
           style={{ display: "flex", justifyContent: "center", gap: "20px" }}

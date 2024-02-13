@@ -69,6 +69,11 @@ const TOKEN_DECIMALS = 18;
 const INITIAL_SUPPLY = 100000000; //  set at 1,000,000
 
 
+import NftMint from './components/NftMint'; // Adjust the import path as needed
+
+import NftMint0 from './components/NftMint0'; // Adjust the import path as needed
+
+
 const App = () => {
 
   // add token to metamask
@@ -247,7 +252,7 @@ const App = () => {
    // Fetch Market Cap and Total Reserve data for BMT Token
    useEffect(() => {
      const bmtTokenAddress = '0x2c5Cb1C18a344D4F1472a904a077CF0B97886719';
-     const url = `https://api.geckoterminal.com/api/v2/networks/maxxchain/tokens/${bmtTokenAddress}`;
+     const url = `https://api.geckoterminal.com/api/v2/networks/maxxchain/tokens/0x2c5Cb1C18a344D4F1472a904a077CF0B97886719`;
 
      fetch(url)
        .then(response => response.json())
@@ -1609,7 +1614,7 @@ fetchTotalSupply();
                                                                                                       </div>
 
                                                                                                     <div style={{ fontSize: '10px', fontWeight: 'bold', textAlign: 'center', marginBottom: '0px' }}>
-                                                                                                        0xc27BbD4276F9eb2D6F2c4623612412d52D7Bb43D
+                                                                                                        0x2c5cb1c18a344d4f1472a904a077cf0b97886719
                                                                                                     </div>
 
 
@@ -2136,10 +2141,29 @@ Unstake
 
 
             </Box>
+            <Box minH="20px" bg="gray.800" p={4} borderRadius="lg">
+
+
+                          <div style={{ fontSize: '32px', fontWeight: 'bolder', textAlign: 'center', marginTop: '8px', marginBottom: '20px' }}>
+                              Power of 3 NFT Suite
+                          </div>
+                      </Box>
+
+            <Flex direction={{ base: "column", md: "row" }} gap={4}>
+                        <Box  flex={1} bg="" p={0} h="500px" display="flex" flexDirection="column" borderRadius="lg">
+
+
+                                    <NftMint />
+              </Box>
+              <Box  flex={1} bg="" p={0} h="500px" display="flex" flexDirection="column" borderRadius="lg">
+
+
+                          <NftMint0 />
+    </Box>
 
 
 
-
+            </Flex>
 
           </Flex>
         </Container>
@@ -2208,146 +2232,19 @@ Unstake
 
 
 
-            //
-            //             <Box minH="100px" bg="gray.800" p={4} borderRadius="lg">
-            //
-            //             <img src={tokenLogo} alt="Main Text Logo" className="logobody" />
-            //
-            //
-            //                           <div style={{ fontSize: '48px', fontWeight: 'bolder', textAlign: 'center', marginBottom: '0px' }}>
-            //               Power Surge
-            //             </div>
-            //                           <div style={{ fontSize: '16px', fontWeight: 'bolder', textAlign: 'center', marginBottom: '0px' }}>
-            //               Rewards Dapp on Maxx Chain
-            //             </div>
-            //                       </Box>
-            // <Box minH="200px" bg="gray.800" p={4} borderRadius="lg">
-            //
-            //
-            //               <div style={{ fontSize: '16px', fontWeight: 'normal', textAlign: 'center', marginBottom: '20px' }}>
-            //
-            //   </div>
-            //
-            //   <div style={{ fontSize: '20px', fontWeight: 'bold', textAlign: 'center', marginBottom: '20px' }}>
-            //        Current Market Cap: {marketCap}
-            //        </div>
-            //   <div style={{ fontSize: '20px', fontWeight: 'bold', textAlign: 'center', marginBottom: '20px' }}>
-            //        Total Liquidity: {totalLiquidityUSD} USD Value</div>
-            //
-            //
-            //   <div style={{ fontSize: '14px', fontWeight: 'bold', textAlign: 'center', marginBottom: '2px' }}>
-            //        Starting Supply: {INITIAL_SUPPLY.toLocaleString()}
-            //   </div>
-            //   <div style={{ fontSize: '14px', fontWeight: 'bold', textAlign: 'center', marginBottom: '2px' }}>
-            //        Tokens Destroyed: 00000
-            //   </div>
-            //   <div style={{ fontSize: '18px', fontWeight: 'bold', textAlign: 'center', marginBottom: '2px' }}>
-            //        Remaining Supply: {totalSupply}
-            //   </div>
-            //
-            //
-            //
-            //
-            //
-            // </Box>
-
-
-
-
-                                                                                //
-                                                                                //   <Box minH="20px" bg="gray.800" p={4} borderRadius="lg">
-                                                                                //
-                                                                                // <div style={{ fontSize: '16px', fontWeight: 'normal', textAlign: 'center', marginBottom: '20px' }}>
-                                                                                //   Token Information on selected token, sort of an itro for sean to provide for each token used
-                                                                                //   </div>
-                                                                                //
-                                                                                //   </Box>
-                                                                                //
-                                                                                //
-                                                                                //
-
-
-                                          //   <Box flex="1" minW="240px" bg="gray.800" p={4} m={2} textAlign="center" borderRadius="lg">
-                                          //     <div style={{ fontSize: '16px', fontWeight: 'bolder', marginBottom: '0px' }}>
-                                          //       PWR: ${pwrPriceUSD}
-                                          //     </div>
-                                          //   </Box>
-
-
-                                          //             <Box minH="200px" bg="gray.800" p={4} borderRadius="lg">
-                                          //
-                                          //           <div style={{ fontSize: '16px', fontWeight: 'normal', textAlign: 'center', marginBottom: '20px' }}>
-                                          //             Multiple Staking Lock Periods: Choose from 30-day, 90-day, and 180-day lock periods to stake your tokens.
-                                          //             Token Statistics: View detailed statistics of your tokens, including available, staked, and total balances.
-                                          //             Total Statistics: Access aggregated statistics to understand the overall staking landscape.
-                                          //             Liquidity Pools Tracker: Monitor the value of the token's LP and other pools directly from the DApp.
-                                          //             Swapper DApp: Easily buy the DApp's token with the native currency or sell it back to the native currency without affecting the network's value stability.
-                                          //             NFT Minting: Projects with NFT collections can utilize our DApp for their minting process.
-                                          //             Comprehensive Token Information: Find all the information about the token, including its utility, benefits, and roadmap.
-                                          //             Live Price Data: Stay updated with live price data for both the DApp's token and the native currency.
-                                          //             </div>
-                                          //
-                                          //             </Box>
-                                          //
-                                          //
-                                          //
-                                          //             {/* Adjusted Flex container for equal height columns */}
-                                          //             <Flex direction={{ base: "column", md: "row" }} gap={4}>
-                                          //
-                                          //             <Box  flex={1} bg="gray.300" p={4} display="flex" flexDirection="column" borderRadius="lg">
-                                          //               Mint NFT section collection 1
-                                          //
-                                          //               {/* Mint NFT Section */}
-                                          // <Box flex={1} bg="gray.800" p={4} display="flex" flexDirection="column">
-                                          //   <VStack spacing={4}>
-                                          // <Box marginTop='4' display='flex' alignItems='center' justifyContent='center'>
-                                          //   <Button
-                                          //     marginTop='1'
-                                          //     textColor='white'
-                                          //     bg='#058ba1'
-                                          //     _hover={{
-                                          //       bg: '#4d9795',
-                                          //     }}
-                                          //     onClick={handleDecrement}
-                                          //     disabled={!isConnected || mintLoading || mintAmount === 1}
-                                          //   >
-                                          //     -
-                                          //   </Button>
-                                          //   <Text marginX='3' textAlign='center' fontSize='lg'>
-                                          //     {mintAmount}
-                                          //   </Text>
-                                          //   <Button
-                                          //     marginTop='1'
-                                          //     textColor='white'
-                                          //     bg='#058ba1'
-                                          //     _hover={{
-                                          //       bg: '#4d9795',
-                                          //     }}
-                                          //     onClick={handleIncrement}
-                                          //     disabled={!isConnected || mintLoading || mintAmount === 200}
-                                          //   >
-                                          //     +
-                                          //   </Button>
-                                          // </Box>
-                                          // <Box marginTop='2' display='flex' alignItems='center' justifyContent='center'>
-                                          //   <Button
-                                          //     disabled={!isConnected || mintLoading}
-                                          //     marginTop='6'
-                                          //     onClick={onMintClick}
-                                          //     textColor='white'
-                                          //     bg='#058ba1'
-                                          //     _hover={{
-                                          //       bg: '#4d9795',
-                                          //     }}
-                                          //   >
-                                          //     {isConnected ? `Mint ${mintAmount} Now` : ' Mint on (Connect Wallet)'}
-                                          //   </Button>
-                                          // </Box>
-                                          //   </VStack>
-                                          // </Box>
-                                                      //
-                                                      // </Box>
-                                          //
-                                          //
-                                          //
-                                          //             </Flex>
+              //
+              //
+              // <Flex direction={{ base: "column", md: "row" }} gap={4}>
+              //             <Box  flex={1} bg="gray.800" p={0} h="600px" display="flex" flexDirection="column" borderRadius="lg">
+              //
+              //
+              //                         <NftMint />
+              //   </Box>
+              //
+              // <Box  flex={1} bg="gray.800" p={0} h="600px" display="flex" flexDirection="column" borderRadius="lg">
+              //
+              // </Box>
+              //
+              //
+              //
+              // </Flex>

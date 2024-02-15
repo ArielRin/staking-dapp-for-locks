@@ -32,6 +32,10 @@ import abiFile from './abiFile.json';
 import tokenAbi from './tokenAbi.json';
 import './styles.css';
 
+import ZapToLP from './components/ZapToLP/ZapToLP'; // Adjust the import path as necessary
+import ZapToAnuLP from './components/ZapToAnuLP/ZapToLP'; // Adjust the import path as necessary
+import ZapToPstLP from './components/ZapToPstLP/ZapToLP'; // Adjust the import path as necessary
+
 
 import tokenLogo from './pst.png';
 
@@ -50,6 +54,7 @@ import binanceImage from "./binance.png";
 import githubImage from "./github.png";
 import inHausImage from "./dh_clear.png";
 import maxxchainImage from "./maxxchain.png";
+import mainBkg from "./green.png";
 
 
 
@@ -66,12 +71,14 @@ const TOKEN_IMAGE = 'https://raw.githubusercontent.com/ArielRin/staking-dapp-for
 const TOKEN_SYMBOL = 'PST';
 const TOKEN_DECIMALS = 18;
 
-const INITIAL_SUPPLY = 100000000; //  set at 1,000,000
+const INITIAL_SUPPLY = 100000000; //  set at 1,000,000 as per seans PST Supply
 
 
-import NftMint from './components/NftMint'; // Adjust the import path as needed
+import NftMint from './components/NftMint';
 
-import NftMint0 from './components/NftMint0'; // Adjust the import path as needed
+import NftMint0 from './components/NftMint0';
+
+import NftMint1 from './components/NftMint1';
 
 
 const App = () => {
@@ -156,10 +163,6 @@ const App = () => {
        });
    };
 
-   // ##############################################################
-   // ##############################################################
-
-   //fetch  supply data of PRT
    // ##############################################################
    // ##############################################################
 
@@ -1505,6 +1508,10 @@ fetchTotalSupply();
     fetchTotalDividends();
   }, []);
     // ####################################################################################################################################
+
+
+
+
     // ####################################################################################################################################
 
 
@@ -1520,11 +1527,20 @@ fetchTotalSupply();
           </Flex>
         </Box>
 
-        <Box p={0}  bg="black" >
+
+
+        <Box p={0}  style={{
+          backgroundColor: 'black',
+          color: 'white',
+          backgroundImage: ``,
+          backgroundSize: 'cover',
+        }}>
         <Container maxW="container.xl" p={4} color="white">
+
+
           <Flex direction="column" gap={4}>
 
-                      <Box minH="270px" bg="black" p={4} borderRadius="lg">
+                      <Box minH="270px" bg="rgba(0, 0, 0, 0.5);" p={4} borderRadius="lg">
 
                           <img src={pw3Logo} alt="Main Text Logo" className="logobody" />
 
@@ -1538,7 +1554,7 @@ fetchTotalSupply();
 
                                                           {/* Adjusted Flex container for equal height columns */}
                                                           <Flex direction={{ base: "column", md: "row" }} gap={4}>
-                                                            <Box flex={1} bg="gray.800" p={4} display="flex" flexDirection="column" borderRadius="lg">
+                                                            <Box flex={1} bg="rgba(0, 0, 0, 0.5);" p={4} display="flex" flexDirection="column" borderRadius="lg">
 
                                                                                   <img src={tokenLogo} alt="Main Text Logo" className="logobody" />
 
@@ -1548,7 +1564,7 @@ fetchTotalSupply();
                                                               </div>
 
                                                               {/* Mint NFT Section */}
-                                              <Box flex={1} bg="gray.800" p={4} display="flex" flexDirection="column">
+                                              <Box flex={1} bg="rgba(0, 0, 0, 0.0);" p={4} display="flex" flexDirection="column">
                                                 <VStack spacing={4}>
                                                   <div style={{ fontSize: '16px', fontWeight: 'bolder', marginBottom: '0px' }}>
                                                     PST: ${tokenPriceUSD}
@@ -1565,7 +1581,7 @@ fetchTotalSupply();
                                               </Box>
                                                             </Box>
 
-                                                          <Box  flex={1} bg="gray.800" p={4} display="flex" flexDirection="column" borderRadius="lg">
+                                                          <Box  flex={1} bg="rgba(0, 0, 0, 0.5);" p={4} display="flex" flexDirection="column" borderRadius="lg">
 
                                                                                 <img src={anuLogo} alt="Main Text Logo" className="logobody"  />
 
@@ -1575,7 +1591,7 @@ fetchTotalSupply();
                                                                                                                 </div>
 
                                                                                                                 {/* Mint NFT Section */}
-                                                                                                <Box flex={1} bg="gray.800" p={4} display="flex" flexDirection="column">
+                                                                                                <Box flex={1} bg="rgba(0, 0, 0, 0.0);" p={4} display="flex" flexDirection="column">
                                                                                                   <VStack spacing={4}>
 
                                                                                                     <div style={{ fontSize: '16px', fontWeight: 'bolder', marginBottom: '0px' }}>
@@ -1594,7 +1610,7 @@ fetchTotalSupply();
                                                           </Box>
 
 
-                                                            <Box flex={1} bg="gray.800" p={4} display="flex" flexDirection="column" borderRadius="lg">
+                                                            <Box flex={1} bg="rgba(0, 0, 0, 0.5);" p={4} display="flex" flexDirection="column" borderRadius="lg">
 
                                                                                   <img src={btmLogo} alt="Main Text Logo" className="logobody" />
 
@@ -1603,7 +1619,7 @@ fetchTotalSupply();
                                                                                                                   </div>
 
                                                                                                                   {/* Mint NFT Section */}
-                                                                                                  <Box flex={1} bg="gray.800" p={4} display="flex" flexDirection="column">
+                                                                                                  <Box flex={1} bg="rgba(0, 0, 0, 0.0);" p={4} display="flex" flexDirection="column">
                                                                                                     <VStack spacing={4}>
 
                                                                                                       <div style={{ fontSize: '16px', fontWeight: 'bolder', marginBottom: '0px' }}>
@@ -1633,7 +1649,7 @@ fetchTotalSupply();
 
 
 
-                                                                      <Box minH="20px" bg="gray.800" p={4} borderRadius="lg">
+                                                                      <Box minH="20px" bg="rgba(0, 0, 0, 0.5);" p={4} borderRadius="lg">
 
 
                                                                                     <div style={{ fontSize: '32px', fontWeight: 'bolder', textAlign: 'center', marginTop: '8px', marginBottom: '20px' }}>
@@ -1645,7 +1661,7 @@ fetchTotalSupply();
 
 
                                                                       <Flex wrap="wrap" justifyContent="space-between" alignItems="center">
-                                                                        <Box flex="1" minW="160px" bg="gray.800" p={4} m={2} textAlign="center" borderRadius="lg">
+                                                                        <Box flex="1" minW="160px" bg="rgba(0, 0, 0, 0.5);" p={4} m={2} textAlign="center" borderRadius="lg">
                                                                           <div style={{ fontSize: '16px', fontWeight: 'bolder', marginBottom: '0px' }}>
                                                                             Market Cap
                                                                           </div>
@@ -1653,7 +1669,7 @@ fetchTotalSupply();
                                                                             {marketCap}
                                                                           </div>
                                                                         </Box>
-                                                                        <Box flex="1" minW="240px" bg="gray.800" p={4} m={2} textAlign="center" borderRadius="lg">
+                                                                        <Box flex="1" minW="240px" bg="rgba(0, 0, 0, 0.5);" p={4} m={2} textAlign="center" borderRadius="lg">
                                                                           <div style={{ fontSize: '16px', fontWeight: 'bolder', marginBottom: '0px' }}>
                                                                             Liquidity
                                                                           </div>
@@ -1661,7 +1677,7 @@ fetchTotalSupply();
                                                                             {totalLiquidityUSD}
                                                                           </div>
                                                                         </Box>
-                                                                        <Box flex="1" minW="240px" bg="gray.800" p={4} m={2} textAlign="center" borderRadius="lg">
+                                                                        <Box flex="1" minW="240px" bg="rgba(0, 0, 0, 0.5);" p={4} m={2} textAlign="center" borderRadius="lg">
                                                                           <div style={{ fontSize: '16px', fontWeight: 'bolder', marginBottom: '0px' }}>
                                                                            Initial Supply
                                                                           </div>
@@ -1669,7 +1685,7 @@ fetchTotalSupply();
                                                                             100,000,000
                                                                           </div>
                                                                         </Box>
-                                                                        <Box flex="1" minW="240px" bg="gray.800" p={4} m={2} textAlign="center" borderRadius="lg">
+                                                                        <Box flex="1" minW="240px" bg="rgba(0, 0, 0, 0.5);" p={4} m={2} textAlign="center" borderRadius="lg">
                                                                           <div style={{ fontSize: '16px', fontWeight: 'bolder', marginBottom: '0px' }}>
                                                                            Remaining Supply
                                                                           </div>
@@ -1693,7 +1709,7 @@ fetchTotalSupply();
                  display="flex"
                  flexDirection="column"
                  borderRadius="lg"
-                 bg="gray.800"
+                 bg="rgba(0, 0, 0, 0.5);"
                  bgImage={`url(${backgroundImage})`}
                  bgPosition="center"
                  bgRepeat="no-repeat"
@@ -1791,7 +1807,8 @@ fetchTotalSupply();
                                 display="flex"
                                 flexDirection="column"
                                 borderRadius="lg"
-                                bg="gray.800"
+
+                                bg="rgba(0, 0, 0, 0.5);"
                                 bgPosition="center"
                                 bgRepeat="no-repeat"
                                 bgSize="cover"
@@ -2061,12 +2078,7 @@ Unstake
                       <Box minH="350px">
 
                                                                                 {/* Claim Section */}
-                                                                              <Box display='flex' flexDirection='column' alignItems='center' justifyContent='center' marginTop='4'>
 
-                                                                                Add More stuff to the More TAB
-
-
-                                                                              </Box>
 <Box display='flex' flexDirection='column' alignItems='center' justifyContent='center' marginTop='4'>
 
                           <Button
@@ -2093,18 +2105,7 @@ Unstake
                                                     {copySuccess && <div>{copySuccess}</div>}
                                                                               </Box>
 
-                                                                             <div style={{ fontSize: '12px', fontWeight: 'bold', textAlign: 'center', marginBottom: '0px' }}>
-                                                                             Balance of dividend tokens {dividendBalance} PSTTRACKER Token
-                                                                             </div>
 
-                                                                             <div style={{ fontSize: '12px', fontWeight: 'bold', textAlign: 'center', marginBottom: '0px' }}>
-                                                                                <Text>Total Dividends Distributed: {totalDividends}</Text>
-                                                                             </div>
-
-
-                                                                                           <div style={{ fontSize: '12px', fontWeight: 'bold', textAlign: 'center', marginBottom: '0px' }}>
-                                                                                           Available Balance: {availableBalance} Tokens
-                                                                                           </div>
 
 
                                                                                            <Box display='flex' flexDirection='column' alignItems='center' justifyContent='center' marginTop='4'>
@@ -2114,13 +2115,29 @@ Unstake
                                                                                                              bg='blue'
                                                                                                              _hover={{ bg: 'blue' }}
                                                                                                            >
-                                                                                                             Harvest Rewards
+                                                                                                             Harvest pending Rewards
                                                                                                            </Button>
-                                                                                           {rewardsToClaim}
 
 
 
                                                                                                                                    </Box>
+                                                                                                                                   <Box  flex={1} bg="" p={0} minH="100px" display="flex" flexDirection="column" borderRadius="lg">
+
+
+                                                                                                                                                        <ZapToLP />
+                                                                                                                                    </Box>
+                                                                                                                                    <Box  flex={1} bg="" p={0} minH="100px" display="flex" flexDirection="column" borderRadius="lg">
+
+
+                                                                                                                                                         <ZapToAnuLP />
+                                                                                                                                     </Box>
+                                                                                                                                     <Box  flex={1} bg="" p={0} minH="100px" display="flex" flexDirection="column" borderRadius="lg">
+
+
+                                                                                                                                                          <ZapToPstLP />
+                                                                                                                                      </Box>
+
+
                       </Box>
 
                     </TabPanel>
@@ -2133,15 +2150,18 @@ Unstake
 
 
 
-            <Box minH="500px" bg="grey.700">
+            <Box minH="500px" bg="rgba(0, 0, 0, 0.0);"
+            p={0}
+            borderRadius="lg">
 
 
-          <iframe  height="490px" width="100%" id="geckoterminal-embed" title="GeckoTerminal Embed" src="https://www.geckoterminal.com/maxxchain/pools/0x18af145720cd2a7e4f570962ee4e8e51084cb922?embed=1&info=0&swaps=0" frameBorder="0" allowFullScreen></iframe>
+          <iframe
+          height="490px" width="100%" id="geckoterminal-embed" title="GeckoTerminal Embed" src="https://www.geckoterminal.com/maxxchain/pools/0x18af145720cd2a7e4f570962ee4e8e51084cb922?embed=1&info=0&swaps=0" frameBorder="0" allowFullScreen></iframe>
 
 
 
             </Box>
-            <Box minH="20px" bg="gray.800" p={4} borderRadius="lg">
+              {/*         <Box minH="20px" bg="rgba(0, 0, 0, 0.5);" p={4} borderRadius="lg">
 
 
                           <div style={{ fontSize: '32px', fontWeight: 'bolder', textAlign: 'center', marginTop: '8px', marginBottom: '20px' }}>
@@ -2150,7 +2170,7 @@ Unstake
                       </Box>
 
             <Flex direction={{ base: "column", md: "row" }} gap={4}>
-                        <Box  flex={1} bg="" p={0} h="500px" display="flex" flexDirection="column" borderRadius="lg">
+             <Box  flex={1} bg="" p={0} h="500px" display="flex" flexDirection="column" borderRadius="lg">
 
 
                                     <NftMint />
@@ -2161,11 +2181,31 @@ Unstake
                           <NftMint0 />
     </Box>
 
+    <Box  flex={1} bg="" p={0} h="500px" display="flex" flexDirection="column" borderRadius="lg">
+
+
+                <NftMint1 />
+</Box>
+
+
 
 
             </Flex>
 
+            */}
+            <Flex direction={{ base: "column", md: "row" }} gap={4}>
+
+
+
+
+
+            </Flex>
+
+                        <Box minH="200px" bg="rgba(0, 0, 0, 0.0);" p={4} borderRadius="lg">
+                                    </Box>
+
           </Flex>
+
         </Container>
 
 
@@ -2184,7 +2224,7 @@ Unstake
           justifyContent="center" // Center items vertically (if there's height specified)
           className="black-section"
         >
-      
+
         <div
           className="social-links"
           style={{ display: "flex", justifyContent: "center", gap: "20px" }}
@@ -2232,22 +2272,3 @@ Unstake
   };
 
   export default App;
-
-
-
-              //
-              //
-              // <Flex direction={{ base: "column", md: "row" }} gap={4}>
-              //             <Box  flex={1} bg="gray.800" p={0} h="600px" display="flex" flexDirection="column" borderRadius="lg">
-              //
-              //
-              //                         <NftMint />
-              //   </Box>
-              //
-              // <Box  flex={1} bg="gray.800" p={0} h="600px" display="flex" flexDirection="column" borderRadius="lg">
-              //
-              // </Box>
-              //
-              //
-              //
-              // </Flex>

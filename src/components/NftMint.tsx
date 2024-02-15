@@ -12,7 +12,7 @@ import { ethers } from 'ethers';
 import { useAccount, useContractWrite } from 'wagmi';
 import nftMintAbi from './NftMint/nftMintAbi.json';
 import MainTextLogo from './NftMint/textLogo.png';
-import backgroundGif from './NftMint/anunftbkg.gif';
+import backgroundGif from './NftMint/anianu.gif';
 
 import './NftMint/mintNftStyles.css';
 
@@ -20,64 +20,86 @@ import './NftMint/mintNftStyles.css';
 const NFTMINT_CONTRACT_ADDRESS = '0x03965dEc6f765ddCA73282065B9646950a613618';
 
 function NftMint() {
-  const { address } = useAccount();
-  const isConnected = !!address;
-  const toast = useToast();
+  const account = useAccount();
+  const [contractName, setContractName] = useState('');
   const [totalSupply, setTotalSupply] = useState(0);
   const [loading, setLoading] = useState(true);
-  const [mintAmount, setMintQuantity] = useState(1);
-  const [mintLoading, setMintLoading] = useState(false);
-  const [mintError, setMintError] = useState<Error | null>(null);
-  const maxSupply = 200;
-  const remainingSupply = maxSupply - totalSupply;
 
-  useEffect(() => {
-    async function fetchContractData() {
-      try {
-        const provider = new ethers.providers.JsonRpcProvider('https://mainrpc4.maxxchain.org/');
-        const contract = new ethers.Contract(NFTMINT_CONTRACT_ADDRESS, nftMintAbi, provider);
-        const supply = await contract.totalSupply();
-        setTotalSupply(supply.toNumber());
-      } catch (error) {
-        console.error('Error fetching contract data:', error);
-      } finally {
-        setLoading(false);
-      }
-    }
 
-    fetchContractData();
-  }, []);
+  const toast = useToast();
+
+
 
   const contractConfig = {
     addressOrName: NFTMINT_CONTRACT_ADDRESS,
     contractInterface: nftMintAbi,
   };
 
-  const { writeAsync: mint } = useContractWrite({
+  const [imgURL, setImgURL] = useState('');
+  const { writeAsync: mint, error: mintError } = useContractWrite({
     ...contractConfig,
     functionName: 'mint',
-    onError: (error: Error) => setMintError(error),
   });
 
+  const [mintLoading, setMintLoading] = useState(false);
+  const { address } = useAccount();
+  const isConnected = !!address;
+  const [mintedTokenId, setMintedTokenId] = useState(null);
+  const [mintAmount, setMintQuantity] = useState(1);
+
+  const calculateTotalPrice = () => {
+    const pricePerToken = 5000; // Adjust the price per token as needed
+    return ethers.utils.parseEther((mintAmount * pricePerToken).toString());
+  };
+
+  const handleIncrement = () => {
+    setMintQuantity((prevQuantity) => Math.min(prevQuantity + 1, 80));
+  };
+
+  const handleDecrement = () => {
+    setMintQuantity((prevQuantity) => Math.max(prevQuantity - 1, 1));
+  };
+
   const onMintClick = async () => {
-    if (!isConnected || remainingSupply === 0) return;
     try {
       setMintLoading(true);
-      const tx = await mint({ args: [mintAmount] }); // Modify according to your contract
-      await tx.wait();
-      toast({
-        title: 'Mint Successful',
-        description: `Successfully minted ${mintAmount} NFT(s).`,
-        status: 'success',
-        duration: 9000,
-        isClosable: true,
+      const totalPrice = calculateTotalPrice();
+
+      const tx = await mint({
+        args: [mintAmount, { value: totalPrice }],
       });
+
+      await tx.wait(); // Wait for the transaction to be mined
     } catch (error) {
-      console.error('Minting error:', error);
+      console.error(error);
     } finally {
       setMintLoading(false);
     }
   };
+
+
+
+  async function fetchContractData() {
+    try {
+      const provider = new ethers.providers.JsonRpcProvider('https://bsc-dataseed.binance.org/');
+      const contract = new ethers.Contract(NFTMINT_CONTRACT_ADDRESS, nftMintAbi, provider);
+      const name = await contract.name();
+      const supply = await contract.totalSupply();
+      setContractName(name);
+      setTotalSupply(supply.toNumber());
+    } catch (error) {
+      console.error('Error fetching contract data:', error);
+    } finally {
+      setLoading(false);
+    }
+  }
+
+  useEffect(() => {
+    fetchContractData();
+  }, []);
+
+  const maxSupply = 106;
+  const remainingSupply = maxSupply - totalSupply;
 
   return (
     <div className="wrapper" style={{

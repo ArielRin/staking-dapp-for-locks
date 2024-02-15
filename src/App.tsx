@@ -11,6 +11,7 @@ import {
   Spacer,
   useBreakpointValue,
   Tabs,
+  Select,
   TabList,
   TabPanels,
   Tab,
@@ -82,6 +83,9 @@ import NftMint1 from './components/NftMint1';
 
 
 const App = () => {
+
+
+    const [selectedBox, setSelectedBox] = useState('1'); // Default to showing box 1
 
   // add token to metamask
   // ##############################################################
@@ -2150,17 +2154,55 @@ Unstake
 
 
 
-            <Box minH="500px" bg="rgba(0, 0, 0, 0.0);"
-            p={0}
-            borderRadius="lg">
 
 
-          <iframe
-          height="490px" width="100%" id="geckoterminal-embed" title="GeckoTerminal Embed" src="https://www.geckoterminal.com/maxxchain/pools/0x18af145720cd2a7e4f570962ee4e8e51084cb922?embed=1&info=0&swaps=0" frameBorder="0" allowFullScreen></iframe>
+            <Flex justifyContent="center" marginTop="15px" marginBottom="45px"  bg="rgba(0, 0, 0, 0.9)" p={4} borderRadius="lg" textAlign="center" flexDirection="column">
 
+        <div>
+<Select placeholder="Select Power of 3 Chart" onChange={(e) => setSelectedBox(e.target.value)}>
+<option value="1">Power Surge PST-PWR</option>
+<option value="2">Bitmaxx BMT-PWR</option>
+<option value="3">Anunaki ANT-PWR</option>
+</Select>
 
+{selectedBox === '1' && (
+<Box id="box1" minH="400px" bg="grey.700">
+{/* Box 1 Content */}
+<Box minH="500px" bg="rgba(0, 0, 0, 0.0);"
+p={0}
+borderRadius="lg">
+<iframe
+height="490px" width="100%" id="geckoterminal-embed" title="GeckoTerminal Embed" src="https://www.geckoterminal.com/maxxchain/pools/0x18af145720cd2a7e4f570962ee4e8e51084cb922?embed=1&info=0&swaps=0" frameBorder="0" allowFullScreen></iframe>
+</Box>
+</Box>
+)}
 
-            </Box>
+{selectedBox === '2' && (
+<Box id="box2" minH="400px" bg="grey.700">
+{/* Box 2 Content */}
+<Box minH="500px" bg="rgba(0, 0, 0, 0.0);"
+p={0}
+borderRadius="lg">
+<iframe
+height="490px" width="100%" id="geckoterminal-embed" title="GeckoTerminal Embed" src="https://www.geckoterminal.com/maxxchain/pools/0x9bf72fb4f81e13e2e5175bbdc10573cc9b985127?embed=1&info=0&swaps=0" frameBorder="0" allowFullScreen></iframe>
+</Box>
+</Box>
+)}
+
+{selectedBox === '3' && (
+<Box id="box3" minH="400px" bg="grey.700">
+{/* Box 3 Content */}
+<Box minH="500px" bg="rgba(0, 0, 0, 0.0);"
+p={0}
+borderRadius="lg">
+<iframe
+height="490px" width="100%" id="geckoterminal-embed" title="GeckoTerminal Embed" src="https://www.geckoterminal.com/maxxchain/pools/0x5b8dc7d0bc746155fcc31e83aa94f7c75830b9f0?embed=1&info=0&swaps=0" frameBorder="0" allowFullScreen></iframe>
+</Box>
+</Box>
+)}
+</div>
+
+                                  </Flex>
               {/*         <Box minH="20px" bg="rgba(0, 0, 0, 0.5);" p={4} borderRadius="lg">
 
 

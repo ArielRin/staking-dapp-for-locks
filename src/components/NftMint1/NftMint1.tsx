@@ -15,7 +15,7 @@ import { ethers } from 'ethers';
 import { useAccount, useContractWrite } from 'wagmi';
 import nftMintAbi from './nftMintAbi.json';
 import MainTextLogo from './textLogo.png';
-import backgroundGif from './bkg22.png';
+import backgroundGif from './bkg33.png';
 
 import './mintNftStyles.css';
 

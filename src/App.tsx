@@ -261,7 +261,7 @@ const App = () => {
 
    // Fetch Market Cap and Total Reserve data for BMT Token
    useEffect(() => {
-     const bmtTokenAddress = '0x2c5Cb1C18a344D4F1472a904a077CF0B97886719';
+     const bmtTokenAddress = 'TOKEN_CONTRACT_ADDRESS';
      const url = `https://api.geckoterminal.com/api/v2/networks/maxxchain/tokens/0x2c5Cb1C18a344D4F1472a904a077CF0B97886719`;
 
      fetch(url)
